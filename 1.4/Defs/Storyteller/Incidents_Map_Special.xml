@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <IncidentDef>
+    <defName>PatientArrives</defName>
+    <label>patient arrives</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>    
+    <workerClass>Hospital.IncidentWorker_PatientArrives</workerClass>
+    <pawnKind>Villager</pawnKind>
+    <baseChance>0</baseChance>
+    <minRefireDays>1</minRefireDays>
+    <letterLabel>New patient arrived</letterLabel>
+    <letterText>{PAWN_possessive} name is {0}.\n\n{PAWN_pronoun} wants you to {CURE}</letterText>
+  </IncidentDef>
+  <Hospital.IncidentScheduleDef>
+    <defName>PatientArrivesSchedule</defName>
+    <incident>PatientArrives</incident>
+    <scheduledHours>
+      <li>8</li>
+      <li>10</li>
+      <li>12</li>
+      <li>14</li>
+      <li>16</li>
+      <li>18</li>
+      <li>20</li>
+    </scheduledHours>
+  </Hospital.IncidentScheduleDef>
+</Defs>

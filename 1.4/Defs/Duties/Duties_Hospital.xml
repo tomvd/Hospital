@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <DutyDef>
+        <defName>Patient</defName>
+        <alwaysShowWeapon>false</alwaysShowWeapon>
+        <thinkNode Class="ThinkNode_Priority">
+            <subNodes>
+                <li Class="ThinkNode_Tagger">
+                    <tagToGive>RestingForMedicalReasons</tagToGive>
+                    <subNodes>
+                        <li Class="JobGiver_PatientGoToBed" />
+                    </subNodes>
+                </li>
+            </subNodes>
+        </thinkNode>
+    </DutyDef>
+</Defs>
