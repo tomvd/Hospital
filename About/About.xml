@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Hospital (early access)</name>
+	<author>Adamas</author>
+	<packageId>Adamas.Hospital.EA</packageId>
+	<supportedVersions>
+		<li>1.4</li>
+	</supportedVersions>
+	<description>
+		Run a hospital: if you have this mod enabled (and settings allow you to receive patients) and you have plenty of medical beds
+		patients will knock on your door asking for help with their disease, wounds or a surgery.
+	</description>
+</ModMetaData>
