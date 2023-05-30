@@ -17,6 +17,15 @@ namespace Hospital.Utilities
             return cachedComponent?.Patients.ContainsKey(pawn) == true;
         }
         
+        public static bool GetPatientRating(this Pawn pawn, out float score)
+        {
+            score = 0.0f;
+            if (pawn == null) return false;
+            score = pawn.needs.mood.curLevelInt;
+            //var cachedComponent = pawn.Map.GetComponent<HospitalMapComponent>();
+            return true;
+        }
+        
         public static void DamagePawn(Pawn pawn, PatientData patientData)
         {
             BodyPartRecord partRecord = pawn.health.hediffSet.GetNotMissingParts()

@@ -78,14 +78,14 @@ namespace Hospital
             SendStandardLetter(title, text, LetterDefOf.PositiveEvent, parms, pawn);
             return true;
         }
-        
-        public virtual PatientData SpawnPatient(Map map, Pawn pawn)
+
+        protected virtual PatientData SpawnPatient(Map map, Pawn pawn)
         {
             pawn.guest.SetGuestStatus(Faction.OfPlayer); // mark as guest otherwise the pawn just wanders off again
             pawn.playerSettings.medCare = MedicalCareCategory.NormalOrWorse;
             pawn.playerSettings.selfTend = false;
 
-            PatientType type = (PatientType)Random.Range(1, 4);
+            PatientType type = (PatientType)Random.Range(1, settings.acceptSurgery?4:3);
             PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
             TryFindEntryCell(map, out var cell);
             GenSpawn.Spawn(pawn, cell, map);

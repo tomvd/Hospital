@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <PawnColumnDef>
+        <defName>Hospital_LabelCustom</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_LabelCustom</workerClass>
+        <sortable>true</sortable>
+    </PawnColumnDef>
+    
+    <PawnColumnDef>
+        <defName>PatientRating</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_PatientRating</workerClass>
+        <headerTip>How happy the patient is.</headerTip>
+        <width>45</width>
+        <sortable>true</sortable>
+    </PawnColumnDef>
+    
+    <PawnColumnDef>
+        <defName>Dismiss</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_ButtonDismiss</workerClass>
+        <width>70</width>
+    </PawnColumnDef>
+</Defs>

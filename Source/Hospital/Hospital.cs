@@ -27,6 +27,7 @@ namespace Hospital
 	        Listing_Standard listingStandard = new Listing_Standard();
 	        listingStandard.Begin(inRect);
 	        listingStandard.CheckboxLabeled("Accept Patients", ref settings.acceptPatients, "uncheck this if you want to stop patients from visiting");
+	        listingStandard.CheckboxLabeled("Accept Surgery", ref settings.acceptSurgery, "uncheck this if you do not want to get surgery events");
 	        //listingStandard.Label("exampleFloatExplanation");
 	        //settings.exampleFloat = listingStandard.Slider(settings.exampleFloat, 100f, 300f);
 	        listingStandard.End();

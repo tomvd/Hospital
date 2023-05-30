@@ -9,6 +9,7 @@ public class HospitalSettings : ModSettings
     /// The three settings our mod has.
     /// </summary>
     public bool acceptPatients;
+    public bool acceptSurgery;
     //public float exampleFloat = 200f;
     //public List<Pawn> exampleListOfPawns = new List<Pawn>();
 
@@ -18,6 +19,7 @@ public class HospitalSettings : ModSettings
     public override void ExposeData()
     {
         Scribe_Values.Look(ref acceptPatients, "acceptPatients", true);
+        Scribe_Values.Look(ref acceptSurgery, "acceptSurgery", true);
         //Scribe_Values.Look(ref exampleFloat, "exampleFloat", 200f);
         //Scribe_Collections.Look(ref exampleListOfPawns, "exampleListOfPawns", LookMode.Reference);
         base.ExposeData();

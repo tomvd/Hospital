@@ -24,7 +24,9 @@ namespace Hospital
             {
                 float silver = PatientUtility.CalculateSilverToReceive(pawn, patientData);
                 int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
-                Messages.Message($"{pawn.NameFullColored} leaves: +"+silver.ToStringMoney()+", +"+goodwill+" "+pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
+                Messages.Message(
+                    $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", +" + goodwill + " " +
+                    pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
                 var silverThing = ThingMaker.MakeThing(ThingDefOf.Silver);
                 silverThing.stackCount = (int)silver;
@@ -57,6 +59,18 @@ namespace Hospital
                 Patients.Remove(pawn);    
             }
             // else - was not a patient?
+        }
+        
+        public void DismissPatient(Pawn pawn)
+        {
+            if (Patients.TryGetValue(pawn, out var patientData))
+            {
+                Messages.Message(
+                    $"{pawn.NameFullColored} dismissed.", MessageTypeDefOf.NeutralEvent); 
+                Patients.Remove(pawn);    
+            }
+            // else - was not a patient?
+            
         }
     }
 

@@ -1,3 +1,4 @@
+using Hospital.Utilities;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -27,7 +28,7 @@ namespace Hospital
                     && pawn.health.surgeryBills.Count == 0
                     && pawn.health.healthState == PawnHealthState.Mobile);
             //Log.Message("result=" + result);
-            return result;
+            return result || !pawn.IsPatient();
         }
     }
 }

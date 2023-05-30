@@ -10,4 +10,12 @@
 		Run a hospital: if you have this mod enabled (and settings allow you to receive patients) and you have plenty of medical beds
 		patients will knock on your door asking for help with their disease, wounds or a surgery.
 	</description>
+	<modDependencies>
+	<li>
+		<packageId>brrainz.harmony</packageId>
+		<displayName>Harmony</displayName>
+		<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+		<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+	</li>
+	</modDependencies>
 </ModMetaData>

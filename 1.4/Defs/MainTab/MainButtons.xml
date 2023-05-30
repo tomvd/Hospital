@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <MainButtonDef>
+    <defName>Patients</defName>
+    <label>patients</label>
+    <description>List patients in the area.</description>
+    <tabWindowClass>Hospital.MainTab.MainTabWindow_Hospital</tabWindowClass>
+    <order>54</order>
+  </MainButtonDef>
+
+</Defs>
