@@ -33,22 +33,7 @@ namespace Hospital.Utilities
             switch (patientData.Type)
             {
                 case PatientType.Disease:
-                    Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
-                    var rnd = Rand.Value;
-                    if (rnd < 0.5)
-                    {
-                        var hediff = HediffMaker.MakeHediff(HediffDefOf.Malaria, pawn);
-                        pawn.health.AddHediff(hediff);
-                        patientData.baseCost = 40;
-                        patientData.Cure = "cure " + hediff.Label;
-                    }
-                    if (rnd >= 0.5)
-                    {
-                        var hediff = HediffMaker.MakeHediff(HediffDefOf.Flu, pawn);
-                        pawn.health.AddHediff(hediff);
-                        patientData.baseCost = 20;
-                        patientData.Cure = "cure " + hediff.Label;
-                    }
+                    DiseaseUtility.AddRandomDisease(pawn, patientData);
                     break;
                 case PatientType.Wounds:
                     WoundsUtility.AddRandomWounds(pawn, patientData);

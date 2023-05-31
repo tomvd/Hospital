@@ -16,7 +16,7 @@ namespace Hospital.MainTab {
 
         public override int GetMinWidth(PawnTable table)
         {
-            return Mathf.Max(base.GetMinWidth(table), 36);
+            return Mathf.Max(base.GetMinWidth(table), 60);
         }
 
         public override int GetMaxWidth(PawnTable table)

@@ -13,10 +13,18 @@
         <width>45</width>
         <sortable>true</sortable>
     </PawnColumnDef>
+
+    <PawnColumnDef>
+        <defName>PatientCure</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_Cure</workerClass>
+        <headerTip>What the patient needs.</headerTip>
+        <width>150</width>
+        <sortable>false</sortable>
+    </PawnColumnDef>
     
     <PawnColumnDef>
         <defName>Dismiss</defName>
         <workerClass>Hospital.MainTab.PawnColumnWorker_ButtonDismiss</workerClass>
-        <width>70</width>
+        <width>100</width>
     </PawnColumnDef>
 </Defs>

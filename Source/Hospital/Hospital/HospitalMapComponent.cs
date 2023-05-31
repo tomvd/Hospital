@@ -16,6 +16,7 @@ namespace Hospital
         public void PatientArrived(Pawn pawn, PatientData data)
         {
             Patients.Add(pawn, data);
+            MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
         }
 
         public void PatientLeaves(Pawn pawn)
@@ -31,7 +32,8 @@ namespace Hospital
                 var silverThing = ThingMaker.MakeThing(ThingDefOf.Silver);
                 silverThing.stackCount = (int)silver;
                 GenPlace.TryPlaceThing(silverThing, pawn.Position, pawn.Map, ThingPlaceMode.Near);
-                Patients.Remove(pawn);    
+                Patients.Remove(pawn);
+                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
             }
             else
             {
@@ -46,6 +48,7 @@ namespace Hospital
                 Messages.Message($"{pawn.NameFullColored} died: -20 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -20, false);
                 Patients.Remove(pawn);    
+                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
             }
             // else - was not a patient?
         }
@@ -57,6 +60,7 @@ namespace Hospital
                 Messages.Message($"{pawn.NameFullColored} surgery failed: -10 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -10, false);
                 Patients.Remove(pawn);    
+                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
             }
             // else - was not a patient?
         }
@@ -68,6 +72,7 @@ namespace Hospital
                 Messages.Message(
                     $"{pawn.NameFullColored} dismissed.", MessageTypeDefOf.NeutralEvent); 
                 Patients.Remove(pawn);    
+                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
             }
             // else - was not a patient?
             
