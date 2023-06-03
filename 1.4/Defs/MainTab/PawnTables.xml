@@ -11,6 +11,8 @@
             <li>GapTiny</li>
             <li>PatientRating</li>
             <li>GapTiny</li>
+            <li>PatientTimeSpent</li>
+            <li>GapTiny</li>
             <li>Dismiss</li>
             <li>RemainingSpace</li>
         </columns>

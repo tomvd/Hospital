@@ -17,12 +17,23 @@ namespace Hospital.Utilities
             return cachedComponent?.Patients.ContainsKey(pawn) == true;
         }
         
-        public static bool GetPatientRating(this Pawn pawn, out float score)
+        public static bool GetPatientRating(this Pawn pawn, out float score, HospitalMapComponent hospital)
         {
             score = 0.0f;
             if (pawn == null) return false;
-            score = pawn.needs.mood.curLevelInt;
-            //var cachedComponent = pawn.Map.GetComponent<HospitalMapComponent>();
+            PatientData patientData = hospital.Patients.TryGetValue(pawn);
+            if (patientData == null) return false;
+            score = Math.Min((pawn.needs.mood.curLevelInt - patientData.InitialMood)*3.0f, 100.0f);
+            return true;
+        }
+        
+        public static bool GetPatientTimeInHospital(this Pawn pawn, out int ticks, HospitalMapComponent hospital)
+        {
+            ticks = 0;
+            if (pawn == null) return false;
+            PatientData patientData = hospital.Patients.TryGetValue(pawn);
+            if (patientData == null) return false;
+            ticks = GenDate.TicksGame - patientData.ArrivedAtTick;
             return true;
         }
         

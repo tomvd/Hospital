@@ -9,7 +9,17 @@
     <PawnColumnDef>
         <defName>PatientRating</defName>
         <workerClass>Hospital.MainTab.PawnColumnWorker_PatientRating</workerClass>
+        <label>rating</label>
         <headerTip>How happy the patient is.</headerTip>
+        <width>45</width>
+        <sortable>true</sortable>
+    </PawnColumnDef>
+
+    <PawnColumnDef>
+        <defName>PatientTimeSpent</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_PatientTimeSpent</workerClass>
+        <label>time spent</label>
+        <headerTip>How many hours the patient spent in your hospital.</headerTip>
         <width>45</width>
         <sortable>true</sortable>
     </PawnColumnDef>
@@ -17,6 +27,7 @@
     <PawnColumnDef>
         <defName>PatientCure</defName>
         <workerClass>Hospital.MainTab.PawnColumnWorker_Cure</workerClass>
+        <label>cure</label>
         <headerTip>What the patient needs.</headerTip>
         <width>150</width>
         <sortable>false</sortable>

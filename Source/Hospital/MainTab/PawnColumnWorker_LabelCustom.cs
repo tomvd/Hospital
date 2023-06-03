@@ -9,7 +9,7 @@ namespace Hospital.MainTab
 {
     public class PawnColumnWorker_LabelCustom : PawnColumnWorker_Label
     {
-        private int guestCountCached;
+        private int patientCountCached;
         private int bedCountCached;
 
         private float lastTimeCached;
@@ -21,18 +21,18 @@ namespace Hospital.MainTab
 
             if (Time.unscaledTime > lastTimeCached + 2 || Find.CurrentMap != currentMap)
             {
-                guestCountCached = Find.CurrentMap.GetComponent<HospitalMapComponent>().Patients.Count;
-                bedCountCached = Find.CurrentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.AnyOccupants);
+                patientCountCached = Find.CurrentMap.GetComponent<HospitalMapComponent>().Patients.Count;
+                bedCountCached = Find.CurrentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical);// && !bed.AnyOccupants);
                 lastTimeCached = Time.unscaledTime;
                 currentMap = Find.CurrentMap;
             }
 
             Text.Font = DefaultHeaderFont;
-            GUI.color = guestCountCached + Math.Ceiling(Find.CurrentMap.mapPawns.ColonistCount / 2.0f) > bedCountCached ? Color.red : DefaultHeaderColor;
+            GUI.color = patientCountCached + Math.Ceiling(Find.CurrentMap.mapPawns.ColonistCount / 2.0f) > bedCountCached ? Color.red : DefaultHeaderColor;
             Text.Anchor = TextAnchor.LowerLeft;
             Rect label = rect;
             label.y += 3f;
-            Widgets.Label(label, "BedsFilled".Translate(guestCountCached, bedCountCached));
+            Widgets.Label(label, "Beds filled:"+ patientCountCached +"/"+ bedCountCached);
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
             Text.Font = GameFont.Small;

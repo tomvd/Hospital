@@ -14,11 +14,11 @@ namespace Hospital.MainTab
 
         public override IEnumerable<Pawn> Pawns => Find.CurrentMap.GetComponent<HospitalMapComponent>().Patients.Keys;
 
-        public override void PostOpen()
+      /*  public override void PostOpen()
         {
             base.PostOpen();
             Find.World.renderer.wantedMode = WorldRenderMode.None;
         }
-
+*/
     }
 }
