@@ -22,6 +22,7 @@ namespace Hospital
         private static bool SentAway(Pawn pawn)
         {
             //Log.Message($"SentAway? HasHediffsNeedingTendByPlayer? {pawn.health.HasHediffsNeedingTendByPlayer()} ShouldSeekMedicalRest? {HealthAIUtility.ShouldSeekMedicalRest(pawn)} pawn.health.surgeryBills.Count? {pawn.health.surgeryBills.Count } pawn.health.healthState? {pawn.health.healthState}");
+            if (pawn?.Map == null) return false; // has not arrived yet...
             
             var result =  (!pawn.health.HasHediffsNeedingTendByPlayer() 
                     && !HealthAIUtility.ShouldSeekMedicalRest(pawn)

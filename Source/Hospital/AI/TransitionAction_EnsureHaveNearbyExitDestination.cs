@@ -3,7 +3,7 @@ using RimWorld;
 using Verse;
 using Verse.AI.Group;
 
-namespace Hospitality
+namespace Hospital
 {
 	public class TransitionAction_EnsureHaveNearbyExitDestination : TransitionAction
 	{

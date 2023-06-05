@@ -3,7 +3,7 @@ using Hospital.Utilities;
 using RimWorld;
 using Verse;
 
-namespace Hospitality.Patches
+namespace Hospital.Patches
 {
     public class JobGiver_Work_Patch
     {
