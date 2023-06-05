@@ -9,11 +9,11 @@ namespace Hospital
 	public class HospitalMod : Mod
 	{
 		public static Harmony harmonyInstance;
-		HospitalSettings settings;
+		public static Settings Settings;
 		
 		public HospitalMod(ModContentPack content) : base(content)
 		{
-			this.settings = GetSettings<HospitalSettings>();
+			Settings = GetSettings<Settings>();
 
 			harmonyInstance = new Harmony("Adamas.Hospital");
             harmonyInstance.PatchAll();
@@ -24,14 +24,7 @@ namespace Hospital
         /// <param name="inRect">A Unity Rect with the size of the settings window.</param>
         public override void DoSettingsWindowContents(Rect inRect)
         {
-	        Listing_Standard listingStandard = new Listing_Standard();
-	        listingStandard.Begin(inRect);
-	        listingStandard.CheckboxLabeled("Accept Patients", ref settings.acceptPatients, "uncheck this if you want to stop patients from visiting");
-	        listingStandard.CheckboxLabeled("Accept Surgery", ref settings.acceptSurgery, "uncheck this if you do not want to get surgery events");
-	        //listingStandard.Label("exampleFloatExplanation");
-	        //settings.exampleFloat = listingStandard.Slider(settings.exampleFloat, 100f, 300f);
-	        listingStandard.End();
-	        base.DoSettingsWindowContents(inRect);
+	        Settings.DoWindowContents(inRect);
         }
 
         /// <summary>

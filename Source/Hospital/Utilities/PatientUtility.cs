@@ -11,10 +11,10 @@ namespace Hospital.Utilities
     {
         public static bool IsPatient(this Pawn pawn)
         {
-            if (pawn == null) return false;
+            if (pawn?.Map == null) return false;
 
-            var cachedComponent = pawn.Map.GetComponent<HospitalMapComponent>();
-            return cachedComponent?.Patients.ContainsKey(pawn) == true;
+            var hospital = pawn.Map.GetComponent<HospitalMapComponent>(); // TODO cache this?
+            return hospital?.Patients.ContainsKey(pawn) == true;
         }
         
         public static bool GetPatientRating(this Pawn pawn, out float score, HospitalMapComponent hospital)

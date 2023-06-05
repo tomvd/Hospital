@@ -12,12 +12,6 @@ namespace Hospital
     // modified IncidentWorker_VisitorGroup
     public class IncidentWorker_PatientArrives : IncidentWorker
     {
-        private HospitalSettings settings;
-        public IncidentWorker_PatientArrives() : base()
-        {
-            settings = LoadedModManager.GetMod<HospitalMod>().GetSettings<HospitalSettings>();
-        }
-
         public override bool CanFireNowSub(IncidentParms parms)
         {
             if (!base.CanFireNowSub(parms))
@@ -42,7 +36,7 @@ namespace Hospital
 
         public virtual bool CanSpawnPatient(Map map)
         {
-            if (!settings.acceptPatients) return false;
+            if (!HospitalMod.Settings.AcceptPatients) return false;
             // get number of hospital beds - we need to have more than ceil(colonists/2)
             // so if you have 5 colonists, you need more than 3 beds to receive a patient
             var freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.AnyOccupants);
@@ -85,10 +79,20 @@ namespace Hospital
             pawn.playerSettings.medCare = MedicalCareCategory.NormalOrWorse;
             pawn.playerSettings.selfTend = false;
 
-            PatientType type = (PatientType)Random.Range(1, settings.acceptSurgery?4:3);
+            PatientType type = (PatientType)Random.Range(1, HospitalMod.Settings.AcceptSurgery?4:3);
             PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
-            TryFindEntryCell(map, out var cell);
-            GenSpawn.Spawn(pawn, cell, map);
+            //TryFindEntryCell(map, out var cell);
+            //GenSpawn.Spawn(pawn, cell, map);
+
+            var loc = DropCellFinder.TryFindSafeLandingSpotCloseToColony(map, IntVec2.Two);
+            var activeDropPodInfo = new ActiveDropPodInfo();
+            activeDropPodInfo.innerContainer.TryAdd(pawn, 1);
+            activeDropPodInfo.openDelay = 60;
+            activeDropPodInfo.leaveSlag = false;
+            activeDropPodInfo.despawnPodBeforeSpawningThing = true;
+            activeDropPodInfo.spawnWipeMode = WipeMode.Vanish;
+            DropPodUtility.MakeDropPodAt(loc, map, activeDropPodInfo);
+            
             PatientUtility.DamagePawn(pawn, data);
             map.GetComponent<HospitalMapComponent>().PatientArrived(pawn, data);
             return data;
@@ -103,8 +107,8 @@ namespace Hospital
         
         protected virtual LordJob_VisitColonyAsPatient CreateLordJob(IncidentParms parms, List<Pawn> pawns)
         {
-            RCellFinder.TryFindRandomSpotJustOutsideColony(pawns[0], out var result);
-            return new LordJob_VisitColonyAsPatient(parms.faction, result);
+            //RCellFinder.TryFindRandomSpotJustOutsideColony(pawns[0], out var result);
+            return new LordJob_VisitColonyAsPatient(parms.faction);
         }
     }
 }

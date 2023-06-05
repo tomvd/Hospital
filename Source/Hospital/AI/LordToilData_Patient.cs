@@ -8,7 +8,7 @@ using Verse.AI.Group;
 
 namespace Hospital
 {
-    internal class LordToilData_VisitPoint : LordToilData
+    internal class LordToilData_Patient : LordToilData
     {
         public float radius;
 
@@ -19,13 +19,13 @@ namespace Hospital
         }
     }
 
-    internal class LordToil_VisitPoint : LordToil
+    internal class LordToil_Patient : LordToil
     {
-        public LordToilData_VisitPoint Data => (LordToilData_VisitPoint) data;
+        public LordToilData_Patient Data => (LordToilData_Patient) data;
 
-        public LordToil_VisitPoint()
+        public LordToil_Patient()
         {
-            data = new LordToilData_VisitPoint();
+            data = new LordToilData_Patient();
         }
 
         public override void Init()
