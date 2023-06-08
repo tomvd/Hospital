@@ -22,7 +22,7 @@ namespace Hospital.MainTab
             if (Time.unscaledTime > lastTimeCached + 2 || Find.CurrentMap != currentMap)
             {
                 patientCountCached = Find.CurrentMap.GetComponent<HospitalMapComponent>().Patients.Count;
-                bedCountCached = Find.CurrentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical);// && !bed.AnyOccupants);
+                bedCountCached = Find.CurrentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && bed.def.building.bed_humanlike && !bed.IsBurning() && !bed.AnyOccupants);
                 lastTimeCached = Time.unscaledTime;
                 currentMap = Find.CurrentMap;
             }

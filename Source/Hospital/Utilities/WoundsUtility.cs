@@ -12,9 +12,10 @@ public class WoundsUtility
     public static void AddRandomWounds(Pawn pawn, PatientData patientData)
     {
         Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
-        int damage = Rand.RangeInclusive(5, 50);
+        float rnd = Rand.Value;
+        int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
         DamageParts(pawn, damage);
-        patientData.baseCost = damage;
+        patientData.baseCost = (int)Mathf.Lerp(20.0f, 80.0f, rnd);
         patientData.Cure = "tend to wounds";
     }
 

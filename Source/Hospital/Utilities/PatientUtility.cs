@@ -60,7 +60,11 @@ namespace Hospital.Utilities
         public static float CalculateSilverToReceive(Pawn pawn, PatientData patientData)
         {
             float increasedMarketValue = Math.Max(pawn.MarketValue - patientData.InitialMarketValue, 0f); // for some reason some patients leave with decreased market value :)
-            float totalPrice = patientData.baseCost; // base price is 100 silver
+            float totalPrice = Math.Max(patientData.baseCost, increasedMarketValue); // base price is 100 silver
+            int ticks = GenDate.TicksGame - patientData.ArrivedAtTick;
+            int days = ticks / 2500 / 24;
+            if (days > 1) totalPrice += 20;
+            if (days > 2) totalPrice += 20;
             /*switch (patientData.Type)
             {
                 case PatientType.Disease:
@@ -76,14 +80,13 @@ namespace Hospital.Utilities
         public static int CalculateGoodwillToGain(Pawn pawn, PatientData patientData)
         {
             if (pawn.needs?.mood == null) return 0;
-            float increasedMood = pawn.needs.mood.curLevelInt - patientData.InitialMood;
-            // TODO this should depend on the patients health and mood somehow - perhaps doctor skills as well - to be refined
-            if (pawn.needs.mood.curLevelInt > 90) return 5;
-            if (pawn.needs.mood.curLevelInt > 60) return 2;
-            if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdMinor) return 1;
-            if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdMajor) return 0; // between maj and min threshold
-            if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdExtreme) return -1; // between maj and critical
-            return -2; // at critical break threshold -> very unhappy stay
+            float score = Math.Min((pawn.needs.mood.curLevelInt - patientData.InitialMood)*3.0f, 100.0f);
+            if (score > 90) return 5;
+            if (score > 80) return 2;
+            if (score > 70) return 1;
+            if (score > 60) return 0;
+            if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdExtreme) return -1; // between maj and critical breakdown
+            return -5; // at a critical break threshold -> very unhappy stay
         }
         
 
