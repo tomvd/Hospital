@@ -26,7 +26,7 @@ namespace Hospital
                 float silver = PatientUtility.CalculateSilverToReceive(pawn, patientData);
                 int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
                 Messages.Message(
-                    $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", +" + goodwill + " " +
+                    $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", goodwill change: " + goodwill + " " +
                     pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
                 var silverThing = ThingMaker.MakeThing(ThingDefOf.Silver);

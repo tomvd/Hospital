@@ -84,9 +84,8 @@ namespace Hospital.Utilities
             if (score > 90) return 5;
             if (score > 80) return 2;
             if (score > 70) return 1;
-            if (score > 60) return 0;
-            if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdExtreme) return -1; // between maj and critical breakdown
-            return -5; // at a critical break threshold -> very unhappy stay
+            if (pawn.needs.mood.curLevelInt < pawn.mindState.mentalBreaker.BreakThresholdMajor) return -1; // very unhappy stay
+            return 0;
         }
         
 
