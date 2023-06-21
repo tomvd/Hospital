@@ -12,11 +12,11 @@ public class DiseaseUtility
         "Flu",
         "Plague",
         "Malaria",
-        "SleepingSickness",
-        "FibrousMechanites",
-        "SensoryMechanites",
+        //"SleepingSickness",
+        //"FibrousMechanites",
+        //"SensoryMechanites",
         "GutWorms",
-        "MuscleParasites",
+        //"MuscleParasites",
     };
     public static void AddRandomDisease(Pawn pawn, PatientData patientData)
     {

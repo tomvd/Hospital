@@ -19,14 +19,14 @@ public class SurgeryUtility
 			        if (!enumerable.Any((ThingDef x) => x.isTechHediff) && !enumerable.Any((ThingDef x) => x.IsDrug) && (!enumerable.Any() || !recipe.dontShowIfAnyIngredientMissing))
 			        {
 				        list.Add(recipe);
-				        Log.Message($"surgery recipe added:" + recipe.defName);
+				        //Log.Message($"surgery recipe added:" + recipe.defName);
 			        }
 		        }
 	        }
 	        
 
 	        RecipeDef selectedRecipe = list.RandomElement();
-	        Log.Message($"recipe selected:" + selectedRecipe.defName);
+	        //Log.Message($"recipe selected:" + selectedRecipe.defName);
 	        if (selectedRecipe.targetsBodyPart)
 	        {
 		        BodyPartRecord part = selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).RandomElement();
