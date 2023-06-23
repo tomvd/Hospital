@@ -19,11 +19,8 @@
     <incident>PatientArrives</incident>
     <scheduledHours>
       <li>8</li>
-      <li>10</li>
       <li>12</li>
-      <li>14</li>
       <li>16</li>
-      <li>18</li>
       <li>20</li>
     </scheduledHours>
   </Hospital.IncidentScheduleDef>

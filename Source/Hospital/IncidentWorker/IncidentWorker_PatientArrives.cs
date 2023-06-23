@@ -42,11 +42,9 @@ namespace Hospital
             if ((int)HospitalMod.Settings.PatientLimit > 0 && map.GetComponent<HospitalMapComponent>().Patients.Count >=
                 (int)HospitalMod.Settings.PatientLimit) return false;
                 // get number of hospital beds - we need to have more than ceil(colonists/2)
-                // so if you have 5 colonists, you need more than 3 beds to receive a patient
+                // so if you have 5 colonists, you need more than 3 free beds to receive a patient
                 var freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.AnyOccupants && bed.def.building.bed_humanlike && !bed.IsBurning());
-            if (freeMedicalBeds <= Math.Ceiling(map.mapPawns.ColonistCount / 2.0f)) return false;
-            // 50% chance a new patient spawns this time
-            if (Rand.Chance(0.5f)) return false;
+            if (freeMedicalBeds <= Math.Ceiling(map.mapPawns.ColonistCount * HospitalMod.Settings.BedsForColonists)) return false;
             IntVec3 cell;
             return TryFindEntryCell(map, out cell);
         }

@@ -13,7 +13,9 @@ public class SurgeryUtility
 	        List<RecipeDef> list = new List<RecipeDef>();
 	        foreach (RecipeDef recipe in pawn.def.AllRecipes)
 	        {
-		        if (recipe.AvailableNow && recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any() && recipe != RecipeDefOf.RemoveBodyPart) // only adding body part recipes for now
+		        if (recipe.AvailableNow && recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any() && recipe != RecipeDefOf.RemoveBodyPart 
+		            && recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any(record => record.def.canSuggestAmputation) // make sure this is a surgery with a body part that can be amputated
+		            )
 		        {
 			        IEnumerable<ThingDef> enumerable = recipe.PotentiallyMissingIngredients(null, pawn.MapHeld);
 			        if (!enumerable.Any((ThingDef x) => x.isTechHediff) && !enumerable.Any((ThingDef x) => x.IsDrug) && (!enumerable.Any() || !recipe.dontShowIfAnyIngredientMissing))
@@ -29,8 +31,8 @@ public class SurgeryUtility
 	        //Log.Message($"recipe selected:" + selectedRecipe.defName);
 	        if (selectedRecipe.targetsBodyPart)
 	        {
-		        BodyPartRecord part = selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).RandomElement();
-		        Log.Message($"part selected:" + part.Label);
+		        BodyPartRecord part = selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).Where(record => record.def.canSuggestAmputation).RandomElement();
+		        //Log.Message($"part selected:" + part.Label);
 		        if (selectedRecipe.AvailableOnNow(pawn, part))
 		        {
 			        HediffDef hediffDefFromDamage;
