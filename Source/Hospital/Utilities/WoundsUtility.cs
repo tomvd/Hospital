@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,7 +16,8 @@ public class WoundsUtility
         int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
         DamageParts(pawn, damage);
         patientData.baseCost = (int)Mathf.Lerp(20.0f, 80.0f, rnd);
-        patientData.Cure = "tend to wounds";
+        patientData.Cure = "CureWounds".Translate();
+        patientData.Diagnosis = "DiagnosisWounds".Translate();
     }
 
     private static void DamageParts(Pawn p, int totalDamage)

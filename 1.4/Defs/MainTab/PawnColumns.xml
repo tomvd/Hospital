@@ -3,7 +3,7 @@
     <PawnColumnDef>
         <defName>Hospital_LabelCustom</defName>
         <workerClass>Hospital.MainTab.PawnColumnWorker_LabelCustom</workerClass>
-        <sortable>true</sortable>
+        <sortable>false</sortable>
     </PawnColumnDef>
     
     <PawnColumnDef>
@@ -23,16 +23,25 @@
         <width>45</width>
         <sortable>true</sortable>
     </PawnColumnDef>
-
+    
     <PawnColumnDef>
-        <defName>PatientCure</defName>
-        <workerClass>Hospital.MainTab.PawnColumnWorker_Cure</workerClass>
-        <label>cure</label>
-        <headerTip>What the patient needs.</headerTip>
+        <defName>PatientDiagnosis</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_Diagnosis</workerClass>
+        <label>diagnosis</label>
+        <headerTip>What's wrong with this patient?.</headerTip>
         <width>150</width>
         <sortable>false</sortable>
     </PawnColumnDef>
     
+    <PawnColumnDef>
+        <defName>PatientCure</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_Cure</workerClass>
+        <label>treatment</label>
+        <headerTip>How will we help the patient?</headerTip>
+        <width>150</width>
+        <sortable>false</sortable>
+    </PawnColumnDef>
+
     <PawnColumnDef>
         <defName>Dismiss</defName>
         <workerClass>Hospital.MainTab.PawnColumnWorker_ButtonDismiss</workerClass>

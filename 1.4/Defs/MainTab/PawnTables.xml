@@ -7,6 +7,8 @@
         <columns>
             <li>Hospital_LabelCustom</li>
             <li>GapTiny</li>
+            <li>PatientDiagnosis</li>
+            <li>GapTiny</li>
             <li>PatientCure</li>
             <li>GapTiny</li>
             <li>PatientRating</li>

@@ -12,7 +12,7 @@
     <baseChance>0</baseChance>
     <minRefireDays>1</minRefireDays>
     <letterLabel>New patient arrived</letterLabel>
-    <letterText>{PAWN_possessive} name is {0}.\n\n{PAWN_pronoun} wants you to {CURE}</letterText>
+    <letterText>{PAWN_possessive} name is {0}.</letterText>
   </IncidentDef>
   <Hospital.IncidentScheduleDef>
     <defName>PatientArrivesSchedule</defName>

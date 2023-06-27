@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <PatientRating.label>calificación</PatientRating.label>
+  <PatientRating.headerTip>Qué tan feliz está el paciente.</PatientRating.headerTip>
+
+  <PatientTimeSpent.label>tiempo transcurrido</PatientTimeSpent.label>
+  <PatientTimeSpent.headerTip>Cuantas horas ha pasado el paciente en tu hospital.</PatientTimeSpent.headerTip>
+
+  <PatientCure.label>cura</PatientCure.label>
+  <PatientCure.headerTip>Lo que necesita el paciente.</PatientCure.headerTip>
+
+
+</LanguageData>

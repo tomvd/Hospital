@@ -13,9 +13,7 @@ public class SurgeryUtility
 	        List<RecipeDef> list = new List<RecipeDef>();
 	        foreach (RecipeDef recipe in pawn.def.AllRecipes)
 	        {
-		        if (recipe.AvailableNow && recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any() && recipe != RecipeDefOf.RemoveBodyPart 
-		            && recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any(record => record.def.canSuggestAmputation) // make sure this is a surgery with a body part that can be amputated
-		            )
+		        if (recipe.AvailableNow && recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any() && recipe != RecipeDefOf.RemoveBodyPart)
 		        {
 			        IEnumerable<ThingDef> enumerable = recipe.PotentiallyMissingIngredients(null, pawn.MapHeld);
 			        if (!enumerable.Any((ThingDef x) => x.isTechHediff) && !enumerable.Any((ThingDef x) => x.IsDrug) && (!enumerable.Any() || !recipe.dontShowIfAnyIngredientMissing))
@@ -31,30 +29,34 @@ public class SurgeryUtility
 	        //Log.Message($"recipe selected:" + selectedRecipe.defName);
 	        if (selectedRecipe.targetsBodyPart)
 	        {
-		        BodyPartRecord part = selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).Where(record => record.def.canSuggestAmputation).RandomElement();
+		        BodyPartRecord part = selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).RandomElement();
 		        //Log.Message($"part selected:" + part.Label);
 		        if (selectedRecipe.AvailableOnNow(pawn, part))
 		        {
-			        HediffDef hediffDefFromDamage;
-			        if (part.def.skinCovered)
+			        if (part.def.canSuggestAmputation)
 			        {
-				        hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(
-					        HealthUtility.RandomPermanentInjuryDamageType(part.def.frostbiteVulnerability > 0f &&
-					                                                      pawn.RaceProps.ToolUser), pawn, part);
-			        }
-			        else
-			        {
-				        hediffDefFromDamage = HediffDefOf.MissingBodyPart;
-			        }
+				        HediffDef hediffDefFromDamage;
+				        if (part.def.skinCovered)
+				        {
+					        hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(
+						        HealthUtility.RandomPermanentInjuryDamageType(part.def.frostbiteVulnerability > 0f &&
+						                                                      pawn.RaceProps.ToolUser), pawn, part);
+				        }
+				        else
+				        {
+					        hediffDefFromDamage = HediffDefOf.MissingBodyPart;
+				        }
 
-			        Hediff_MissingPart hediffMissingPart =
+				        Hediff_MissingPart hediffMissingPart =
 					        (Hediff_MissingPart)HediffMaker.MakeHediff(HediffDefOf.MissingBodyPart, pawn);
 				        hediffMissingPart.lastInjury = hediffDefFromDamage;
 				        hediffMissingPart.Part = part;
 				        hediffMissingPart.IsFresh = false;
 				        pawn.health.AddHediff(hediffMissingPart, part);
+			        }
 
 			        HealthCardUtility.CreateSurgeryBill(pawn, selectedRecipe, part, null, false);
+			        patientData.Diagnosis = TranslatorFormattedStringExtensions.Translate("DiagnosisSurgeryOnPart",part.Label);
 			        patientData.Cure = selectedRecipe.Worker.GetLabelWhenUsedOn(pawn, part);
 		        }
 	        }
@@ -72,7 +74,7 @@ public class SurgeryUtility
 	        // fixed ingredients are prosthetics for example
 	        foreach (IngredientCount ingredientCount in selectedRecipe.ingredients.Where(count => count.IsFixedIngredient))
 	        {
-		        materialCost += ingredientCount.FixedIngredient.BaseMarketValue * 0.4f;		        
+		        materialCost += ingredientCount.FixedIngredient.BaseMarketValue * 0.5f;		        
 	        }
 	        patientData.baseCost = skillBasedCost + materialCost;
         }

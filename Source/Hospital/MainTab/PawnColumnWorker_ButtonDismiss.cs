@@ -7,7 +7,7 @@ namespace Hospital.MainTab {
     {
         public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
-            if (Widgets.ButtonText(rect, "Dismiss"))
+            if (Widgets.ButtonText(rect, "Dismiss".Translate()))
             {
                 CameraJumper.TryJumpAndSelect(pawn);
                 pawn.Map.GetComponent<HospitalMapComponent>().DismissPatient(pawn);

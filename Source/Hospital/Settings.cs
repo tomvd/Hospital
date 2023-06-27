@@ -24,12 +24,12 @@ public class Settings : ModSettings
     {
         Listing_Standard listingStandard = new Listing_Standard();
         listingStandard.Begin(inRect);
-        listingStandard.CheckboxLabeled("Accept Patients", ref AcceptPatients, "uncheck this if you want to stop patients from visiting");
-        listingStandard.CheckboxLabeled("Accept Surgery", ref AcceptSurgery, "uncheck this if you do not want to get surgery events");
-        listingStandard.SliderLabeled("Patient Limit", ref PatientLimit, PatientLimit.ToString("0"), 0f, 100f,
-            "maximum number of patients to accept, 0=unlimited");
-        listingStandard.SliderLabeled("Pct beds reserved for colonists", ref BedsForColonists, BedsForColonists.ToString("0%"), 0f, 1f,
-            "percentage of beds reserved for colonists");
+        listingStandard.CheckboxLabeled("AcceptPatients".Translate(), ref AcceptPatients, "AcceptPatientsTooltip".Translate());
+        listingStandard.CheckboxLabeled("AcceptSurgery".Translate(), ref AcceptSurgery, "AcceptSurgeryTooltip".Translate());
+        listingStandard.SliderLabeled("PatientLimit".Translate(), ref PatientLimit, PatientLimit.ToString("0"), 0f, 100f,
+            "PatientLimitTooltip".Translate());
+        listingStandard.SliderLabeled("PctBedsForColonists".Translate(), ref BedsForColonists, BedsForColonists.ToString("0%"), 0f, 1f,
+            "PctBedsForColonistsTooltip".Translate());
         listingStandard.End();
     }
 }

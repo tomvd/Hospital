@@ -15,7 +15,7 @@ public class DiseaseUtility
         //"SleepingSickness",
         //"FibrousMechanites",
         //"SensoryMechanites",
-        "GutWorms",
+        //"GutWorms",
         //"MuscleParasites",
     };
     public static void AddRandomDisease(Pawn pawn, PatientData patientData)
@@ -33,6 +33,7 @@ public class DiseaseUtility
             patientData.baseCost = 40;
             pawn.health.AddHediff(hediff);
         }
-        patientData.Cure = "cure " + hediff.Label;
+        patientData.Diagnosis = hediff.Label;
+        patientData.Cure = "CureDisease".Translate();
     }
 }

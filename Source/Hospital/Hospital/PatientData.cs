@@ -24,4 +24,5 @@ public class PatientData
     public PatientType Type { get; set; }
     public float baseCost { get; set; }
     public string Cure { get; set; }
+    public string Diagnosis { get; set; }
 }

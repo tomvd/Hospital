@@ -78,7 +78,6 @@ namespace Hospital
         protected virtual PatientData SpawnPatient(Map map, Pawn pawn)
         {
             pawn.guest.SetGuestStatus(Faction.OfPlayer); // mark as guest otherwise the pawn just wanders off again
-            pawn.playerSettings.medCare = MedicalCareCategory.NormalOrWorse;
             pawn.playerSettings.selfTend = false;
 
             PatientType type = (PatientType)Random.Range(1, HospitalMod.Settings.AcceptSurgery?4:3);

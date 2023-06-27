@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <PatientsTab>Patients</PatientsTab>
+    <BedsFilled>Beds filled:</BedsFilled>
+    <DiagnosisWounds>wounds</DiagnosisWounds>
+    <CureWounds>tend to wounds</CureWounds>
+    <CureDisease>apply medicine</CureDisease>
+    <DiagnosisSurgeryOnPart>problem with {0}</DiagnosisSurgeryOnPart>
+    <Dismiss>Dismiss</Dismiss>
+    
+    <!-- settings -->
+    <AcceptPatients>Accept patients</AcceptPatients>
+    <AcceptPatientsTooltip>uncheck this if you want to stop patients from visiting</AcceptPatientsTooltip>
+    <AcceptSurgery>Accept surgery</AcceptSurgery>
+    <AcceptSurgeryTooltip>uncheck this if you do not want to get surgery events</AcceptSurgeryTooltip>
+    <PatientLimit>Patient limit</PatientLimit>
+    <PatientLimitTooltip>maximum number of patients to accept, 0=unlimited</PatientLimitTooltip>
+    <PctBedsForColonists>Pct beds for colonists</PctBedsForColonists>
+    <PctBedsForColonistsTooltip>Percentage of beds reserved for colonists</PctBedsForColonistsTooltip>
+    
+</LanguageData>

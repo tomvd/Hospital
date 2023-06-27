@@ -14,6 +14,7 @@ namespace Hospital.MainTab
 
         private float lastTimeCached;
         private Map currentMap;
+        private readonly string _bedsFilled = "BedsFilled".Translate();
 
         public override void DoHeader(Rect rect, PawnTable table)
         {
@@ -32,7 +33,7 @@ namespace Hospital.MainTab
             Text.Anchor = TextAnchor.LowerLeft;
             Rect label = rect;
             label.y += 3f;
-            Widgets.Label(label, "Beds filled:"+ patientCountCached +"/"+ bedCountCached);
+            Widgets.Label(label,  _bedsFilled + patientCountCached +"/"+ bedCountCached);
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
             Text.Font = GameFont.Small;

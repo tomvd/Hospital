@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <PatientArrives.label>llegada del paciente</PatientArrives.label>
+  <PatientArrives.letterText>El nombre de {PAWN_possessive} es {0}.</PatientArrives.letterText>
+  <PatientArrives.letterLabel>Nuevo paciente llegó</PatientArrives.letterLabel>
+
+
+</LanguageData>

@@ -81,9 +81,9 @@ namespace Hospital.Utilities
         {
             if (pawn.needs?.mood == null) return 0;
             float score = Math.Min((pawn.needs.mood.curLevelInt - patientData.InitialMood)*3.0f, 100.0f);
-            if (score > 90) return 5;
-            if (score > 80) return 2;
-            if (score > 70) return 1;
+            if (score > 80) return 5;
+            if (score > 70) return 2;
+            if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdMinor) return 1; // ok stay
             if (pawn.needs.mood.curLevelInt < pawn.mindState.mentalBreaker.BreakThresholdMajor) return -1; // very unhappy stay
             return 0;
         }
