@@ -23,7 +23,7 @@ namespace Hospital.Utilities
             if (pawn == null) return false;
             PatientData patientData = hospital.Patients.TryGetValue(pawn);
             if (patientData == null) return false;
-            score = Math.Min((pawn.needs.mood.curLevelInt - patientData.InitialMood)*3.0f, 100.0f);
+            score = Math.Min((pawn.needs.mood.CurInstantLevel - patientData.InitialMood)*3.5f, 100.0f);
             return true;
         }
         
@@ -60,7 +60,7 @@ namespace Hospital.Utilities
         public static float CalculateSilverToReceive(Pawn pawn, PatientData patientData)
         {
             float increasedMarketValue = Math.Max(pawn.MarketValue - patientData.InitialMarketValue, 0f); // for some reason some patients leave with decreased market value :)
-            float totalPrice = Math.Max(patientData.baseCost, increasedMarketValue); // base price is 100 silver
+            float totalPrice = Math.Max(patientData.Bill, increasedMarketValue); // base price is 100 silver
             int ticks = GenDate.TicksGame - patientData.ArrivedAtTick;
             int days = ticks / 2500 / 24;
             if (days > 1) totalPrice += 20;
@@ -74,7 +74,7 @@ namespace Hospital.Utilities
                     break;
             }*/
 
-            return totalPrice;
+            return totalPrice * HospitalMod.Settings.SilverMultiplier;
         }
 
         public static int CalculateGoodwillToGain(Pawn pawn, PatientData patientData)

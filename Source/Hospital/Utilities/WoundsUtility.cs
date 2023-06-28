@@ -1,7 +1,8 @@
  using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+ using RimWorld;
+ using UnityEngine;
 using Verse;
 
 namespace Hospital.Utilities;
@@ -15,7 +16,7 @@ public class WoundsUtility
         float rnd = Rand.Value;
         int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
         DamageParts(pawn, damage);
-        patientData.baseCost = (int)Mathf.Lerp(20.0f, 80.0f, rnd);
+        patientData.Bill = Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 10.0f);
         patientData.Cure = "CureWounds".Translate();
         patientData.Diagnosis = "DiagnosisWounds".Translate();
     }

@@ -1,3 +1,5 @@
+using Verse;
+
 namespace Hospital;
 
 public enum PatientType
@@ -8,7 +10,7 @@ public enum PatientType
     Surgery = 3
 }
 
-public class PatientData
+public class PatientData : IExposable
 {
     public PatientData(int arrivedAtTick, float initialMarketValue, float initialMood, PatientType type)
     {
@@ -18,11 +20,24 @@ public class PatientData
         InitialMood = initialMood;
     }
 
-    public int ArrivedAtTick { get; set; }
-    public float InitialMarketValue { get; set; }
-    public float InitialMood { get; set; }
-    public PatientType Type { get; set; }
-    public float baseCost { get; set; }
-    public string Cure { get; set; }
-    public string Diagnosis { get; set; }
+    public PatientData()
+    {
+    }
+
+    public int ArrivedAtTick;
+    public float InitialMarketValue;
+    public float InitialMood;
+    public PatientType Type;
+    public float Bill;
+    public string Cure;
+    public string Diagnosis;
+    public void ExposeData()
+    {
+        Scribe_Values.Look(ref ArrivedAtTick, "ArrivedAtTick");
+        Scribe_Values.Look(ref InitialMarketValue, "InitialMarketValue");
+        Scribe_Values.Look(ref InitialMood, "InitialMood");
+        Scribe_Values.Look(ref Bill, "Bill");
+        Scribe_Values.Look(ref Cure, "Cure");
+        Scribe_Values.Look(ref Diagnosis, "Diagnosis");
+    }
 }

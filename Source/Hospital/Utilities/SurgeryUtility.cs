@@ -76,6 +76,6 @@ public class SurgeryUtility
 	        {
 		        materialCost += ingredientCount.FixedIngredient.BaseMarketValue * 0.5f;		        
 	        }
-	        patientData.baseCost = skillBasedCost + materialCost;
+	        patientData.Bill = skillBasedCost + materialCost;
         }
 }

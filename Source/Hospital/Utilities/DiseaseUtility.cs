@@ -24,13 +24,13 @@ public class DiseaseUtility
         var hediff = HediffMaker.MakeHediff(HediffDef.Named(hediffString), pawn);
         if (hediffString == "GutWorms")
         {
-            patientData.baseCost = 20;
+            patientData.Bill = 20;
             BodyPartRecord stomach = pawn.health.hediffSet.GetNotMissingParts().Where(record => record.def.Equals(BodyPartDefOf.Stomach)).FirstOrFallback();
             pawn.health.AddHediff(hediff, stomach);
         }
         else
         {
-            patientData.baseCost = 40;
+            patientData.Bill = 40;
             pawn.health.AddHediff(hediff);
         }
         patientData.Diagnosis = hediff.Label;

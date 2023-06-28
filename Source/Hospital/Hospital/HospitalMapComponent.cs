@@ -7,10 +7,20 @@ namespace Hospital
 {
     public class HospitalMapComponent : MapComponent
     {
-        public Dictionary<Pawn, PatientData> Patients { get; } = new();
+        public Dictionary<Pawn, PatientData> Patients;
+        private List<Pawn> _colonistsKeysWorkingList;
+        private List<PatientData> _colonistsValuesWorkingList;
         
         public HospitalMapComponent(Map map) : base(map)
         {
+            Patients = new Dictionary<Pawn, PatientData>();
+        }
+        
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Patients ??= new Dictionary<Pawn, PatientData>();
+            Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList);
         }
 
         public void PatientArrived(Pawn pawn, PatientData data)
