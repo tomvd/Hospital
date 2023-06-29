@@ -84,8 +84,13 @@ namespace Hospital
             PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
             //TryFindEntryCell(map, out var cell);
             //GenSpawn.Spawn(pawn, cell, map);
-
+            var spot = map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("PatientLandingSpot")).RandomElement();
             var loc = DropCellFinder.TryFindSafeLandingSpotCloseToColony(map, IntVec2.Two);
+            if (spot != null)
+            {
+                loc = spot.Position;
+            }
+
             var activeDropPodInfo = new ActiveDropPodInfo();
             activeDropPodInfo.innerContainer.TryAdd(pawn, 1);
             activeDropPodInfo.openDelay = 60;
