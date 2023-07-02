@@ -10,7 +10,7 @@ namespace Hospital.MainTab
     {
         private static PawnTableDef pawnTableDef;
 
-        public override PawnTableDef PawnTableDef => pawnTableDef ??= DefDatabase<PawnTableDef>.GetNamed("PatientsTab".Translate());
+        public override PawnTableDef PawnTableDef => pawnTableDef ??= DefDatabase<PawnTableDef>.GetNamed("Patients");
 
         public override IEnumerable<Pawn> Pawns => Find.CurrentMap.GetComponent<HospitalMapComponent>().Patients.Keys;
 

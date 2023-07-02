@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+   <PatientsTab>Pacientes</PatientsTab>
+<BedsFilled>Camas ocupadas:</BedsFilled>
+<DiagnosisWounds>heridas</DiagnosisWounds>
+<CureWounds>atender heridas</CureWounds>
+<CureDisease>aplicar medicina</CureDisease>
+<DiagnosisSurgeryOnPart>problema con {0}</DiagnosisSurgeryOnPart>
+<Dismiss>Descartar</Dismiss>
+    
+    <!-- settings -->
+<AcceptPatients>Aceptar pacientes</AcceptPatients>
+<AcceptPatientsTooltip>desmarca esto si no quieres recibir visitas de pacientes</AcceptPatientsTooltip>
+<AcceptSurgery>Aceptar cirugía</AcceptSurgery>
+<AcceptSurgeryTooltip>desmarca esto si no deseas recibir eventos de cirugía</AcceptSurgeryTooltip>
+<PatientLimit>Límite de pacientes</PatientLimit>
+<PatientLimitTooltip>número máximo de pacientes a aceptar, 0=ilimitado</PatientLimitTooltip>
+<PctBedsForColonists>Porcentaje de camas para colonos</PctBedsForColonists>
+<PctBedsForColonistsTooltip>Porcentaje de camas reservadas para colonos</PctBedsForColonistsTooltip>
+<SilverMultiplier>Multiplicador de plata</SilverMultiplier>
+<SilverMultiplierTooltip>Cambia la factura de los pacientes en este porcentaje. (recomendado: 100%)</SilverMultiplierTooltip>
+
+    
+</LanguageData>

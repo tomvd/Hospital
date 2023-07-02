@@ -20,5 +20,7 @@
     <PctBedsForColonistsTooltip>Percentage of beds reserved for colonists</PctBedsForColonistsTooltip>
     <SilverMultiplier>Silver multiplier</SilverMultiplier>
     <SilverMultiplierTooltip>Changes the patients bill by this percentage. (recommended: 100%)</SilverMultiplierTooltip>
+    <ShowMessageAtArrival>Show message instead of letter</ShowMessageAtArrival>
+    <ShowMessageAtArrivalTooltip>Shows as a message instead of a letter when a new patient arrives.</ShowMessageAtArrivalTooltip>
     
 </LanguageData>

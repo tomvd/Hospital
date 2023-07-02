@@ -71,7 +71,15 @@ namespace Hospital
                     .AdjustedFor(pawn);
             //text += " " + patient.baseCost.ToStringMoney();
             TaggedString title = def.letterLabel.Formatted(pawn.Named("PAWN")).AdjustedFor(pawn);
-            SendStandardLetter(title, text, LetterDefOf.PositiveEvent, parms, pawn);
+            if (HospitalMod.Settings.ShowMessageAtArrival)
+            {
+                Messages.Message(title + ": " + text, MessageTypeDefOf.PositiveEvent);                
+            }
+            else
+            {
+                SendStandardLetter(title, text, LetterDefOf.PositiveEvent, parms, pawn);
+            }
+
             return true;
         }
 

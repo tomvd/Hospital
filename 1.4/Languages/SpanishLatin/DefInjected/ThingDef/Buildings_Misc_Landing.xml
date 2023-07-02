@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+ <PatientLandingSpot.label>los pacientes aterrizan aquí</PatientLandingSpot.label>
+ <PatientLandingSpot.description>Designa un lugar donde los pacientes serán dejados.</PatientLandingSpot.description>
+ <PatientLandingSpot_Blueprint.label>los pacientes aterrizan aquí (plano)</PatientLandingSpot_Blueprint.label>
+ <PatientLandingSpot_Frame.label>los pacientes aterrizan aquí (edificio)</PatientLandingSpot_Frame.label>
+ <PatientLandingSpot_Frame.description>Designa un lugar donde los pacientes serán dejados.</PatientLandingSpot_Frame.description>
+
+
+</LanguageData>
