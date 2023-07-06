@@ -14,14 +14,4 @@
     <letterLabel>New patient arrived</letterLabel>
     <letterText>{PAWN_possessive} name is {0}.</letterText>
   </IncidentDef>
-  <Hospital.IncidentScheduleDef>
-    <defName>PatientArrivesSchedule</defName>
-    <incident>PatientArrives</incident>
-    <scheduledHours>
-      <li>8</li>
-      <li>12</li>
-      <li>16</li>
-      <li>20</li>
-    </scheduledHours>
-  </Hospital.IncidentScheduleDef>
 </Defs>

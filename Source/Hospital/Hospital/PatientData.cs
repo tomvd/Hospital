@@ -31,6 +31,7 @@ public class PatientData : IExposable
     public float Bill;
     public string Cure;
     public string Diagnosis;
+    public RecipeDef CureRecipe;
     public void ExposeData()
     {
         Scribe_Values.Look(ref ArrivedAtTick, "ArrivedAtTick");
@@ -39,5 +40,6 @@ public class PatientData : IExposable
         Scribe_Values.Look(ref Bill, "Bill");
         Scribe_Values.Look(ref Cure, "Cure");
         Scribe_Values.Look(ref Diagnosis, "Diagnosis");
+        Scribe_Defs.Look(ref CureRecipe, "CureRecipe");
     }
 }

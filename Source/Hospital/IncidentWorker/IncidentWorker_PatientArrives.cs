@@ -37,9 +37,10 @@ namespace Hospital
 
         public virtual bool CanSpawnPatient(Map map)
         {
-            if (!HospitalMod.Settings.AcceptPatients) return false;
+            var hospital = map.GetComponent<HospitalMapComponent>();
+            if (!hospital.IsOpen()) return false;
             //Log.Message((int)HospitalMod.Settings.PatientLimit + " - " + map.GetComponent<HospitalMapComponent>().Patients.Count);
-            if ((int)HospitalMod.Settings.PatientLimit > 0 && map.GetComponent<HospitalMapComponent>().Patients.Count >=
+            if ((int)HospitalMod.Settings.PatientLimit > 0 && hospital.Patients.Count >=
                 (int)HospitalMod.Settings.PatientLimit) return false;
                 // get number of hospital beds - we need to have more than ceil(colonists/2)
                 // so if you have 5 colonists, you need more than 3 free beds to receive a patient
@@ -59,7 +60,7 @@ namespace Hospital
                 return false;
             }
 
-            Faction faction = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer)).RandomElement();
+            Faction faction = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer) && f.def.humanlikeFaction).RandomElement();
             parms.faction = faction;
             Pawn pawn = GeneratePawn(faction);
             PatientData patient = SpawnPatient(map, pawn);
@@ -107,8 +108,9 @@ namespace Hospital
             activeDropPodInfo.spawnWipeMode = WipeMode.Vanish;
             DropPodUtility.MakeDropPodAt(loc, map, activeDropPodInfo);
             
-            PatientUtility.DamagePawn(pawn, data);
-            map.GetComponent<HospitalMapComponent>().PatientArrived(pawn, data);
+            HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
+            PatientUtility.DamagePawn(pawn, data, hospital);
+            hospital.PatientArrived(pawn, data);
             return data;
         }
         

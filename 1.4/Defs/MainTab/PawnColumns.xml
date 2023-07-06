@@ -10,7 +10,7 @@
         <defName>PatientRating</defName>
         <workerClass>Hospital.MainTab.PawnColumnWorker_PatientRating</workerClass>
         <label>rating</label>
-        <headerTip>How happy the patient is.</headerTip>
+        <headerTip>How happy the patient is. Get above 70 for more goodwill.</headerTip>
         <width>45</width>
         <sortable>true</sortable>
     </PawnColumnDef>
@@ -29,7 +29,7 @@
         <workerClass>Hospital.MainTab.PawnColumnWorker_Diagnosis</workerClass>
         <label>diagnosis</label>
         <headerTip>What's wrong with this patient?.</headerTip>
-        <width>150</width>
+        <width>175</width>
         <sortable>false</sortable>
     </PawnColumnDef>
     
@@ -38,7 +38,7 @@
         <workerClass>Hospital.MainTab.PawnColumnWorker_Cure</workerClass>
         <label>treatment</label>
         <headerTip>How will we help the patient?</headerTip>
-        <width>150</width>
+        <width>175</width>
         <sortable>false</sortable>
     </PawnColumnDef>
 
@@ -55,5 +55,11 @@
         <defName>Dismiss</defName>
         <workerClass>Hospital.MainTab.PawnColumnWorker_ButtonDismiss</workerClass>
         <width>100</width>
+    </PawnColumnDef>
+
+    <PawnColumnDef>
+        <defName>Disallow</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_ButtonDisallow</workerClass>
+        <width>300</width>
     </PawnColumnDef>
 </Defs>

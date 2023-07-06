@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Hospital.Utilities;
 using RimWorld;
 using Verse;
@@ -11,6 +12,10 @@ namespace Hospital
         private List<Pawn> _colonistsKeysWorkingList;
         private List<PatientData> _colonistsValuesWorkingList;
         
+        public bool openForBusiness = false;
+        public List<bool> openingHours;
+        public List<RecipeDef> refusedOperations;
+        
         public HospitalMapComponent(Map map) : base(map)
         {
             Patients = new Dictionary<Pawn, PatientData>();
@@ -19,8 +24,27 @@ namespace Hospital
         public override void ExposeData()
         {
             base.ExposeData();
+            openingHours ??= new System.Collections.Generic.List<bool>
+            {
+                false,false,false,false,false,false,false,true, //8
+                false,false,false,true, //12
+                false,false,false,true,//16
+                false,false,false,true,//20
+                false,false,false,false
+            };
+            refusedOperations ??= new List<RecipeDef>();
+            
+            Scribe_Collections.Look(ref openingHours, "openingHours");
+            Scribe_Collections.Look(ref refusedOperations, "refusedOperations");
+            Scribe_Values.Look(ref openForBusiness, "openForBusiness", false);
             Patients ??= new Dictionary<Pawn, PatientData>();
             Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList);
+        }
+
+        public bool IsOpen()
+        {
+            if (!openForBusiness) return false;
+            return openingHours[GenLocalDate.HourOfDay(map)];
         }
 
         public void PatientArrived(Pawn pawn, PatientData data)
@@ -28,7 +52,7 @@ namespace Hospital
             Patients.Add(pawn, data);
             MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
         }
-
+        
         public void PatientLeaves(Pawn pawn)
         {
             if (Patients.TryGetValue(pawn, out var patientData))
@@ -86,6 +110,31 @@ namespace Hospital
             }
             // else - was not a patient?
             
+        }
+
+        public bool IsSurgeryRecipeAllowed(RecipeDef recipe)
+        {
+            return !refusedOperations.Exists(def => def.Equals(recipe));
+        }
+
+        public void RefuseOperation(Pawn pawn, RecipeDef recipe)
+        {
+            if (!refusedOperations.Exists(def => def.Equals(recipe)))
+            {
+                refusedOperations.Add(recipe);
+                Messages.Message(
+                    $"{recipe.LabelCap} blacklisted.", MessageTypeDefOf.NeutralEvent); 
+            }
+
+            DismissPatient(pawn);
+        }
+        
+        public void UnRefuseOperation(RecipeDef recipe)
+        {
+            if (refusedOperations.Exists(def => def.Equals(recipe)))
+            {
+                refusedOperations.Remove(recipe);
+            }
         }
     }
 

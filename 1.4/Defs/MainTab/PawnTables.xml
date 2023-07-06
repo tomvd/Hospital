@@ -18,6 +18,8 @@
             <li>PatientBill</li>
             <li>GapTiny</li>
             <li>Dismiss</li>
+            <li>GapTiny</li>
+            <li>Disallow</li>
             <li>RemainingSpace</li>
         </columns>
     </PawnTableDef>

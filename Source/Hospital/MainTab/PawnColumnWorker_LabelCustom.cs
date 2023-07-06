@@ -29,13 +29,11 @@ namespace Hospital.MainTab
             }
 
             Text.Font = DefaultHeaderFont;
-            GUI.color = patientCountCached + Math.Ceiling(Find.CurrentMap.mapPawns.ColonistCount / 2.0f) > bedCountCached ? Color.red : DefaultHeaderColor;
             Text.Anchor = TextAnchor.LowerLeft;
             Rect label = rect;
             label.y += 3f;
             Widgets.Label(label,  _bedsFilled + patientCountCached +"/"+ bedCountCached);
             Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
             Text.Font = GameFont.Small;
         }
 

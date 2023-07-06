@@ -8,12 +8,12 @@ namespace Hospital.Utilities;
 
 public class SurgeryUtility
 {
-        public static void AddRandomSurgeryBill(Pawn pawn, PatientData patientData)
+        public static bool AddRandomSurgeryBill(Pawn pawn, PatientData patientData, HospitalMapComponent hospital)
         {
 	        List<RecipeDef> list = new List<RecipeDef>();
 	        foreach (RecipeDef recipe in pawn.def.AllRecipes)
 	        {
-		        if (recipe.AvailableNow && recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any() && recipe != RecipeDefOf.RemoveBodyPart)
+		        if (recipe.AvailableNow && recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any() && recipe != RecipeDefOf.RemoveBodyPart && hospital.IsSurgeryRecipeAllowed(recipe))
 		        {
 			        IEnumerable<ThingDef> enumerable = recipe.PotentiallyMissingIngredients(null, pawn.MapHeld);
 			        if (!enumerable.Any((ThingDef x) => x.isTechHediff) && !enumerable.Any((ThingDef x) => x.IsDrug) && (!enumerable.Any() || !recipe.dontShowIfAnyIngredientMissing))
@@ -23,11 +23,12 @@ public class SurgeryUtility
 			        }
 		        }
 	        }
-	        
+
+	        if (list.Count == 0) return true; // in case someone blacklisted all possible surgery recipes
 
 	        RecipeDef selectedRecipe = list.RandomElement();
 	        //Log.Message($"recipe selected:" + selectedRecipe.defName);
-	        if (selectedRecipe.targetsBodyPart)
+	        if (selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).Any())
 	        {
 		        BodyPartRecord part = selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).RandomElement();
 		        //Log.Message($"part selected:" + part.Label);
@@ -58,24 +59,28 @@ public class SurgeryUtility
 			        HealthCardUtility.CreateSurgeryBill(pawn, selectedRecipe, part, null, false);
 			        patientData.Diagnosis = TranslatorFormattedStringExtensions.Translate("DiagnosisSurgeryOnPart",part.Label);
 			        patientData.Cure = selectedRecipe.Worker.GetLabelWhenUsedOn(pawn, part);
+			        patientData.CureRecipe = selectedRecipe;
 		        }
 	        }
 	        else
 	        {
-		        //HealthCardUtility.CreateSurgeryBill(pawn,selectedRecipe, null, null, false);
-		        //patientData.Report = selectedRecipe.Worker.GetLabelWhenUsedOn(pawn, null);
+		        HealthCardUtility.CreateSurgeryBill(pawn,selectedRecipe, null, null, false);
+		        patientData.Diagnosis = TranslatorFormattedStringExtensions.Translate("DiagnosisSurgeryOnPart");
+		        patientData.Cure = selectedRecipe.Worker.GetLabelWhenUsedOn(pawn, null);
+		        patientData.CureRecipe = selectedRecipe;
 	        }
 
 	        // cost of surgery based on required medical skill - with minimum of 10
 	        float skillBasedCost = Math.Max(selectedRecipe.skillRequirements
 		        .Find(requirement => requirement.skill == SkillDefOf.Medicine).minLevel * 10f, 10f);
 	        // cost of materials are added to this
-	        float materialCost = 5; // medicine
+	        float materialCost = ((int)pawn.playerSettings.medCare * 10.0f); // medicine
 	        // fixed ingredients are prosthetics for example
 	        foreach (IngredientCount ingredientCount in selectedRecipe.ingredients.Where(count => count.IsFixedIngredient))
 	        {
-		        materialCost += ingredientCount.FixedIngredient.BaseMarketValue * 0.5f;		        
+		        materialCost += ingredientCount.FixedIngredient.BaseMarketValue;		        
 	        }
 	        patientData.Bill = skillBasedCost + materialCost;
+	        return false;
         }
 }

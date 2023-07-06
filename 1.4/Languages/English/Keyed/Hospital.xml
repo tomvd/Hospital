@@ -8,8 +8,11 @@
     <CureDisease>apply medicine</CureDisease>
     <DiagnosisSurgeryOnPart>problem with {0}</DiagnosisSurgeryOnPart>
     <Dismiss>Dismiss</Dismiss>
+    <Disallow>Refuse operation</Disallow>
+    <RefusedOperations>Refused operations:</RefusedOperations>
     
     <!-- settings -->
+    <MapSettings>Map settings...</MapSettings>
     <AcceptPatients>Accept patients</AcceptPatients>
     <AcceptPatientsTooltip>uncheck this if you want to stop patients from visiting</AcceptPatientsTooltip>
     <AcceptSurgery>Accept surgery</AcceptSurgery>

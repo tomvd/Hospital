@@ -37,10 +37,9 @@ namespace Hospital.Utilities
             return true;
         }
         
-        public static void DamagePawn(Pawn pawn, PatientData patientData)
+        public static void DamagePawn(Pawn pawn, PatientData patientData, HospitalMapComponent hospital)
         {
-            BodyPartRecord partRecord = pawn.health.hediffSet.GetNotMissingParts()
-                .Where(x => x.depth == BodyPartDepth.Outside && x.coverageAbs > 0).RandomElement();
+            bool failed = false;
             switch (patientData.Type)
             {
                 case PatientType.Disease:
@@ -50,11 +49,14 @@ namespace Hospital.Utilities
                     WoundsUtility.AddRandomWounds(pawn, patientData);
 	                break;
                 case PatientType.Surgery:
-	                SurgeryUtility.AddRandomSurgeryBill(pawn, patientData);
+                    failed = SurgeryUtility.AddRandomSurgeryBill(pawn, patientData, hospital);
                     break;
             }
+            if (failed)
+            {
+                WoundsUtility.AddRandomWounds(pawn, patientData);
+            }
 
-            ;
         }
         
         public static float CalculateSilverToReceive(Pawn pawn, PatientData patientData)
