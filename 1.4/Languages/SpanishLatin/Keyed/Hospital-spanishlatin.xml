@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-   <PatientsTab>Pacientes</PatientsTab>
-<BedsFilled>Camas ocupadas:</BedsFilled>
+<PatientsTab>Pacientes</PatientsTab>
+<BedsFilled>Camas ocupadas: {0}/{1}</BedsFilled>
 <DiagnosisWounds>heridas</DiagnosisWounds>
 <CureWounds>atender heridas</CureWounds>
 <CureDisease>aplicar medicina</CureDisease>

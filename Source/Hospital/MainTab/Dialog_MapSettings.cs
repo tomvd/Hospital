@@ -1,4 +1,5 @@
 using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -30,16 +31,27 @@ namespace Hospital.MainTab
            listingStandard.End();
            TimetableUtility.DoHeader(new Rect(0,0,inRect.width,50));
            TimetableUtility.DoCell(new Rect(0,60,inRect.width,20), hospital.openingHours, map);
-           Widgets.Label(new Rect(0,80,inRect.width,50),  "RefusedOperations".Translate());
-           int row = 0;
+           Rect rect = new Rect(inRect.x, 94, 170f, 28f);
+           Rect rect2 = new Rect(170f, 94, 140f, 28f);
+           Widgets.LabelFit(rect, "DefaultMedicineSettings".Translate());
+           MedicalCareUtility.MedicalCareSetter(rect2, ref Find.PlaySettings.defaultCareForNeutralFaction);
+           rect.y += 34f;
+           rect2.y += 34f;
+           if (hospital.refusedOperations == null) return;
+           Widgets.Label(rect, "RefusedOperations".Translate());
+           rect2.x = 350;
+           rect.y += 20f;
+           rect2.y += 20f;
+           rect2.width = rect2.height; 
            foreach (var hospitalRefusedOperation in hospital.refusedOperations.ToList())
            {
-               row++;
-               Widgets.Label(new Rect(0,100 + row*20,inRect.width,20),  hospitalRefusedOperation.LabelCap);
-               if (Widgets.ButtonText(new Rect(400,100 + row*20,20,20), "X", true, false))
+               Widgets.Label(rect, hospitalRefusedOperation.LabelCap);
+               if (Widgets.ButtonText(rect2, "X", true, false))
                {
                    hospital.UnRefuseOperation(hospitalRefusedOperation);
                }
+               rect.y += 34f;
+               rect2.y += 34f;
            }
         }
     }

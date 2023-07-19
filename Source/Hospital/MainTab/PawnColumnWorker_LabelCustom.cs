@@ -11,6 +11,7 @@ namespace Hospital.MainTab
     {
         private int patientCountCached;
         private int bedCountCached;
+        private bool full;
 
         private float lastTimeCached;
         private Map currentMap;
@@ -23,17 +24,26 @@ namespace Hospital.MainTab
             if (Time.unscaledTime > lastTimeCached + 2 || Find.CurrentMap != currentMap)
             {
                 patientCountCached = Find.CurrentMap.GetComponent<HospitalMapComponent>().Patients.Count;
-                bedCountCached = Find.CurrentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && bed.def.building.bed_humanlike && !bed.IsBurning() && !bed.AnyOccupants);
+                full = Find.CurrentMap.GetComponent<HospitalMapComponent>().isFull();
+                bedCountCached = Find.CurrentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && bed.def.building.bed_humanlike && !bed.IsBurning());
                 lastTimeCached = Time.unscaledTime;
                 currentMap = Find.CurrentMap;
             }
-
+/*
+ *             if ((int)HospitalMod.Settings.PatientLimit > 0 && hospital.Patients.Count >=
+                (int)HospitalMod.Settings.PatientLimit) return false;
+            // check if we have enough beds left for colonists
+                var freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.AnyOccupants && bed.def.building.bed_humanlike && !bed.IsBurning());
+            if (freeMedicalBeds <= Math.Ceiling(map.mapPawns.ColonistCount * HospitalMod.Settings.BedsForColonists)) return false;
+ */
             Text.Font = DefaultHeaderFont;
+            GUI.color = full ? Color.red : DefaultHeaderColor;
             Text.Anchor = TextAnchor.LowerLeft;
             Rect label = rect;
             label.y += 3f;
-            Widgets.Label(label,  _bedsFilled + patientCountCached +"/"+ bedCountCached);
+            Widgets.Label(label,  "BedsFilled".Translate(patientCountCached,bedCountCached));
             Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
             Text.Font = GameFont.Small;
         }
 

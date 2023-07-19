@@ -23,7 +23,7 @@ namespace Hospital.Utilities
             if (pawn == null) return false;
             PatientData patientData = hospital.Patients.TryGetValue(pawn);
             if (patientData == null) return false;
-            score = Math.Min((pawn.needs.mood.CurInstantLevel - patientData.InitialMood)*3.5f, 100.0f);
+            score = Score(pawn, patientData);
             return true;
         }
         
@@ -43,7 +43,7 @@ namespace Hospital.Utilities
             switch (patientData.Type)
             {
                 case PatientType.Disease:
-                    DiseaseUtility.AddRandomDisease(pawn, patientData);
+                    failed = DiseaseUtility.AddRandomDisease(pawn, patientData);
                     break;
                 case PatientType.Wounds:
                     WoundsUtility.AddRandomWounds(pawn, patientData);
@@ -82,15 +82,20 @@ namespace Hospital.Utilities
         public static int CalculateGoodwillToGain(Pawn pawn, PatientData patientData)
         {
             if (pawn.needs?.mood == null) return 0;
-            float score = Math.Min((pawn.needs.mood.curLevelInt - patientData.InitialMood)*3.0f, 100.0f);
-            if (score > 80) return 5;
-            if (score > 70) return 2;
+            float score = Score(pawn, patientData);
+            if (score > 0.9f) return 5;
+            if (score > 0.8f) return 4;
+            if (score > 0.7f) return 3;
+            if (score > 0.6f) return 2;
             if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdMinor) return 1; // ok stay
             if (pawn.needs.mood.curLevelInt < pawn.mindState.mentalBreaker.BreakThresholdMajor) return -1; // very unhappy stay
             return 0;
         }
-        
 
-
+        private static float Score(Pawn pawn, PatientData patientData)
+        {
+            if (pawn.needs?.mood == null) return 0;
+            return Math.Min((pawn.needs.mood.CurInstantLevel - patientData.InitialMood)*3.5f, 100.0f);
+        }
     }
 }

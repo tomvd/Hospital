@@ -2,7 +2,7 @@
 <LanguageData>
 
    <PatientsTab>Pacientes</PatientsTab>
-<BedsFilled>Camas ocupadas:</BedsFilled>
+<BedsFilled>Camas ocupadas: {0}/{1}</BedsFilled>
 <DiagnosisWounds>heridas</DiagnosisWounds>
 <CureWounds>atender heridas</CureWounds>
 <CureDisease>aplicar medicina</CureDisease>

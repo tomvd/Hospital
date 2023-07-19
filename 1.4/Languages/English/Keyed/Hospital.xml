@@ -2,11 +2,13 @@
 <LanguageData>
 
     <PatientsTab>Patients</PatientsTab>
-    <BedsFilled>Beds filled:</BedsFilled>
+    <BedsFilled>Beds in use: {0}/{1}</BedsFilled>
     <DiagnosisWounds>wounds</DiagnosisWounds>
     <CureWounds>tend to wounds</CureWounds>
     <CureDisease>apply medicine</CureDisease>
     <DiagnosisSurgeryOnPart>problem with {0}</DiagnosisSurgeryOnPart>
+    <DiagnosisSurgeryNoPart>needs an operation</DiagnosisSurgeryNoPart>
+    <DiagnosisArtificialBodyPart>wants a {0}</DiagnosisArtificialBodyPart>
     <Dismiss>Dismiss</Dismiss>
     <Disallow>Refuse operation</Disallow>
     <RefusedOperations>Refused operations:</RefusedOperations>

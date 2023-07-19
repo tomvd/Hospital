@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Utilities;
@@ -13,8 +14,15 @@ namespace Hospital
         private List<PatientData> _colonistsValuesWorkingList;
         
         public bool openForBusiness = false;
-        public List<bool> openingHours;
-        public List<RecipeDef> refusedOperations;
+        public List<bool> openingHours = new System.Collections.Generic.List<bool>
+        {
+            false,false,false,false,false,false,false,true, //8
+            false,false,false,true, //12
+            false,false,false,true,//16
+            false,false,false,true,//20
+            false,false,false,false
+        };
+        public List<RecipeDef> refusedOperations = new List<RecipeDef>();
         
         public HospitalMapComponent(Map map) : base(map)
         {
@@ -58,14 +66,19 @@ namespace Hospital
             if (Patients.TryGetValue(pawn, out var patientData))
             {
                 float silver = PatientUtility.CalculateSilverToReceive(pawn, patientData);
-                int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
-                Messages.Message(
-                    $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", goodwill change: " + goodwill + " " +
-                    pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
-                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
-                var silverThing = ThingMaker.MakeThing(ThingDefOf.Silver);
-                silverThing.stackCount = (int)silver;
-                GenPlace.TryPlaceThing(silverThing, pawn.Position, pawn.Map, ThingPlaceMode.Near);
+                if (silver > 0)
+                {
+                    int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
+                    Messages.Message(
+                        $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", goodwill change: " +
+                        goodwill + " " +
+                        pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
+                    pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
+                    var silverThing = ThingMaker.MakeThing(ThingDefOf.Silver);
+                    silverThing.stackCount = (int)silver;
+                    GenPlace.TryPlaceThing(silverThing, pawn.Position, pawn.Map, ThingPlaceMode.Near);
+                }
+
                 Patients.Remove(pawn);
                 MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
             }
@@ -135,6 +148,22 @@ namespace Hospital
             {
                 refusedOperations.Remove(recipe);
             }
+        }
+
+        public bool isFull()
+        {
+            // check if a patient limit is reached
+            if ((int)HospitalMod.Settings.PatientLimit > 0 && Patients.Count >=
+                (int)HospitalMod.Settings.PatientLimit) return true;
+            // check if we have enough beds left for colonists
+            int freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && bed.def.building.bed_humanlike && !bed.IsBurning()) - Patients.Count;
+            int reservedBeds = 0;
+            if ((int)HospitalMod.Settings.BedsForColonists > 0)
+            {
+                reservedBeds = (int)Math.Ceiling(map.mapPawns.ColonistCount * HospitalMod.Settings.BedsForColonists);
+            }
+            if (freeMedicalBeds <= reservedBeds) return true;
+            return false;
         }
     }
 

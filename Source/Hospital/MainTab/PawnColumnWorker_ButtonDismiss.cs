@@ -10,7 +10,7 @@ namespace Hospital.MainTab {
             if (Widgets.ButtonText(rect, "Dismiss".Translate()))
             {
                 CameraJumper.TryJumpAndSelect(pawn);
-                pawn?.Map?.GetComponent<HospitalMapComponent>().DismissPatient(pawn);
+                Find.CurrentMap.GetComponent<HospitalMapComponent>().DismissPatient(pawn);
             }
         }
 

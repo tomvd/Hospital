@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using RimWorld;
-using UnityEngine;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
@@ -15,7 +11,7 @@ namespace Hospital
 
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref radius, "radius", 45f);
+            Scribe_Values.Look(ref radius, "radius", 100f);
         }
     }
 

@@ -51,6 +51,7 @@ public class LordJob_VisitColonyAsPatient : LordJob
 
         public override void Notify_PawnLost(Pawn pawn, PawnLostCondition condition)
         {
-            Log.Message($"{pawn.NameFullColored} lost because of {condition}");
+            //Log.Message($"{pawn.NameFullColored} lost because of {condition}");
+            Find.CurrentMap.GetComponent<HospitalMapComponent>().DismissPatient(pawn);
         }
 }

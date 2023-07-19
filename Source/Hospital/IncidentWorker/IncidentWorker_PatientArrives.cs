@@ -39,13 +39,8 @@ namespace Hospital
         {
             var hospital = map.GetComponent<HospitalMapComponent>();
             if (!hospital.IsOpen()) return false;
+            if (hospital.isFull()) return false;
             //Log.Message((int)HospitalMod.Settings.PatientLimit + " - " + map.GetComponent<HospitalMapComponent>().Patients.Count);
-            if ((int)HospitalMod.Settings.PatientLimit > 0 && hospital.Patients.Count >=
-                (int)HospitalMod.Settings.PatientLimit) return false;
-                // get number of hospital beds - we need to have more than ceil(colonists/2)
-                // so if you have 5 colonists, you need more than 3 free beds to receive a patient
-                var freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.AnyOccupants && bed.def.building.bed_humanlike && !bed.IsBurning());
-            if (freeMedicalBeds <= Math.Ceiling(map.mapPawns.ColonistCount * HospitalMod.Settings.BedsForColonists)) return false;
             IntVec3 cell;
             return TryFindEntryCell(map, out cell);
         }
@@ -90,6 +85,8 @@ namespace Hospital
             pawn.playerSettings.selfTend = false;
 
             PatientType type = (PatientType)Random.Range(1, HospitalMod.Settings.AcceptSurgery?4:3);
+            //type = PatientType.Surgery; // debug
+            //Log.Message(pawn.Label + " -> " +type.ToString());
             PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
             //TryFindEntryCell(map, out var cell);
             //GenSpawn.Spawn(pawn, cell, map);
