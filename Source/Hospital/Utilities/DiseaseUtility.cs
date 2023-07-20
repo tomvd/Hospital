@@ -27,12 +27,14 @@ public class DiseaseUtility
         {
 
             hediff = HediffMaker.MakeHediff(list.RandomElement(), pawn);
-            float severity = Rand.Range(hediff.def.lethalSeverity / 4.0f, (hediff.def.lethalSeverity * 3.0f) / 4.0f);
+            float severity = Rand.Range(hediff.def.lethalSeverity / 10.0f, hediff.def.lethalSeverity / 4.0f);
             hediff.Severity = severity - loweredSeverity;
             if (!pawn.health.WouldDieAfterAddingHediff(hediff))
             {
                 pawn.health.AddHediff(hediff);
-                retry = false;
+                // check if the disease actually made the patient sick - otherwise we have to try again
+                retry = (!pawn.health.HasHediffsNeedingTend() 
+                         && !HealthAIUtility.ShouldSeekMedicalRest(pawn));
             }
             else
             {

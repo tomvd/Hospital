@@ -64,9 +64,8 @@ namespace Hospital.Utilities
             float increasedMarketValue = Math.Max(pawn.MarketValue - patientData.InitialMarketValue, 0f); // for some reason some patients leave with decreased market value :)
             float totalPrice = Math.Max(patientData.Bill, increasedMarketValue); // base price is 100 silver
             int ticks = GenDate.TicksGame - patientData.ArrivedAtTick;
-            int days = ticks / 2500 / 24;
-            if (days > 1) totalPrice += 20;
-            if (days > 2) totalPrice += 20;
+            int days = ticks / 2500 / 6;
+            totalPrice += 20 * days;
             /*switch (patientData.Type)
             {
                 case PatientType.Disease:
