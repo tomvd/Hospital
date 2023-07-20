@@ -25,6 +25,8 @@ namespace Hospital.MainTab
 
         public override void DoWindowContents(Rect inRect)
         {
+            if (Multiplayer.IsRunning)
+                Multiplayer.WatchBegin();
            var listingStandard = new Listing_Standard {ColumnWidth = inRect.width};
            listingStandard.Begin(inRect);
            listingStandard.CheckboxLabeled("AcceptPatients".Translate(), ref hospital.openForBusiness, "AcceptPatientsTooltip".Translate());
@@ -53,6 +55,8 @@ namespace Hospital.MainTab
                rect.y += 34f;
                rect2.y += 34f;
            }
+           if (Multiplayer.IsRunning)
+               Multiplayer.WatchEnd();
         }
     }
 }

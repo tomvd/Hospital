@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -77,7 +76,7 @@ public class SurgeryUtility
 		        {
 			        return true;
 		        }
-		        part = source.RandomElement();			        
+		        part = source.RandomElement();
 	        }
 	        //Log.Message($"part selected:" + part.Label);
 	        if (selectedRecipe.removesHediff != null)

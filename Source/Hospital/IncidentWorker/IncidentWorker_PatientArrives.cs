@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Utilities;
 using RimWorld;
-using UnityEngine;
 using Verse;
 using Verse.AI.Group;
-using Random = UnityEngine.Random;
 
 namespace Hospital
 {
@@ -54,7 +51,6 @@ namespace Hospital
             {
                 return false;
             }
-
             Faction faction = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer) && f.def.humanlikeFaction).RandomElement();
             parms.faction = faction;
             Pawn pawn = GeneratePawn(faction);
@@ -84,7 +80,7 @@ namespace Hospital
             pawn.guest.SetGuestStatus(Faction.OfPlayer); // mark as guest otherwise the pawn just wanders off again
             pawn.playerSettings.selfTend = false;
 
-            PatientType type = (PatientType)Random.Range(1, HospitalMod.Settings.AcceptSurgery?4:3);
+            PatientType type = (PatientType)Rand.Range(1, HospitalMod.Settings.AcceptSurgery?4:3);
             //type = PatientType.Surgery; // debug
             //Log.Message(pawn.Label + " -> " +type.ToString());
             PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
