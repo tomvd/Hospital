@@ -14,8 +14,7 @@ public class DiseaseUtility
         bool retry = true;
         float loweredSeverity = 0;
         List<HediffDef> list = new List<HediffDef>();
-        list = DefDatabase<HediffDef>.defsList.Where(def => def.tendable && def.scenarioCanAdd
-        && !def.defName.ToLower().Contains("sepsis")
+        list = DefDatabase<HediffDef>.defsList.Where(def => def.tendable
         && !def.defName.ToLower().Contains("sepsis")).ToList();
         /*foreach (HediffDef def in list)
         {
@@ -33,13 +32,15 @@ public class DiseaseUtility
             {
                 pawn.health.AddHediff(hediff);
                 // check if the disease actually made the patient sick - otherwise we have to try again
+                //Log.Message(hediff.def.label + " pawn.health.HasHediffsNeedingTend() " + pawn.health.HasHediffsNeedingTend() );
+                //Log.Message(hediff.def.label + " HealthAIUtility.ShouldSeekMedicalRest(pawn) " + HealthAIUtility.ShouldSeekMedicalRest(pawn));
                 retry = (!pawn.health.HasHediffsNeedingTend() 
                          && !HealthAIUtility.ShouldSeekMedicalRest(pawn));
             }
             else
             {
                 loweredSeverity += 0.1f;
-                Log.Message("disease would kill patient, trying lower severity " + hediff.def.label);
+                //Log.Message("disease would kill patient, trying lower severity " + hediff.def.label);
                 if (loweredSeverity > 0.9f) return true;
             }
         }
