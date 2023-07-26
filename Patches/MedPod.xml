@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+    <Operation Class="PatchOperationFindMod">
+    <mods>
+        <li>MedPod</li>
+    </mods>
+    <match Class="PatchOperationAdd">
+        <xpath>Defs/DutyDef[defName="Patient"]/thinkNode/subNodes/li[@Class="ThinkNode_Tagger"]/subNodes</xpath>
+        <value>
+            <li Class="MedPod.JobGiver_PatientGoToMedPod" />
+        </value>
+        <order>Prepend</order>
+    </match>
+    </Operation>
+</Patch>
