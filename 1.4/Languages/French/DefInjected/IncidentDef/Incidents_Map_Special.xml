@@ -2,7 +2,7 @@
 <LanguageData>
 
   <PatientArrives.label>Arrivée du patient</PatientArrives.label>
-  <PatientArrives.letterText>Le nom de {PAWN_possessive} est {0}.</PatientArrives.letterText>
+  <PatientArrives.letterText>Le nom de {PAWN_possessive} est {0}. Diagnostic: {1}</PatientArrives.letterText>
   <PatientArrives.letterLabel>Nouveau patient arrivé</PatientArrives.letterLabel>
 
 </LanguageData>

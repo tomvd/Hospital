@@ -17,6 +17,7 @@ public class SurgeryUtility
 		            && hospital.IsSurgeryRecipeAllowed(recipe)
 		            && !recipe.isViolation
 		            //&& recipe.Worker.GetPartsToApplyOn(pawn, recipe).Any()
+		            && !recipe.defName.ToLower().Contains("abasia")
 		            && !recipe.defName.ToLower().Contains("coma")
 		            && !recipe.defName.ToLower().Contains("remove")
 		            && !recipe.defName.ToLower().Contains("anesthetize")
@@ -31,8 +32,7 @@ public class SurgeryUtility
 			        {
 				        continue;
 			        }
-			        IEnumerable<ThingDef> enumerable = recipe.PotentiallyMissingIngredients(null, pawn.MapHeld);
-			        if (!enumerable.Any((ThingDef x) => x.isTechHediff) && !enumerable.Any((ThingDef x) => x.IsDrug) && (!enumerable.Any() || !recipe.dontShowIfAnyIngredientMissing))
+			        if (!recipe.PotentiallyMissingIngredients(null, pawn.MapHeld).Any())
 			        {
 				        list.Add(recipe);
 				        //Log.Message($"surgery recipe added:" + recipe.defName);
@@ -49,7 +49,18 @@ public class SurgeryUtility
 	        //Log.Message($"recipe selected:" + selectedRecipe.defName);
 	        
 	        BodyPartRecord part = null;
-	        if (selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).Any())
+	        if (selectedRecipe.appliedOnFixedBodyParts != null)
+	        {
+		        BodyPartDef bpd = selectedRecipe.appliedOnFixedBodyParts.RandomElement();
+		        foreach (BodyPartRecord notMissingPart in pawn.health.hediffSet.GetNotMissingParts())
+		        {
+			        if (notMissingPart.def.Equals(bpd))
+			        {
+				        part = notMissingPart;
+			        }
+		        }
+	        }
+	        if (part == null && selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).Any())
 	        {
 		        part = selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).RandomElement();
 	        }
@@ -74,6 +85,7 @@ public class SurgeryUtility
 			        select x;
 		        if (!source.Any())
 		        {
+			        Log.Message($"tried to find part but could not find one");
 			        return true;
 		        }
 		        part = source.RandomElement();
@@ -84,7 +96,7 @@ public class SurgeryUtility
 		        /*
 		         * if the operation removes a hediff, we need to add it first...
 		         */
-		        Log.Message($"removesHediff selected:" + selectedRecipe.removesHediff.label);
+		        //Log.Message($"removesHediff selected:" + selectedRecipe.removesHediff.label);
 		        Hediff hediff = HediffMaker.MakeHediff(selectedRecipe.removesHediff, pawn);
 		        hediff.Part = part;
 		        pawn.health.AddHediff(hediff, part);

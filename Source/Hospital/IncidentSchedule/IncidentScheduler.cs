@@ -25,12 +25,12 @@ public class IncidentScheduler : MapComponent
         if (GenTicks.TicksGame % 42 == 0) // every ingame minute
         {
             // every ingame minute there is a chance of patients arriving minute
-            float baseChance = 0.005f; // 1% every minute, gives about a patient per 100 minutes  
+            float baseChance = 0.004f; // 1% every minute, gives about a patient per 100 minutes  
             if (GenLocalDate.DayOfQuadrum(map) % 2 == 0)
-                baseChance = 0.02f;
+                baseChance = 0.008f; // 2% every minute, gives about a patient per 50 minutes  
             // 7 days to die ...
             if (GenLocalDate.DayOfQuadrum(map) == 6 || GenLocalDate.DayOfQuadrum(map) == 13)
-                baseChance = 0.333f;
+                baseChance = 0.04f; // 10% every minute, gives about a patient per 10 minutes 
             if (Rand.Chance(baseChance))
             {
                 IncidentParms parms = new IncidentParms();

@@ -19,8 +19,8 @@
     <AcceptSurgeryTooltip>uncheck this if you do not want to get surgery events</AcceptSurgeryTooltip>
     <PatientLimit>Patient limit</PatientLimit>
     <PatientLimitTooltip>maximum number of patients to accept, 0=unlimited</PatientLimitTooltip>
-    <PctBedsForColonists>Pct beds for colonists</PctBedsForColonists>
-    <PctBedsForColonistsTooltip>Percentage of beds reserved for colonists</PctBedsForColonistsTooltip>
+    <PctBedsForColonists>Pct of colonists having reserved beds</PctBedsForColonists>
+    <PctBedsForColonistsTooltip>Percentage of colonists that should have access to a free medical bed</PctBedsForColonistsTooltip>
     <SilverMultiplier>Silver multiplier</SilverMultiplier>
     <SilverMultiplierTooltip>Changes the patients bill by this percentage. (recommended: 100%)</SilverMultiplierTooltip>
     <ShowMessageAtArrival>Show message instead of letter</ShowMessageAtArrival>

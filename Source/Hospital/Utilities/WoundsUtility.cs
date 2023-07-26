@@ -9,7 +9,6 @@ namespace Hospital.Utilities;
 
 public class WoundsUtility
 {
-    
     public static void AddRandomWounds(Pawn pawn, PatientData patientData)
     {
         Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
@@ -36,24 +35,29 @@ public class WoundsUtility
                 break;
             }
             BodyPartRecord bodyPartRecord = source.RandomElement();
-            float maxHealth = bodyPartRecord.def.GetMaxHealth(p);
-            float partHealth = p.health.hediffSet.GetPartHealth(bodyPartRecord);
-            int min = Mathf.Clamp(Mathf.RoundToInt(maxHealth * 0.12f), 1, (int)partHealth - 1);
-            int max = Mathf.Clamp(Mathf.RoundToInt(maxHealth * 0.27f), 1, (int)partHealth - 1);
-            int severity = Math.Min(Rand.RangeInclusive(min, max), totalDamage);
-            DamageDef damageDef = HealthUtility.RandomViolenceDamageType();
-            HediffDef hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(damageDef, p, bodyPartRecord);
-            if (p.health.WouldDieAfterAddingHediff(hediffDefFromDamage, bodyPartRecord, severity))
-            {
-                break;
-            }
-            DamageInfo dinfo = new DamageInfo(damageDef, severity, 999f, -1f, null, bodyPartRecord);
-            dinfo.SetAllowDamagePropagation(val: false);
-            p.TakeDamage(dinfo);
+            if (DamagePart(p, totalDamage, bodyPartRecord, out var severity)) break;
             totalDamage -= severity;
         }
         p.health.forceDowned = false;
     }
 
+    public static bool DamagePart(Pawn p, int totalDamage, BodyPartRecord bodyPartRecord, out int severity)
+    {
+        float maxHealth = bodyPartRecord.def.GetMaxHealth(p);
+        float partHealth = p.health.hediffSet.GetPartHealth(bodyPartRecord);
+        int min = Mathf.Clamp(Mathf.RoundToInt(maxHealth * 0.12f), 1, (int)partHealth - 1);
+        int max = Mathf.Clamp(Mathf.RoundToInt(maxHealth * 0.27f), 1, (int)partHealth - 1);
+        severity = Math.Min(Rand.RangeInclusive(min, max), totalDamage);
+        DamageDef damageDef = HealthUtility.RandomViolenceDamageType();
+        HediffDef hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(damageDef, p, bodyPartRecord);
+        if (p.health.WouldDieAfterAddingHediff(hediffDefFromDamage, bodyPartRecord, severity))
+        {
+            return true;
+        }
 
+        DamageInfo dinfo = new DamageInfo(damageDef, severity, 999f, -1f, null, bodyPartRecord);
+        dinfo.SetAllowDamagePropagation(val: false);
+        p.TakeDamage(dinfo);
+        return false;
+    }
 }

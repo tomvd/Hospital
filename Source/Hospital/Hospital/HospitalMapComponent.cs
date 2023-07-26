@@ -156,9 +156,9 @@ namespace Hospital
             if ((int)HospitalMod.Settings.PatientLimit > 0 && Patients.Count >=
                 (int)HospitalMod.Settings.PatientLimit) return true;
             // check if we have enough beds left for colonists
-            int freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && bed.def.building.bed_humanlike && !bed.IsBurning()) - Patients.Count;
+            int freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.ForPrisoners && bed.def.building.bed_humanlike && !bed.IsBurning()) - Patients.Count;
             int reservedBeds = 0;
-            if ((int)HospitalMod.Settings.BedsForColonists > 0)
+            if (HospitalMod.Settings.BedsForColonists > 0.0f)
             {
                 reservedBeds = (int)Math.Ceiling(map.mapPawns.ColonistCount * HospitalMod.Settings.BedsForColonists);
             }

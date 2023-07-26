@@ -12,6 +12,6 @@
     <baseChance>0</baseChance>
     <minRefireDays>1</minRefireDays>
     <letterLabel>New patient arrived</letterLabel>
-    <letterText>{PAWN_possessive} name is {0}.</letterText>
+    <letterText>{PAWN_possessive} name is {0}. Diagnosis: {1}</letterText>
   </IncidentDef>
 </Defs>

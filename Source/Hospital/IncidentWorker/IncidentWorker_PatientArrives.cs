@@ -58,9 +58,8 @@ namespace Hospital
             var list = new List<Pawn> { pawn };
             LordMaker.MakeNewLord(parms.faction, CreateLordJob(parms, list), map, list);
             //pawn.mindState.duty = new PawnDuty(DefDatabase<DutyDef>.GetNamed("Patient"), pawn.Position, 1000);
-            var cure = patient.Cure;
-            TaggedString text = def.letterText.Formatted(pawn.Named("PAWN"), NamedArgumentUtility.Named(cure, "CURE"))
-                    .AdjustedFor(pawn);
+            var diagnosis = patient.Diagnosis;
+            TaggedString text = def.letterText.Formatted(pawn.Named("PAWN"), diagnosis).AdjustedFor(pawn);
             //text += " " + patient.baseCost.ToStringMoney();
             TaggedString title = def.letterLabel.Formatted(pawn.Named("PAWN")).AdjustedFor(pawn);
             if (HospitalMod.Settings.ShowMessageAtArrival)
