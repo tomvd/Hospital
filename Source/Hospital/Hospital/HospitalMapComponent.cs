@@ -23,6 +23,7 @@ namespace Hospital
             false,false,false,false
         };
         public List<RecipeDef> refusedOperations = new List<RecipeDef>();
+        public int bedsReserved = 0;
         
         public HospitalMapComponent(Map map) : base(map)
         {
@@ -45,6 +46,7 @@ namespace Hospital
             Scribe_Collections.Look(ref openingHours, "openingHours");
             Scribe_Collections.Look(ref refusedOperations, "refusedOperations");
             Scribe_Values.Look(ref openForBusiness, "openForBusiness", false);
+            Scribe_Values.Look(ref bedsReserved, "bedsReserved", 0);
             Patients ??= new Dictionary<Pawn, PatientData>();
             Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList);
         }
@@ -152,17 +154,9 @@ namespace Hospital
 
         public bool isFull()
         {
-            // check if a patient limit is reached
-            if ((int)HospitalMod.Settings.PatientLimit > 0 && Patients.Count >=
-                (int)HospitalMod.Settings.PatientLimit) return true;
             // check if we have enough beds left for colonists
             int freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.ForPrisoners && bed.def.building.bed_humanlike && !bed.IsBurning()) - Patients.Count;
-            int reservedBeds = 0;
-            if (HospitalMod.Settings.BedsForColonists > 0.0f)
-            {
-                reservedBeds = (int)Math.Ceiling(map.mapPawns.ColonistCount * HospitalMod.Settings.BedsForColonists);
-            }
-            if (freeMedicalBeds <= reservedBeds) return true;
+            if (freeMedicalBeds <= bedsReserved) return true;
             return false;
         }
     }

@@ -75,7 +75,7 @@ namespace Hospital.Utilities
                     break;
             }*/
 
-            return totalPrice * HospitalMod.Settings.SilverMultiplier;
+            return totalPrice;
         }
 
         public static int CalculateGoodwillToGain(Pawn pawn, PatientData patientData)

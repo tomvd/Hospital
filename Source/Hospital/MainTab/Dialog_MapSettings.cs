@@ -30,11 +30,13 @@ namespace Hospital.MainTab
            var listingStandard = new Listing_Standard {ColumnWidth = inRect.width};
            listingStandard.Begin(inRect);
            listingStandard.CheckboxLabeled("AcceptPatients".Translate(), ref hospital.openForBusiness, "AcceptPatientsTooltip".Translate());
+           listingStandard.SliderLabeled("BedsReserved".Translate(), ref hospital.bedsReserved, hospital.bedsReserved.ToString("0"), 0f, 10f,
+               "BedsReservedTooltip".Translate());           
            listingStandard.End();
-           TimetableUtility.DoHeader(new Rect(0,0,inRect.width,50));
-           TimetableUtility.DoCell(new Rect(0,60,inRect.width,20), hospital.openingHours, map);
-           Rect rect = new Rect(inRect.x, 94, 170f, 28f);
-           Rect rect2 = new Rect(170f, 94, 140f, 28f);
+           TimetableUtility.DoHeader(new Rect(0,20,inRect.width,50));
+           TimetableUtility.DoCell(new Rect(0,80,inRect.width,20), hospital.openingHours, map);
+           Rect rect = new Rect(inRect.x, 114, 170f, 28f);
+           Rect rect2 = new Rect(170f, 114, 140f, 28f);
            Widgets.LabelFit(rect, "DefaultMedicineSettings".Translate());
            MedicalCareUtility.MedicalCareSetter(rect2, ref Find.PlaySettings.defaultCareForNeutralFaction);
            rect.y += 34f;

@@ -21,17 +21,14 @@ namespace Hospital.MainTab
         {
             base.DoHeader(rect, table);
 
-            if (Time.unscaledTime > lastTimeCached + 2 || Find.CurrentMap != currentMap)
+            if (Time.unscaledTime > lastTimeCached + 4 || Find.CurrentMap != currentMap)
             {
-                patientCountCached = Find.CurrentMap.GetComponent<HospitalMapComponent>().Patients.Count;
-                full = Find.CurrentMap.GetComponent<HospitalMapComponent>().isFull();
-                bedCountCached = Find.CurrentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.ForPrisoners && bed.def.building.bed_humanlike && !bed.IsBurning());
-                if (HospitalMod.Settings.BedsForColonists > 0.0f)
-                {
-                    bedCountCached -= (int)Math.Ceiling(Find.CurrentMap.mapPawns.ColonistCount * HospitalMod.Settings.BedsForColonists);
-                }
-                lastTimeCached = Time.unscaledTime;
                 currentMap = Find.CurrentMap;
+                HospitalMapComponent hospital = currentMap.GetComponent<HospitalMapComponent>();
+                patientCountCached = hospital.Patients.Count;
+                full = hospital.isFull();
+                bedCountCached = currentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.ForPrisoners && bed.def.building.bed_humanlike && !bed.IsBurning()) - hospital.bedsReserved;
+                lastTimeCached = Time.unscaledTime;
             }
 /*
  *             if ((int)HospitalMod.Settings.PatientLimit > 0 && hospital.Patients.Count >=
