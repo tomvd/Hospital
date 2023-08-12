@@ -17,7 +17,9 @@ public class DiseaseUtility
         list = DefDatabase<HediffDef>.defsList.Where(def => def.tendable && def.makesSickThought
         //&& def.defName.ToLower().Contains("infection") //debug
         && !def.defName.ToLower().Contains("abasia")
-        && !def.defName.ToLower().Contains("sepsis")).ToList();
+        && !def.defName.ToLower().Contains("sepsis")
+        && !def.defName.ToLower().Contains("animal")
+        && !def.defName.ToLower().Contains("infant")).ToList();
         /*foreach (HediffDef def in list)
         {
             Log.Message(def.label);
