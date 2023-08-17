@@ -57,12 +57,14 @@ public class SurgeryUtility
 			        if (notMissingPart.def.Equals(bpd))
 			        {
 				        part = notMissingPart;
+				        //Log.Message($"part selected1:" + part.def.defName);
 			        }
 		        }
 	        }
 	        if (part == null && selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).Any())
 	        {
 		        part = selectedRecipe.Worker.GetPartsToApplyOn(pawn, selectedRecipe).RandomElement();
+		        //Log.Message($"part selected2:" + part.def.defName);
 	        }
 	        if (selectedRecipe.removesHediff != null)
 	        {
@@ -89,6 +91,7 @@ public class SurgeryUtility
 			        return true;
 		        }
 		        part = source.RandomElement();
+		        //Log.Message($"part selected3:" + part.def.defName);
 	        }
 	        //Log.Message($"part selected:" + part.Label);
 	        if (selectedRecipe.removesHediff != null)
@@ -102,35 +105,32 @@ public class SurgeryUtility
 		        pawn.health.AddHediff(hediff, part);
 		        patientData.Diagnosis = selectedRecipe.removesHediff.label;
 	        }
-	        else if (selectedRecipe.workerClass == typeof(Recipe_InstallArtificialBodyPart))
+	        else if (selectedRecipe.workerClass == typeof(Recipe_InstallArtificialBodyPart) ||
+	                 selectedRecipe.workerClass == typeof(Recipe_InstallNaturalBodyPart))
 	        {
 		        /*
 				* if we are installing an artificial body part, it is more fun to amputate the body part first
 				*/
-		        if (part.def.canSuggestAmputation)
+		        HediffDef hediffDefFromDamage;
+		        if (part.def.skinCovered)
 		        {
-			        HediffDef hediffDefFromDamage;
-			        if (part.def.skinCovered)
-			        {
-				        hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(
-					        HealthUtility.RandomPermanentInjuryDamageType(part.def.frostbiteVulnerability > 0f &&
-					                                                      pawn.RaceProps.ToolUser), pawn, part);
-			        }
-			        else
-			        {
-				        hediffDefFromDamage = HediffDefOf.MissingBodyPart;
-			        }
-
-			        Hediff_MissingPart hediffMissingPart =
-				        (Hediff_MissingPart)HediffMaker.MakeHediff(HediffDefOf.MissingBodyPart, pawn);
-			        hediffMissingPart.lastInjury = hediffDefFromDamage;
-			        hediffMissingPart.Part = part;
-			        hediffMissingPart.IsFresh = false;
-			        pawn.health.AddHediff(hediffMissingPart, part);
+			        hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(
+				        HealthUtility.RandomPermanentInjuryDamageType(part.def.frostbiteVulnerability > 0f &&
+				                                                      pawn.RaceProps.ToolUser), pawn, part);
+		        }
+		        else
+		        {
+			        hediffDefFromDamage = HediffDefOf.MissingBodyPart;
 		        }
 
+		        Hediff_MissingPart hediffMissingPart =
+			        (Hediff_MissingPart)HediffMaker.MakeHediff(HediffDefOf.MissingBodyPart, pawn);
+		        hediffMissingPart.lastInjury = hediffDefFromDamage;
+		        hediffMissingPart.Part = part;
+		        hediffMissingPart.IsFresh = false;
+		        pawn.health.AddHediff(hediffMissingPart, part);
 		        patientData.Diagnosis =
-			        TranslatorFormattedStringExtensions.Translate("DiagnosisArtificialBodyPart", selectedRecipe.addsHediff.label);
+			        TranslatorFormattedStringExtensions.Translate("DiagnosisArtificialBodyPart", selectedRecipe.addsHediff != null ? selectedRecipe.addsHediff.label: part.Label);
 	        }
 	        else
 	        {
