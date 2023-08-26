@@ -17,10 +17,10 @@ public class AllowOperationsPatch
         [HarmonyPrefix]
         public static void Prefix(Pawn pawn, ref bool allowOperations)
         {
-            if (pawn.IsPatient())
+            if (pawn.IsPatient(out _))
             {
                 allowOperations = true;
             }
         }
     }
-    }
+}

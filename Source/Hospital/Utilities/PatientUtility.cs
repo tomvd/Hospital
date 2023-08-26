@@ -9,12 +9,20 @@ namespace Hospital.Utilities
 {
     public static class PatientUtility
     {
-        public static bool IsPatient(this Pawn pawn)
+        public static bool IsPatient(this Pawn pawn,out HospitalMapComponent hospital)
         {
+            hospital = null;
             if (pawn?.Map == null) return false;
 
-            var hospital = pawn.Map.GetComponent<HospitalMapComponent>(); // TODO cache this?
+            hospital = pawn.Map.GetComponent<HospitalMapComponent>(); // TODO cache this?
             return hospital?.Patients.ContainsKey(pawn) == true;
+        }
+        public static void AddToBill(this Pawn pawn, HospitalMapComponent hospital, float silver)
+        {
+            if (pawn == null) return;
+            PatientData patientData = hospital.Patients.TryGetValue(pawn);
+            if (patientData == null) return;
+            patientData.Bill += silver;
         }
         
         public static bool GetPatientRating(this Pawn pawn, out float score, HospitalMapComponent hospital)
@@ -61,21 +69,7 @@ namespace Hospital.Utilities
         
         public static float CalculateSilverToReceive(Pawn pawn, PatientData patientData)
         {
-            float increasedMarketValue = Math.Max(pawn.MarketValue - patientData.InitialMarketValue, 0f); // for some reason some patients leave with decreased market value :)
-            float totalPrice = Math.Max(patientData.Bill, increasedMarketValue); // base price is 100 silver
-            int ticks = GenDate.TicksGame - patientData.ArrivedAtTick;
-            int days = ticks / 2500 / 6;
-            totalPrice += 20 * days;
-            /*switch (patientData.Type)
-            {
-                case PatientType.Disease:
-                case PatientType.Wounds:
-                case PatientType.Surgery:
-                    totalPrice += increasedMarketValue / 10f;
-                    break;
-            }*/
-
-            return totalPrice * HospitalMod.Settings.SilverMultiplier;
+            return patientData.Bill * HospitalMod.Settings.SilverMultiplier;
         }
 
         public static int CalculateGoodwillToGain(Pawn pawn, PatientData patientData)

@@ -16,7 +16,7 @@ namespace Hospital.Patches
             [HarmonyPrefix]
             public static bool Prefix(ref bool __result, Pawn pawn, WorkGiver giver)
             {
-                if (!pawn.IsPatient()) return true;
+                if (!pawn.IsPatient(out _)) return true;
 
                 if (!IsPatientWork(giver.def.workType)) return false;
 

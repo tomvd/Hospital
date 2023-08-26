@@ -36,7 +36,7 @@ namespace Hospital
         {
             var hospital = map.GetComponent<HospitalMapComponent>();
             if (!hospital.IsOpen()) return false;
-            if (hospital.isFull()) return false;
+            if (hospital.IsFull()) return false;
             //Log.Message((int)HospitalMod.Settings.PatientLimit + " - " + map.GetComponent<HospitalMapComponent>().Patients.Count);
             IntVec3 cell;
             return TryFindEntryCell(map, out cell);

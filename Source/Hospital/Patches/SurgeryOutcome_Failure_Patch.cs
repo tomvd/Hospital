@@ -18,7 +18,8 @@ public class SurgeryOutcome_Failure_Patch
         [HarmonyPrefix]
         public static void Prefix(Pawn patient)
         {
-            if (patient.IsPatient()) patient.Map.GetComponent<HospitalMapComponent>().SurgeryFailed(patient);
+            HospitalMapComponent hospitalMapComponent;
+            if (patient.IsPatient(out hospitalMapComponent)) hospitalMapComponent.SurgeryFailed(patient);
         }
     }
 }

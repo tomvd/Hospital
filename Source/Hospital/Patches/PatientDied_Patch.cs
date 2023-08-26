@@ -18,7 +18,8 @@ public class PatientDied_Patch
         [HarmonyPrefix]
         public static void Prefix(Pawn __instance)
         {
-            if (__instance.IsPatient()) __instance.Map.GetComponent<HospitalMapComponent>().PatientDied(__instance);
+            HospitalMapComponent hospitalMapComponent;
+            if (__instance.IsPatient(out hospitalMapComponent)) hospitalMapComponent.PatientDied(__instance);
         }
     }
 }

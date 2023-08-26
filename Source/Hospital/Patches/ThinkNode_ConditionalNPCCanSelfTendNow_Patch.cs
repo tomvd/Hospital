@@ -17,7 +17,7 @@ namespace Hospital.Patches
             public static void Postfix(ref bool __result, Pawn pawn)
             {
                 if (!__result) return;
-                if (pawn.IsPatient()) __result = false;
+                if (pawn.IsPatient(out _)) __result = false;
             }
         }
     }

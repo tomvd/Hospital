@@ -152,12 +152,19 @@ namespace Hospital
             }
         }
 
-        public bool isFull()
+        public bool IsFull()
         {
             // check if we have enough beds left for colonists
-            int freeMedicalBeds = map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical && !bed.ForPrisoners && bed.def.building.bed_humanlike && !bed.IsBurning()) - Patients.Count;
-            if (freeMedicalBeds <= bedsReserved) return true;
+            if (FreeMedicalBeds() <= bedsReserved) return true;
             return false;
+        }
+
+        public int FreeMedicalBeds()
+        {
+            return map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical 
+                && !bed.ForPrisoners 
+                && bed.def.building.bed_humanlike 
+                && !bed.IsBurning()) - Patients.Count;            
         }
     }
 

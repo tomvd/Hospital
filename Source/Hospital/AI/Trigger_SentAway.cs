@@ -30,7 +30,7 @@ namespace Hospital
                     && pawn.health.healthState == PawnHealthState.Mobile);
             //Log.Message("result=" + canbedismissed);
             // sometimes patients have to be reminded to stay in bed :)
-            if (pawn.IsPatient() && !canbedismissed && (pawn.mindState.duty == null || !pawn.mindState.duty.def.defName.Equals("Patient")))
+            if (pawn.IsPatient(out _) && !canbedismissed && (pawn.mindState.duty == null || !pawn.mindState.duty.def.defName.Equals("Patient")))
             {
                 Log.Message("mindState duty was " + pawn.mindState.duty?.def.defName.ToStringSafe());
                 pawn.mindState.duty = new PawnDuty(DefDatabase<DutyDef>.GetNamed("Patient"), pawn.Position, 100f);
@@ -41,7 +41,7 @@ namespace Hospital
                 pawn.Map..treatment = "resting";
             }*/
 
-            return canbedismissed || !pawn.IsPatient();
+            return canbedismissed || !pawn.IsPatient(out _);
         }
     }
 }

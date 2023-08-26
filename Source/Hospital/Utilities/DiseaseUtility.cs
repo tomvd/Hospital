@@ -67,7 +67,7 @@ public class DiseaseUtility
             }
         }
 
-        patientData.Bill = Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f) * 2;
+        patientData.Bill = 10;//Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f) * 2;
         patientData.Diagnosis = hediff.Label;
         patientData.Cure = "CureDisease".Translate();
         return false;

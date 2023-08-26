@@ -15,7 +15,7 @@ public class WoundsUtility
         float rnd = Rand.Value;
         int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
         DamageParts(pawn, damage);
-        patientData.Bill = Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
+        patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
         patientData.Cure = "CureWounds".Translate();
         patientData.Diagnosis = "DiagnosisWounds".Translate();
     }

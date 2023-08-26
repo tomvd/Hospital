@@ -15,7 +15,7 @@ public class AllowOperationsPatchNoViolation
         [HarmonyPrefix]
         public static bool Prefix(ref bool __result, Pawn pawn)
         {
-            if (!pawn.IsPatient()) return true;
+            if (!pawn.IsPatient(out _)) return true;
             __result = false;
             return false;
         }
@@ -27,7 +27,7 @@ public class AllowOperationsPatchNoViolation
         [HarmonyPrefix]
         public static bool Prefix(ref bool __result, Pawn pawn)
         {
-            if (!pawn.IsPatient()) return true;
+            if (!pawn.IsPatient(out _)) return true;
             __result = false;
             return false;
         }
@@ -39,7 +39,7 @@ public class AllowOperationsPatchNoViolation
         [HarmonyPrefix]
         public static bool Prefix(ref bool __result, Pawn pawn)
         {
-            if (!pawn.IsPatient()) return true;
+            if (!pawn.IsPatient(out _)) return true;
             __result = false;
             return false;
         }

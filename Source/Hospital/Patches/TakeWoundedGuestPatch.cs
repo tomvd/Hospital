@@ -13,7 +13,7 @@ public class TakeWoundedGuestPatch
     {
         public static void Postfix(ref Pawn __result)
         {
-            if (__result.IsPatient())
+            if (__result.IsPatient(out _))
             {
                 __result = null;
             }
