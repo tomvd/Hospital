@@ -26,7 +26,6 @@ namespace Hospital
                 MP.RegisterSyncMethod(AccessTools.Method(typeof(HospitalMapComponent), nameof(HospitalMapComponent.PatientArrived)));
                 MP.RegisterSyncMethod(AccessTools.Method(typeof(HospitalMapComponent), nameof(HospitalMapComponent.PatientLeaves)));
                 MP.RegisterSyncMethod(AccessTools.Method(typeof(HospitalMapComponent), nameof(HospitalMapComponent.PatientDied)));
-                MP.RegisterSyncMethod(AccessTools.Method(typeof(HospitalMapComponent), nameof(HospitalMapComponent.SurgeryFailed)));
                 MP.RegisterSyncMethod(AccessTools.Method(typeof(HospitalMapComponent), nameof(HospitalMapComponent.DismissPatient)));
                 MP.RegisterSyncMethod(AccessTools.Method(typeof(HospitalMapComponent), nameof(HospitalMapComponent.RefuseOperation)));
                 MP.RegisterSyncMethod(AccessTools.Method(typeof(HospitalMapComponent), nameof(HospitalMapComponent.UnRefuseOperation)));

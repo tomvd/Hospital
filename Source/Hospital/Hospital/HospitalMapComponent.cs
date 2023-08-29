@@ -94,19 +94,7 @@ namespace Hospital
         {
             if (Patients.TryGetValue(pawn, out var patientData))
             {
-                Messages.Message($"{pawn.NameFullColored} died: -20 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
-                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -20, false);
-                Patients.Remove(pawn);    
-                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
-            }
-            // else - was not a patient?
-        }
-        
-        public void SurgeryFailed(Pawn pawn)
-        {
-            if (Patients.TryGetValue(pawn, out var patientData))
-            {
-                Messages.Message($"{pawn.NameFullColored} surgery failed: -10 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                Messages.Message($"{pawn.NameFullColored} died: -10 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -10, false);
                 Patients.Remove(pawn);    
                 MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();

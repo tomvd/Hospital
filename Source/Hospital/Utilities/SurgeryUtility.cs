@@ -111,24 +111,26 @@ public class SurgeryUtility
 		        /*
 				* if we are installing an artificial body part, it is more fun to amputate the body part first
 				*/
-		        HediffDef hediffDefFromDamage;
-		        if (part.def.skinCovered)
+		        if (!part.def.canSuggestAmputation)
 		        {
-			        hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(
+			        HediffDef hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(
 				        HealthUtility.RandomPermanentInjuryDamageType(part.def.frostbiteVulnerability > 0f &&
 				                                                      pawn.RaceProps.ToolUser), pawn, part);
+			        pawn.health.AddHediff(hediffDefFromDamage, part);			        
 		        }
 		        else
 		        {
-			        hediffDefFromDamage = HediffDefOf.MissingBodyPart;
+			        Hediff_MissingPart hediffMissingPart =
+				        (Hediff_MissingPart)HediffMaker.MakeHediff(HediffDefOf.MissingBodyPart, pawn);
+			        hediffMissingPart.lastInjury = HealthUtility.GetHediffDefFromDamage(
+				        HealthUtility.RandomPermanentInjuryDamageType(part.def.frostbiteVulnerability > 0f &&
+				                                                      pawn.RaceProps.ToolUser), pawn, part);
+			        hediffMissingPart.Part = part;
+			        hediffMissingPart.IsFresh = false;
+			        pawn.health.AddHediff(hediffMissingPart, part);			        
 		        }
 
-		        Hediff_MissingPart hediffMissingPart =
-			        (Hediff_MissingPart)HediffMaker.MakeHediff(HediffDefOf.MissingBodyPart, pawn);
-		        hediffMissingPart.lastInjury = hediffDefFromDamage;
-		        hediffMissingPart.Part = part;
-		        hediffMissingPart.IsFresh = false;
-		        pawn.health.AddHediff(hediffMissingPart, part);
+
 		        patientData.Diagnosis =
 			        TranslatorFormattedStringExtensions.Translate("DiagnosisArtificialBodyPart", selectedRecipe.addsHediff != null ? selectedRecipe.addsHediff.label: part.Label);
 	        }
