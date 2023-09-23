@@ -27,6 +27,7 @@ namespace Hospital.Utilities
         
         public static bool GetPatientRating(this Pawn pawn, out float score, HospitalMapComponent hospital)
         {
+            // idea: Rating new screen. Stars. Last 10 reviews. Store thoughts gained during stay. New thought about staff friendliness. Goodwill gained for 4 and 5 star. Loss for less than 3.
             score = 0.0f;
             if (pawn == null) return false;
             PatientData patientData = hospital.Patients.TryGetValue(pawn);

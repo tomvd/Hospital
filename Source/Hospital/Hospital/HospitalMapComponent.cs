@@ -70,12 +70,19 @@ namespace Hospital
                 float silver = PatientUtility.CalculateSilverToReceive(pawn, patientData);
                 if (silver > 0)
                 {
-                    int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
-                    Messages.Message(
-                        $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", goodwill change: " +
-                        goodwill + " " +
-                        pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
-                    pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
+                    if (pawn.Faction != null)
+                    {
+                        int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
+                        Messages.Message(
+                            $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", goodwill change: " +
+                            goodwill + " " +
+                            pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
+                        pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
+                    }
+                    else
+                    {
+                        Messages.Message($"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney(), MessageTypeDefOf.NeutralEvent);                        
+                    }
                     var silverThing = ThingMaker.MakeThing(ThingDefOf.Silver);
                     silverThing.stackCount = (int)silver;
                     GenPlace.TryPlaceThing(silverThing, pawn.Position, pawn.Map, ThingPlaceMode.Near);
