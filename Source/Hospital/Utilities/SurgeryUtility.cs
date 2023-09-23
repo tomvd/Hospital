@@ -24,6 +24,7 @@ public class SurgeryUtility
 		            && !recipe.defName.ToLower().Contains("blood")
 		            && !recipe.defName.ToLower().Contains("admin")
 		            && !recipe.defName.ToLower().Contains("rib")
+		            && !recipe.defName.ToLower().Contains("harvest")
 					)
 		        {
 			        if (!(from p in pawn.MapHeld.mapPawns.PawnsInFaction(Faction.OfPlayer)
