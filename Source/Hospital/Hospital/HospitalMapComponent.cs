@@ -88,8 +88,7 @@ namespace Hospital
                     GenPlace.TryPlaceThing(silverThing, pawn.Position, pawn.Map, ThingPlaceMode.Near);
                 }
 
-                Patients.Remove(pawn);
-                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
+                RemoveFromPatientList(pawn);
             }
             else
             {
@@ -103,8 +102,7 @@ namespace Hospital
             {
                 Messages.Message($"{pawn.NameFullColored} died: -10 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -10, false);
-                Patients.Remove(pawn);    
-                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
+                RemoveFromPatientList(pawn);
             }
             // else - was not a patient?
         }
@@ -114,12 +112,19 @@ namespace Hospital
             if (Patients.TryGetValue(pawn, out var patientData))
             {
                 Messages.Message(
-                    $"{pawn.NameFullColored} dismissed.", MessageTypeDefOf.NeutralEvent); 
-                Patients.Remove(pawn);    
-                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
+                    $"{pawn.NameFullColored} dismissed.", MessageTypeDefOf.NeutralEvent);
+                RemoveFromPatientList(pawn);
             }
             // else - was not a patient?
             
+        }
+
+        private void RemoveFromPatientList(Pawn pawn)
+        {
+            Patients.Remove(pawn);    
+            pawn.playerSettings.selfTend = true; // in case the patient gets hurt while walking home
+            pawn.guest.SetGuestStatus(null); // might fix the "patients stay hanging around" issue
+            MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
         }
 
         public bool IsSurgeryRecipeAllowed(RecipeDef recipe)
@@ -158,7 +163,9 @@ namespace Hospital
         {
             return map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical 
                 && !bed.ForPrisoners 
-                && bed.def.building.bed_humanlike 
+                && bed.def.building.bed_humanlike
+                && bed.Spawned
+                && bed.Map == this.map
                 && !bed.IsBurning()) - Patients.Count;            
         }
     }

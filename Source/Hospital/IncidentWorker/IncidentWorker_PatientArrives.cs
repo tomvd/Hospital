@@ -103,6 +103,9 @@ namespace Hospital
             HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
             PatientUtility.DamagePawn(pawn, data, hospital);
             hospital.PatientArrived(pawn, data);
+            // this hack is needed to cancel the current patient goes to bed job and start a new one
+            pawn.jobs.StopAll();
+            pawn.jobs.JobTrackerTick();
             return data;
         }
         

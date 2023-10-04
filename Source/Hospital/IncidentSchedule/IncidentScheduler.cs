@@ -20,6 +20,14 @@ public class IncidentScheduler : MapComponent
         base.ExposeData();
         //Scribe_Values.Look(ref hour, "hour");
     }
+    
+    /*
+     * TODO : instead of this random/steady stream every now and then we want an orchestrated event of a mass intake
+     * possible with some kind of "calm before the storm" period of perhaps 4h. Ideally this happens either once every 2,3 or 4 days
+     * ideally during hospital opening hours :p
+     * the amount in the event should correspond to the number of free beds (so the whole hospital is occupied)
+     * should be a setting to disable if you dont want those events
+     */
 
     public override void MapComponentTick()
     {
