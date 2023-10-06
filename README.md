@@ -6,5 +6,4 @@ EPOE: mostly compatible
 Diseases Overhauled: mostly compatible
 Rah's Bionics and Surgery Expansion: mostly compatible
 Hospitality: compatible (visitors should not rescue patients out of your hospital)
-
-Multiplayer: not at the moment, but working on it
+Multiplayer: mostly compatible
