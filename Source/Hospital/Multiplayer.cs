@@ -18,7 +18,7 @@ namespace Hospital
                 MP.RegisterSyncField(typeof(HospitalMapComponent), nameof(HospitalMapComponent.openForBusiness)),
                 MP.RegisterSyncField(typeof(HospitalMapComponent), nameof(HospitalMapComponent.openingHours)),
                 MP.RegisterSyncField(typeof(HospitalMapComponent), nameof(HospitalMapComponent.refusedOperations)),
-                MP.RegisterSyncField(typeof(HospitalMapComponent), nameof(HospitalMapComponent.bedsReserved))
+                //MP.RegisterSyncField(typeof(HospitalMapComponent), nameof(HospitalMapComponent.bedsReserved))
             };
 
             // methods

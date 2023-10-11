@@ -63,6 +63,7 @@ namespace Hospital.Utilities
             }
             if (failed)
             {
+                patientData.Type = PatientType.Wounds;
                 WoundsUtility.AddRandomWounds(pawn, patientData);
             }
 

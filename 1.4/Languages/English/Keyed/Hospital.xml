@@ -21,4 +21,9 @@
     <BedsReservedTooltip>To make sure your beds are not all filled up with patients</BedsReservedTooltip>
     <ShowMessageAtArrival>Show message instead of letter</ShowMessageAtArrival>
     <ShowMessageAtArrivalTooltip>Shows as a message instead of a letter when a new patient arrives.</ShowMessageAtArrivalTooltip>
+    <!-- button -->
+    <CommandBedSetAsHospitalLabel>Hospital Bed</CommandBedSetAsHospitalLabel>
+    <CommandBedSetAsHospitalDesc>Whether this bed is for patients.</CommandBedSetAsHospitalDesc>
+    <CommandBedSetAsSurgeryLabel>Surgery Bed</CommandBedSetAsSurgeryLabel>
+    <CommandBedSetAsSurgeryDesc>Whether this bed is for surgery patients.</CommandBedSetAsSurgeryDesc>    
 </LanguageData>

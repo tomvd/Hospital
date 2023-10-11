@@ -29,7 +29,9 @@ namespace Hospital.MainTab
                 full = hospital.IsFull();
                 bedCountCached = currentMap.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical 
                     && !bed.ForPrisoners && bed.def.building.bed_humanlike && !bed.IsBurning() && bed.Spawned
-                    && bed.Map == currentMap) - hospital.bedsReserved;
+                    && bed.TryGetComp<CompHospitalBed>() != null
+                    && bed.TryGetComp<CompHospitalBed>().Hospital                    
+                    && bed.Map == currentMap);
                 lastTimeCached = Time.unscaledTime;
             }
 /*

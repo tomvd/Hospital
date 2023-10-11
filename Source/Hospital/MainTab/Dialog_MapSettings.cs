@@ -30,8 +30,8 @@ namespace Hospital.MainTab
            var listingStandard = new Listing_Standard {ColumnWidth = inRect.width};
            listingStandard.Begin(inRect);
            listingStandard.CheckboxLabeled("AcceptPatients".Translate(), ref hospital.openForBusiness, "AcceptPatientsTooltip".Translate());
-           listingStandard.SliderLabeled("BedsReserved".Translate(), ref hospital.bedsReserved, hospital.bedsReserved.ToString("0"), 0f, 10f,
-               "BedsReservedTooltip".Translate());           
+           /*listingStandard.SliderLabeled("BedsReserved".Translate(), ref hospital.bedsReserved, hospital.bedsReserved.ToString("0"), 0f, 10f,
+               "BedsReservedTooltip".Translate());*/           
            listingStandard.End();
            TimetableUtility.DoHeader(new Rect(0,20,inRect.width,50));
            TimetableUtility.DoCell(new Rect(0,80,inRect.width,20), hospital.openingHours, map);

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using HarmonyLib;
 using Hospital.Utilities;
@@ -13,36 +14,30 @@ public class Patients_BedFinder_Patch
     /// </summary>
     [HarmonyPatch(typeof(RestUtility), nameof(RestUtility.FindBedFor),  typeof(Pawn),typeof(Pawn),typeof(bool),typeof(bool),typeof(GuestStatus?))]
 
-public class FindBedPatch
+    public class FindBedPatch
     {
         [HarmonyPostfix]
         public static void Postfix(ref Building_Bed __result, Pawn sleeper, Pawn traveler)
         {
-            HospitalMapComponent hospital;
-            if (sleeper.IsPatient(out hospital))
+            if (sleeper.IsPatient(out _) && !sleeper.InBed())
             {
+                // try to find hospital bed
+                __result = sleeper.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Where(
+                        bed => bed.Medical
+                               && bed.GetComp<CompHospitalBed>() != null
+                               && bed.GetComp<CompHospitalBed>().Hospital
+                               && RestUtility.IsValidBedFor(bed, sleeper, traveler, checkSocialProperness: false))
+                    .FirstOrFallback(__result);
+                //try to find even better hospital bed
                 if (sleeper.health.surgeryBills.Count > 0)
                 {
-                    // surgery patient - give bed with highest surgerysuccesschancefactor
-                    Building_Bed newBed = sleeper.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Where(
+                    __result = sleeper.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Where(
                             bed => bed.Medical
+                                   && bed.GetComp<CompHospitalBed>() != null
+                                   && bed.GetComp<CompHospitalBed>().Surgery                                   
                                    && RestUtility.IsValidBedFor(bed, sleeper, traveler, checkSocialProperness: false))
-                        .OrderByDescending(
-                            bed => bed.GetStatValue(StatDefOf.SurgerySuccessChanceFactor)
-                        ).FirstOrFallback(__result);
-                     __result = newBed;
-                }
-                else
-                {
-                    // normal patient - surgerysuccesschancefactor does not matter, so give them the worst beds first
-                    Building_Bed newBed = sleeper.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Where(
-                            bed => bed.Medical
-                                   && RestUtility.IsValidBedFor(bed, sleeper, traveler, checkSocialProperness: false))
-                        .OrderBy(
-                            bed => bed.GetStatValue(StatDefOf.SurgerySuccessChanceFactor)
-                        ).FirstOrFallback(__result);
-                    __result = newBed;                    
-                }
+                        .FirstOrFallback(__result);
+                }            
             }
         }
     }
