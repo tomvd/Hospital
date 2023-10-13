@@ -23,7 +23,7 @@ namespace Hospital
 
         public virtual Pawn GeneratePawn(Faction faction)
         {
-            return PawnGenerator.GeneratePawn(new PawnGenerationRequest(def.pawnKind, faction,
+            return PawnGenerator.GeneratePawn(new PawnGenerationRequest(faction.RandomPawnKind(), faction,
                 PawnGenerationContext.NonPlayer, -1, forceGenerateNewPawn: true, allowDead: false, allowDowned: false,
                 canGeneratePawnRelations: true, def.pawnMustBeCapableOfViolence, 1f,
                 forceAddFreeWarmLayerIfNeeded: false, allowGay: true, allowPregnant: true, allowFood: true,
