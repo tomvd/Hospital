@@ -23,10 +23,12 @@ namespace Hospital
             false,false,false,false
         };
         public List<RecipeDef> refusedOperations = new List<RecipeDef>();
+        public FoodRestriction PatientFoodRestriction;
         
         public HospitalMapComponent(Map map) : base(map)
         {
             Patients = new Dictionary<Pawn, PatientData>();
+            PatientFoodRestriction = Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
         }
         
         public override void ExposeData()
@@ -47,6 +49,8 @@ namespace Hospital
             Scribe_Values.Look(ref openForBusiness, "openForBusiness", false);
             Patients ??= new Dictionary<Pawn, PatientData>();
             Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList);
+            Scribe_References.Look(ref PatientFoodRestriction, "PatientFoodRestriction");
+            PatientFoodRestriction ??= Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
         }
 
         public bool IsOpen()

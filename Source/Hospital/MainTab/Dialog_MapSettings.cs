@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using UnityEngine;
@@ -41,6 +42,32 @@ namespace Hospital.MainTab
            MedicalCareUtility.MedicalCareSetter(rect2, ref Find.PlaySettings.defaultCareForNeutralFaction);
            rect.y += 34f;
            rect2.y += 34f;
+
+           rect2 = new Rect(0f, rect.y, 140f, 23f);
+           Text.Anchor = TextAnchor.MiddleLeft;
+           Widgets.Label(rect2, Text.TinyFontSupported ? "FoodRestriction".Translate() : "FoodRestrictionShort".Translate());
+           GenUI.ResetLabelAlign();
+           if (Widgets.ButtonText(new Rect(rect2.width, rect.y, 140f, 23f), hospital.PatientFoodRestriction.label))
+           {
+               List<FloatMenuOption> list = new List<FloatMenuOption>();
+               List<FoodRestriction> allFoodRestrictions = Current.Game.foodRestrictionDatabase.AllFoodRestrictions;
+               for (int i = 0; i < allFoodRestrictions.Count; i++)
+               {
+                   FoodRestriction localRestriction = allFoodRestrictions[i];
+                   list.Add(new FloatMenuOption(localRestriction.label, delegate
+                   {
+                       hospital.PatientFoodRestriction = localRestriction;
+                   }));
+               }
+               list.Add(new FloatMenuOption("ManageFoodRestrictions".Translate(), delegate
+               {
+                   Find.WindowStack.Add(new Dialog_ManageFoodRestrictions(null));
+               }));
+               Find.WindowStack.Add(new FloatMenu(list));
+           }
+           rect.y += 23f;
+           rect2.y += 23f;
+           
            if (hospital.refusedOperations == null) return;
            Widgets.Label(rect, "RefusedOperations".Translate());
            rect2.x = 350;

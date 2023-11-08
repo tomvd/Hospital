@@ -106,6 +106,10 @@ namespace Hospital
             // this hack is needed to cancel the current patient goes to bed job and start a new one
             pawn.jobs.StopAll();
             pawn.jobs.JobTrackerTick();
+            pawn.foodRestriction = new Pawn_FoodRestrictionTracker(pawn)
+            {
+                CurrentFoodRestriction = hospital.PatientFoodRestriction
+            };
             return data;
         }
         

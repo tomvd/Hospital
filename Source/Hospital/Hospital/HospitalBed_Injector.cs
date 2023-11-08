@@ -22,7 +22,7 @@ public static class InjectHospitalBed
                 CompProperties_HospitalBed prop =
                     (CompProperties_HospitalBed)Activator.CreateInstance(typeof(CompProperties_HospitalBed));
                 def.comps.Add(prop);
-                Log.Message(def.defName + ": potential hospitalbed");
+                //Log.Message(def.defName + ": potential hospitalbed");
             }
         }
     }
