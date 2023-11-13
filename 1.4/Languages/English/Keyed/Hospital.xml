@@ -17,6 +17,8 @@
     <AcceptPatientsTooltip>uncheck this if you want to stop patients from visiting</AcceptPatientsTooltip>
     <AcceptSurgery>Accept surgery</AcceptSurgery>
     <AcceptSurgeryTooltip>uncheck this if you do not want to get surgery events</AcceptSurgeryTooltip>
+    <SilverMultiplier>Silver multiplier</SilverMultiplier>
+    <SilverMultiplierTooltip>Changes the patients bill by this percentage. (recommended: 100%)</SilverMultiplierTooltip>
     <BedsReserved>Beds reserved for colonists</BedsReserved>
     <BedsReservedTooltip>To make sure your beds are not all filled up with patients</BedsReservedTooltip>
     <ShowMessageAtArrival>Show message instead of letter</ShowMessageAtArrival>
