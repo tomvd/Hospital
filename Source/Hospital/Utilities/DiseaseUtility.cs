@@ -19,6 +19,7 @@ public class DiseaseUtility
         && !def.defName.ToLower().Contains("abasia")
         && !def.defName.ToLower().Contains("sepsis")
         && !def.defName.ToLower().Contains("animal")
+        && !def.defName.ToLower().Contains("gene")
         && !def.defName.ToLower().Contains("infant")).ToList();
         /*foreach (HediffDef def in list)
         {
