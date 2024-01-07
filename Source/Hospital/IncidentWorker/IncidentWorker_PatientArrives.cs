@@ -51,9 +51,13 @@ namespace Hospital
             {
                 return false;
             }
-            Faction faction = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer) && f.def.humanlikeFaction).RandomElement();
-            parms.faction = faction;
-            Pawn pawn = GeneratePawn(faction);
+            List<Faction> factions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
+            /*foreach (Faction def in factions)
+            {
+                Log.Message(def.def.defName);
+            } */           
+            parms.faction = factions.RandomElement();
+            Pawn pawn = GeneratePawn(parms.faction);
             PatientData patient = SpawnPatient(map, pawn);
             var list = new List<Pawn> { pawn };
             LordMaker.MakeNewLord(parms.faction, CreateLordJob(parms, list), map, list);
