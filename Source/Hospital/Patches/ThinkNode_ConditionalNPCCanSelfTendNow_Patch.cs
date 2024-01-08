@@ -21,4 +21,26 @@ namespace Hospital.Patches
             }
         }
     }
+    
+    public class CanSelfTendNow_Patch
+    {
+        /// <summary>
+        /// Disable self-tending of patients
+        /// </summary>
+        [HarmonyPatch(typeof(JobDriver_TendPatient), nameof(JobDriver_TendPatient.TryMakePreToilReservations))]
+        public class Satisfied
+        {
+            [HarmonyPrefix]
+            public static bool Prefix(ref bool __result, JobDriver_TendPatient __instance)
+            {
+                if (__instance.Deliveree == __instance.pawn && __instance.pawn.IsPatient(out _))
+                {
+                    __result = false;
+                    return false;
+                }
+
+                return true;
+            }
+        }
+    }    
 }
