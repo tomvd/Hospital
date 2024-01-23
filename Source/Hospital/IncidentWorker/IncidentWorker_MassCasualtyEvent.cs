@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hospital.Utilities;
@@ -8,61 +9,91 @@ using Verse.AI.Group;
 namespace Hospital
 {
     // modified IncidentWorker_VisitorGroup
-    public class IncidentWorker_PatientArrives : IncidentWorker
+    public class IncidentWorker_MassCasualtyEvent : IncidentWorker
     {
+        public enum MCEType
+        {
+            Pandemic = 0,
+            Raid = 1,
+            Crash = 2,
+            Fire = 3
+        }
+        
         public override bool CanFireNowSub(IncidentParms parms)
         {
             if (!base.CanFireNowSub(parms))
             {
                 return false;
             }
+            
+            if (!HospitalMod.Settings.MassCasualties)
+            {
+                return false;
+            }            
 
             Map map = (Map)parms.target;
             return IncidentHelper.CanSpawnPatient(map);
         }
-        
+
         public override bool TryExecuteWorker(IncidentParms parms)
         {
+            if (!HospitalMod.Settings.MassCasualties)
+            {
+                return false;
+            }            
             Map map = (Map)parms.target;
             if (!IncidentHelper.CanSpawnPatient(map))
             {
                 return false;
             }
+
+            if (parms.pawnCount == 0)
+            {
+                parms.pawnCount = map.GetComponent<HospitalMapComponent>().BedCount();
+            }
             List<Faction> factions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
+            parms.faction = factions.RandomElement();
             /*foreach (Faction def in factions)
             {
                 Log.Message(def.def.defName);
-            } */           
-            parms.faction = factions.RandomElement();
-            Pawn pawn = IncidentHelper.GeneratePawn(parms.faction);
+            } */
+            List<Pawn> list = new List<Pawn>();
+            list.AddRange(IncidentHelper.GetKnownPawns(parms).InRandomOrder().Take((int)Math.Floor(parms.pawnCount * 0.20f)).ToList());
+            int pawnsToGenerate = parms.pawnCount - list.Count;
+            for (int i = 0; i < pawnsToGenerate; i++)
+            {
+                list.Add(IncidentHelper.GeneratePawn(parms.faction));
+            }
+            
+            MCEType type = (MCEType)Rand.Range(0, 4);
 
-            PatientData patient = SpawnPatient(map, pawn);
-            var list = new List<Pawn> { pawn };
-            LordMaker.MakeNewLord(parms.faction, CreateLordJob(parms, list), map, list);
+            foreach (var pawn in list)
+            {
+                SpawnPatient(map, pawn, type);
+                LordMaker.MakeNewLord(parms.faction, CreateLordJob(parms, list), map, new List<Pawn> { pawn });
+            }
+
             //pawn.mindState.duty = new PawnDuty(DefDatabase<DutyDef>.GetNamed("Patient"), pawn.Position, 1000);
-            var diagnosis = patient.Diagnosis;
-            TaggedString text = def.letterText.Formatted(pawn.Named("PAWN"), diagnosis).AdjustedFor(pawn);
+            //var diagnosis = patient.Diagnosis;
+            // a pandemic, a raid (gunshot wounds), a transport pod crash (scratches,bruises,etc), a colony fire (burns)
+            TaggedString text = def.letterText.Formatted(("MCE_"+type).Translate(), parms.pawnCount);
             //text += " " + patient.baseCost.ToStringMoney();
-            TaggedString title = def.letterLabel.Formatted(pawn.Named("PAWN")).AdjustedFor(pawn);
-            if (HospitalMod.Settings.ShowMessageAtArrival)
-            {
-                Messages.Message(title + ": " + text, MessageTypeDefOf.PositiveEvent);                
-            }
-            else
-            {
-                SendStandardLetter(title, text, LetterDefOf.PositiveEvent, parms, pawn);
-            }
+            TaggedString title = def.letterLabel;
+            SendStandardLetter(title, text, LetterDefOf.ThreatSmall, parms, list);
 
             return true;
         }
 
-        protected virtual PatientData SpawnPatient(Map map, Pawn pawn)
+        protected virtual PatientData SpawnPatient(Map map, Pawn pawn, MCEType type)
         {
             IncidentHelper.SetUpNewPatient(pawn);
-            PatientType type = (PatientType)Rand.Range(1, HospitalMod.Settings.AcceptSurgery?4:3);
+            
+            PatientType ptype = PatientType.Wounds;
+            if (type.Equals(MCEType.Pandemic)) ptype = PatientType.Disease;
+            
             //type = PatientType.Surgery; // debug
             //Log.Message(pawn.Label + " -> " +type.ToString());
-            PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
+            PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, ptype);
             //TryFindEntryCell(map, out var cell);
             //GenSpawn.Spawn(pawn, cell, map);
             var spot = map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("PatientLandingSpot")).RandomElement();
@@ -81,7 +112,7 @@ namespace Hospital
             DropPodUtility.MakeDropPodAt(loc, map, activeDropPodInfo);
             
             HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
-            PatientUtility.DamagePawn(pawn, data, hospital);
+            PatientUtility.DamagePawn(pawn, data, hospital, type);
             hospital.PatientArrived(pawn, data);
             // this hack is needed to cancel the current patient goes to bed job and start a new one
             pawn.jobs.StopAll();
@@ -92,6 +123,7 @@ namespace Hospital
             };
             return data;
         }
+
         
         protected virtual LordJob_VisitColonyAsPatient CreateLordJob(IncidentParms parms, List<Pawn> pawns)
         {

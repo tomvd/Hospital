@@ -66,8 +66,26 @@ namespace Hospital.Utilities
                 patientData.Type = PatientType.Wounds;
                 WoundsUtility.AddRandomWounds(pawn, patientData);
             }
-
         }
+        public static void DamagePawn(Pawn pawn, PatientData patientData, HospitalMapComponent hospital, IncidentWorker_MassCasualtyEvent.MCEType type)
+        {
+
+            switch (type)
+            {
+                case IncidentWorker_MassCasualtyEvent.MCEType.Pandemic:
+                    DiseaseUtility.AddPlague(pawn, patientData);
+                    break;
+                case IncidentWorker_MassCasualtyEvent.MCEType.Raid:
+                    WoundsUtility.AddGunshotWounds(pawn, patientData);
+                    break;
+                case IncidentWorker_MassCasualtyEvent.MCEType.Crash:
+                    WoundsUtility.AddBruisesWounds(pawn, patientData);
+                    break;
+                case IncidentWorker_MassCasualtyEvent.MCEType.Fire:
+                    WoundsUtility.AddBurnWounds(pawn, patientData);
+                    break;
+            }
+        }        
         
         public static float CalculateSilverToReceive(Pawn pawn, PatientData patientData)
         {
@@ -92,5 +110,7 @@ namespace Hospital.Utilities
             if (pawn.needs?.mood == null) return 0;
             return Math.Min((pawn.needs.mood.CurInstantLevel - patientData.InitialMood)*3.5f, 100.0f);
         }
+
+
     }
 }

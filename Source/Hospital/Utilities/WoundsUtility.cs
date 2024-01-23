@@ -14,13 +14,13 @@ public class WoundsUtility
         Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
         float rnd = Rand.Value;
         int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
-        DamageParts(pawn, damage);
+        DamageParts(pawn, damage, null);
         patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
         patientData.Cure = "CureWounds".Translate();
         patientData.Diagnosis = "DiagnosisWounds".Translate();
     }
 
-    private static void DamageParts(Pawn p, int totalDamage)
+    private static void DamageParts(Pawn p, int totalDamage, DamageDef damageDef)
     {
         int it = 0;
         p.health.forceDowned = true;
@@ -35,20 +35,20 @@ public class WoundsUtility
                 break;
             }
             BodyPartRecord bodyPartRecord = source.RandomElement();
-            if (DamagePart(p, totalDamage, bodyPartRecord, out var severity)) break;
+            if (DamagePart(p, totalDamage, bodyPartRecord, out var severity, damageDef)) break;
             totalDamage -= severity;
         }
         p.health.forceDowned = false;
     }
 
-    public static bool DamagePart(Pawn p, int totalDamage, BodyPartRecord bodyPartRecord, out int severity)
+    public static bool DamagePart(Pawn p, int totalDamage, BodyPartRecord bodyPartRecord, out int severity, DamageDef damageDef)
     {
         float maxHealth = bodyPartRecord.def.GetMaxHealth(p);
         float partHealth = p.health.hediffSet.GetPartHealth(bodyPartRecord);
         int min = Mathf.Clamp(Mathf.RoundToInt(maxHealth * 0.12f), 1, (int)partHealth - 1);
         int max = Mathf.Clamp(Mathf.RoundToInt(maxHealth * 0.27f), 1, (int)partHealth - 1);
         severity = Math.Min(Rand.RangeInclusive(min, max), totalDamage);
-        DamageDef damageDef = HealthUtility.RandomViolenceDamageType();
+        if (damageDef == null) damageDef = HealthUtility.RandomViolenceDamageType();
         HediffDef hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(damageDef, p, bodyPartRecord);
         if (p.health.WouldDieAfterAddingHediff(hediffDefFromDamage, bodyPartRecord, severity))
         {
@@ -59,5 +59,38 @@ public class WoundsUtility
         dinfo.SetAllowDamagePropagation(val: false);
         p.TakeDamage(dinfo);
         return false;
+    }
+
+    public static void AddGunshotWounds(Pawn pawn, PatientData patientData)
+    {
+        Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
+        float rnd = Rand.Value;
+        int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
+        DamageParts(pawn, damage, DamageDefOf.Bullet);
+        patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
+        patientData.Cure = "CureWounds".Translate();
+        patientData.Diagnosis = "DiagnosisWounds".Translate();
+    }
+
+    public static void AddBruisesWounds(Pawn pawn, PatientData patientData)
+    {
+        Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
+        float rnd = Rand.Value;
+        int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
+        DamageParts(pawn, damage, (new List<DamageDef>() {DamageDefOf.Crush, DamageDefOf.Scratch, DamageDefOf.Cut}).RandomElement());
+        patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
+        patientData.Cure = "CureWounds".Translate();
+        patientData.Diagnosis = "DiagnosisWounds".Translate();
+    }
+
+    public static void AddBurnWounds(Pawn pawn, PatientData patientData)
+    {
+        Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
+        float rnd = Rand.Value;
+        int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
+        DamageParts(pawn, damage, DamageDefOf.Burn);
+        patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
+        patientData.Cure = "CureWounds".Translate();
+        patientData.Diagnosis = "DiagnosisWounds".Translate();
     }
 }

@@ -4,6 +4,7 @@
     <exclude>.git</exclude>
     <exclude>1.4\Assemblies\0DubCore.dll</exclude>
     <exclude>1.4\Assemblies\0Harmony.dll</exclude>
+    <exclude>1.4\Assemblies\0MultiplayerAPI.dll</exclude>
     <exclude>1.4\Assemblies\Assembly-CSharp.dll</exclude>
     <exclude>1.4\Assemblies\Assembly-CSharp.pdb</exclude>
     <exclude>1.4\Assemblies\Assembly-CSharp-firstpass.dll</exclude>
@@ -77,5 +78,7 @@
     <exclude>About\preview.afdesign</exclude>
     <exclude>README.md</exclude>
     <exclude>Source</exclude>
+    <exclude>spanish.zip</exclude>
+    <exclude>Textures\UI\Commands\PSDs\allows.afdesign</exclude>
   </Excluded>
 </Configuration>

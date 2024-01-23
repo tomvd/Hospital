@@ -47,7 +47,7 @@ public class DiseaseUtility
                         break;
                     }
                     BodyPartRecord bodyPartRecord = source.RandomElement();
-                    WoundsUtility.DamagePart(pawn, 5, bodyPartRecord, out var s);
+                    WoundsUtility.DamagePart(pawn, 5, bodyPartRecord, out var s, DamageDefOf.Bite);
                     pawn.health.AddHediff(hediff, bodyPartRecord); 
                 }
                 else
@@ -72,5 +72,38 @@ public class DiseaseUtility
         patientData.Diagnosis = hediff.Label;
         patientData.Cure = "CureDisease".Translate();
         return false;
+    }
+
+    public static void AddPlague(Pawn pawn, PatientData patientData)
+    {
+        bool retry = true;
+        float loweredSeverity = 0;
+        Hediff hediff = HediffMaker.MakeHediff(HediffDefOf.Plague, pawn);;
+        while (retry)
+        {
+
+            //Log.Message(hediff.def.label + " choosen" );
+            float severity = Rand.Range(hediff.def.lethalSeverity / 10.0f, hediff.def.lethalSeverity / 4.0f);
+            hediff.Severity = severity - loweredSeverity;
+            if (!pawn.health.WouldDieAfterAddingHediff(hediff))
+            {
+                pawn.health.AddHediff(hediff);                    
+                // check if the disease actually made the patient sick - otherwise we have to try again
+                //Log.Message(hediff.def.label + " pawn.health.HasHediffsNeedingTend() " + pawn.health.HasHediffsNeedingTend() );
+                //Log.Message(hediff.def.label + " HealthAIUtility.ShouldSeekMedicalRest(pawn) " + HealthAIUtility.ShouldSeekMedicalRest(pawn));
+                retry = (!pawn.health.HasHediffsNeedingTend() && !HealthAIUtility.ShouldSeekMedicalRest(pawn));
+                if (retry) hediff = HediffMaker.MakeHediff(HediffDefOf.Flu, pawn); // perhaps immune to plague? try flu
+                
+            }
+            else
+            {
+                loweredSeverity += 0.1f;
+                //Log.Message("disease would kill patient, trying lower severity " + hediff.def.label);
+            }
+        }
+
+        if (!retry) patientData.Bill = 10;//Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f) * 2;
+        patientData.Diagnosis = hediff.Label;
+        patientData.Cure = "CureDisease".Translate();
     }
 }

@@ -14,4 +14,18 @@
     <letterLabel>New patient arrived</letterLabel>
     <letterText>{PAWN_possessive} name is {0}. Diagnosis: {1}</letterText>
   </IncidentDef>
+  <IncidentDef>
+    <defName>MassCasualtyEvent</defName>
+    <label>mass casualty event</label>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>    
+    <workerClass>Hospital.IncidentWorker_MassCasualtyEvent</workerClass>
+    <pawnKind>Villager</pawnKind>
+    <baseChance>5</baseChance>
+    <minRefireDays>2</minRefireDays>
+    <category>ThreatSmall</category>
+    <letterLabel>Mass casualty event</letterLabel>
+    <letterText>{0} happened nearby. {1} patients are on their way to your hospital.</letterText>
+  </IncidentDef>  
 </Defs>

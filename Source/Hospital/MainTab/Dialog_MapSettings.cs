@@ -81,8 +81,9 @@ namespace Hospital.MainTab
                {
                    hospital.UnRefuseOperation(hospitalRefusedOperation);
                }
-               rect.y += 34f;
-               rect2.y += 34f;
+               rect.y += 20;
+               rect2.y += 20f;
+               if (rect.y > 600) break; // sorry window is full :p
            }
            if (Multiplayer.IsRunning)
                Multiplayer.WatchEnd();

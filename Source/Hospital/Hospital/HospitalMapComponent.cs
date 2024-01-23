@@ -162,14 +162,19 @@ namespace Hospital
 
         public int FreeMedicalBeds()
         {
-            return map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical 
-                && !bed.ForPrisoners 
+            return BedCount() - Patients.Count;            
+        }
+
+        public int BedCount()
+        {
+            return map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Count(bed => bed.Medical
+                && !bed.ForPrisoners
                 && bed.def.building.bed_humanlike
+                && !bed.IsBurning()
                 && bed.Spawned
-                && bed.Map == this.map
                 && bed.TryGetComp<CompHospitalBed>() != null
                 && bed.TryGetComp<CompHospitalBed>().Hospital
-                && !bed.IsBurning()) - Patients.Count;            
+                && bed.Map == map);
         }
     }
 
