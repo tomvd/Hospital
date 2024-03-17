@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hospital.Utilities;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace Hospital
@@ -23,12 +24,12 @@ namespace Hospital
             false,false,false,false
         };
         public List<RecipeDef> refusedOperations = new List<RecipeDef>();
-        public FoodRestriction PatientFoodRestriction;
+        public FoodPolicy PatientFoodPolicy;
         
         public HospitalMapComponent(Map map) : base(map)
         {
             Patients = new Dictionary<Pawn, PatientData>();
-            PatientFoodRestriction = Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
+            PatientFoodPolicy = Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
         }
         
         public override void ExposeData()
@@ -49,8 +50,8 @@ namespace Hospital
             Scribe_Values.Look(ref openForBusiness, "openForBusiness", false);
             Patients ??= new Dictionary<Pawn, PatientData>();
             Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList);
-            Scribe_References.Look(ref PatientFoodRestriction, "PatientFoodRestriction");
-            PatientFoodRestriction ??= Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
+            Scribe_References.Look(ref PatientFoodPolicy, "PatientFoodPolicy");
+            PatientFoodPolicy ??= Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
         }
 
         public bool IsOpen()
@@ -70,6 +71,7 @@ namespace Hospital
             if (Patients.TryGetValue(pawn, out var patientData))
             {
                 float silver = PatientUtility.CalculateSilverToReceive(pawn, patientData);
+                silver = Mathf.Clamp(silver, 0, 4000);
                 if (silver > 0)
                 {
                     if (pawn.Faction != null)

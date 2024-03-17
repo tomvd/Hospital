@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace Hospital.Utilities;
@@ -177,7 +178,7 @@ public class SurgeryUtility
 				        .Find(count => count.filter != null && count.filter.categories.Contains("Medicine")).count *
 			        ((int)pawn.playerSettings.medCare * 15.0f);
 	        }
-	        patientData.Bill = timeCost + materialCost;
+	        patientData.Bill = Mathf.Clamp(timeCost,0,100) + Mathf.Clamp(materialCost,0, 3000);
 	        return false;
         }
 }

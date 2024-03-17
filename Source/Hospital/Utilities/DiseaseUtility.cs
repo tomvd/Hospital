@@ -92,7 +92,7 @@ public class DiseaseUtility
                 //Log.Message(hediff.def.label + " pawn.health.HasHediffsNeedingTend() " + pawn.health.HasHediffsNeedingTend() );
                 //Log.Message(hediff.def.label + " HealthAIUtility.ShouldSeekMedicalRest(pawn) " + HealthAIUtility.ShouldSeekMedicalRest(pawn));
                 retry = (!pawn.health.HasHediffsNeedingTend() && !HealthAIUtility.ShouldSeekMedicalRest(pawn));
-                if (retry) hediff = HediffMaker.MakeHediff(HediffDefOf.Flu, pawn); // perhaps immune to plague? try flu
+                if (retry) hediff = HediffMaker.MakeHediff(HediffDefOf.Hangover, pawn); // perhaps immune to plague? try flu
                 
             }
             else

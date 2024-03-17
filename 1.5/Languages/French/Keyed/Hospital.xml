@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+    <PatientsTab>Patients</PatientsTab>
+    <BedsFilled>Lits occupés : {0}/{1}</BedsFilled>
+    <DiagnosisWounds>blessures</DiagnosisWounds>
+    <CureWounds>soigner les blessures</CureWounds>
+    <CureDisease>appliquer un médicament</CureDisease>
+    <DiagnosisSurgeryOnPart>problème avec {0}</DiagnosisSurgeryOnPart>
+    <DiagnosisSurgeryNoPart>a besoin d'une opération</DiagnosisSurgeryNoPart>
+    <DiagnosisArtificialBodyPart>veut un(e) {0}</DiagnosisArtificialBodyPart>
+    <Dismiss>Rejeter</Dismiss>
+    <Disallow>Refuser l'opération</Disallow>
+    <RefusedOperations>Opérations refusées :</RefusedOperations>
+    <!-- Paramètres -->
+    <MapSettings>Paramètres de la carte...</MapSettings>
+    <AcceptPatients>Accepter les patients</AcceptPatients>
+    <AcceptPatientsTooltip>décochez cette case si vous souhaitez empêcher les patients de venir</AcceptPatientsTooltip>
+    <AcceptSurgery>Accepter les opérations</AcceptSurgery>
+    <AcceptSurgeryTooltip>décochez cette case si vous ne voulez pas recevoir d'événements chirurgicaux</AcceptSurgeryTooltip>
+    <PatientLimit>Limite de patients</PatientLimit>
+    <PatientLimitTooltip>nombre maximal de patients à accepter, 0=illimité</PatientLimitTooltip>
+    <PctBedsForColonists>Pct lits pour colons</PctBedsForColonists>
+    <PctBedsForColonistsTooltip>Pourcentage de lits réservés aux colons</PctBedsForColonistsTooltip>
+    <SilverMultiplier>Facteur multiplicateur d'argent</SilverMultiplier>
+    <SilverMultiplierTooltip>Modifie la facture des patients selon ce pourcentage. (recommandé : 100 %)</SilverMultiplierTooltip>
+    <ShowMessageAtArrival>Afficher un message à l'arrivée</ShowMessageAtArrival>
+    <ShowMessageAtArrivalTooltip>Affiche un message au lieu d'une lettre lorsqu'un nouveau patient arrive.</ShowMessageAtArrivalTooltip>
+</LanguageData>

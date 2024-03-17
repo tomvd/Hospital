@@ -1,8 +1,7 @@
 using HarmonyLib;
 using Hospital.Utilities;
 using RimWorld;
-using Verse;
-using Verse.AI;
+using UnityEngine;
 
 namespace Hospital.Patches;
 
@@ -18,12 +17,12 @@ public class Billing_Feed_Patch
         public static void Postfix(JobDriver_FoodFeedPatient __instance)
         {
             __instance.AddFinishAction(
-            () =>
+            (x) =>
             {
                 HospitalMapComponent hospital;
                 if (__instance.Deliveree.IsPatient(out hospital))
                 {
-                    __instance.Deliveree.AddToBill(hospital, __instance.Food.MarketValue * 1.1f);
+                    __instance.Deliveree.AddToBill(hospital, Mathf.Clamp(__instance.Food.MarketValue * 1.1f, 0, 70));
                 }
             });
         }

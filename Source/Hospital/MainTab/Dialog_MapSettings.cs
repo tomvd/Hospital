@@ -45,23 +45,23 @@ namespace Hospital.MainTab
 
            rect2 = new Rect(0f, rect.y, 140f, 23f);
            Text.Anchor = TextAnchor.MiddleLeft;
-           Widgets.Label(rect2, Text.TinyFontSupported ? "FoodRestriction".Translate() : "FoodRestrictionShort".Translate());
+           Widgets.Label(rect2, Text.TinyFontSupported ? "FoodPolicy".Translate() : "FoodPolicyShort".Translate());
            GenUI.ResetLabelAlign();
-           if (Widgets.ButtonText(new Rect(rect2.width, rect.y, 140f, 23f), hospital.PatientFoodRestriction.label))
+           if (Widgets.ButtonText(new Rect(rect2.width, rect.y, 140f, 23f), hospital.PatientFoodPolicy.label))
            {
                List<FloatMenuOption> list = new List<FloatMenuOption>();
-               List<FoodRestriction> allFoodRestrictions = Current.Game.foodRestrictionDatabase.AllFoodRestrictions;
+               List<FoodPolicy> allFoodRestrictions = Current.Game.foodRestrictionDatabase.AllFoodRestrictions;
                for (int i = 0; i < allFoodRestrictions.Count; i++)
                {
-                   FoodRestriction localRestriction = allFoodRestrictions[i];
+                   FoodPolicy localRestriction = allFoodRestrictions[i];
                    list.Add(new FloatMenuOption(localRestriction.label, delegate
                    {
-                       hospital.PatientFoodRestriction = localRestriction;
+                       hospital.PatientFoodPolicy = localRestriction;
                    }));
                }
-               list.Add(new FloatMenuOption("ManageFoodRestrictions".Translate(), delegate
+               list.Add(new FloatMenuOption("ManageFoodPolicies".Translate(), delegate
                {
-                   Find.WindowStack.Add(new Dialog_ManageFoodRestrictions(null));
+                   Find.WindowStack.Add(new Dialog_ManageFoodPolicies(null));
                }));
                Find.WindowStack.Add(new FloatMenu(list));
            }

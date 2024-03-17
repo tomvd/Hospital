@@ -119,7 +119,7 @@ namespace Hospital
             pawn.jobs.JobTrackerTick();
             pawn.foodRestriction = new Pawn_FoodRestrictionTracker(pawn)
             {
-                CurrentFoodRestriction = hospital.PatientFoodRestriction
+                CurrentFoodPolicy = hospital.PatientFoodPolicy
             };
             return data;
         }

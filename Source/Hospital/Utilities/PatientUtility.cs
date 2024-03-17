@@ -23,6 +23,7 @@ namespace Hospital.Utilities
             PatientData patientData = hospital.Patients.TryGetValue(pawn);
             if (patientData == null) return;
             patientData.Bill += silver;
+            patientData.Bill = Mathf.Clamp(patientData.Bill, 0, 4000);
         }
         
         public static bool GetPatientRating(this Pawn pawn, out float score, HospitalMapComponent hospital)

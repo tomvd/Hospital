@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <PawnColumnDef>
+        <defName>Hospital_LabelCustom</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_LabelCustom</workerClass>
+        <sortable>false</sortable>
+    </PawnColumnDef>
+    
+    <PawnColumnDef>
+        <defName>PatientRating</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_PatientRating</workerClass>
+        <label>rating</label>
+        <headerTip>How happy the patient is. Get above 70 for more goodwill.</headerTip>
+        <width>45</width>
+        <sortable>true</sortable>
+    </PawnColumnDef>
+
+    <PawnColumnDef>
+        <defName>PatientTimeSpent</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_PatientTimeSpent</workerClass>
+        <label>time spent</label>
+        <headerTip>How many hours the patient spent in your hospital.</headerTip>
+        <width>45</width>
+        <sortable>true</sortable>
+    </PawnColumnDef>
+    
+    <PawnColumnDef>
+        <defName>PatientDiagnosis</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_Diagnosis</workerClass>
+        <label>diagnosis</label>
+        <headerTip>What's wrong with this patient?.</headerTip>
+        <width>175</width>
+        <sortable>false</sortable>
+    </PawnColumnDef>
+    
+    <PawnColumnDef>
+        <defName>PatientCure</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_Cure</workerClass>
+        <label>treatment</label>
+        <headerTip>How will we help the patient?</headerTip>
+        <width>175</width>
+        <sortable>false</sortable>
+    </PawnColumnDef>
+
+    <PawnColumnDef>
+        <defName>PatientBill</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_Bill</workerClass>
+        <label>bill</label>
+        <headerTip>How much the patient will have to pay</headerTip>
+        <width>45</width>
+        <sortable>true</sortable>
+    </PawnColumnDef>
+
+    <PawnColumnDef>
+        <defName>Dismiss</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_ButtonDismiss</workerClass>
+        <width>100</width>
+    </PawnColumnDef>
+
+    <PawnColumnDef>
+        <defName>Disallow</defName>
+        <workerClass>Hospital.MainTab.PawnColumnWorker_ButtonDisallow</workerClass>
+        <width>300</width>
+    </PawnColumnDef>
+</Defs>
