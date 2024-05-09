@@ -42,7 +42,7 @@ public class IncidentScheduler : MapComponent
                 DefDatabase<IncidentDef>.GetNamed("PatientArrives").Worker.TryExecuteWorker(parms);
             }
 
-            if (GenDate.DaysPassed % 7 == 0)
+            if (GenDate.DaysPassed % 7 == 0 && GenDate.DaysPassed > 0)
             {
                 if (!MCEtriggered)
                 {
