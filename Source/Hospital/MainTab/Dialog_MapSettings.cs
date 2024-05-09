@@ -88,5 +88,10 @@ namespace Hospital.MainTab
            if (Multiplayer.IsRunning)
                Multiplayer.WatchEnd();
         }
+        public override void PostClose()
+        {
+            base.PostClose();
+            Find.PlaySettings.defaultCareForFriendlyFaction = Find.PlaySettings.defaultCareForNeutralFaction;
+        }
     }
 }
