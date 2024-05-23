@@ -21,23 +21,35 @@ public class Patients_BedFinder_Patch
         {
             if (sleeper.IsPatient(out _) && !sleeper.InBed())
             {
-                // try to find hospital bed
+                //Find any hospital bed
                 __result = sleeper.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Where(
                         bed => bed.Medical
-                               && bed.GetComp<CompHospitalBed>() != null
-                               && bed.GetComp<CompHospitalBed>().Hospital
-                               && RestUtility.IsValidBedFor(bed, sleeper, traveler, checkSocialProperness: false))
+                                && bed.GetComp<CompHospitalBed>() != null
+                                && bed.GetComp<CompHospitalBed>().Hospital
+                                && RestUtility.IsValidBedFor(bed, sleeper, traveler, checkSocialProperness: false))
                     .FirstOrFallback(__result);
-                //try to find even better hospital bed
-                if (sleeper.health.surgeryBills.Count > 0)
-                {
+                // Try to find hospital bed for a patient that does not require surgery
+                if (sleeper.health.surgeryBills.Count <= 0) {
+                    
                     __result = sleeper.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Where(
-                            bed => bed.Medical
-                                   && bed.GetComp<CompHospitalBed>() != null
-                                   && bed.GetComp<CompHospitalBed>().Surgery                                   
-                                   && RestUtility.IsValidBedFor(bed, sleeper, traveler, checkSocialProperness: false))
-                        .FirstOrFallback(__result);
-                }            
+                        bed => bed.Medical
+                                && bed.GetComp<CompHospitalBed>() != null
+                                && bed.GetComp<CompHospitalBed>().Hospital
+                                && !bed.GetComp<CompHospitalBed>().Surgery 
+                                && RestUtility.IsValidBedFor(bed, sleeper, traveler, checkSocialProperness: false))
+                    .FirstOrFallback(__result);
+                }
+                // Try to find hospital bed for a patient that does surgery
+                if (sleeper.health.surgeryBills.Count > 0) {
+
+                    __result = sleeper.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>().Where(
+                        bed => bed.Medical
+                                && bed.GetComp<CompHospitalBed>() != null
+                                && bed.GetComp<CompHospitalBed>().Hospital
+                                && bed.GetComp<CompHospitalBed>().Surgery 
+                                && RestUtility.IsValidBedFor(bed, sleeper, traveler, checkSocialProperness: false))
+                    .FirstOrFallback(__result);
+                }
             }
         }
     }
