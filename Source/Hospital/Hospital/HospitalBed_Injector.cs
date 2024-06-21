@@ -10,7 +10,7 @@ public static class InjectHospitalBed
     // all hospital beds get a hospitalbed comp to store their allow state
     static InjectHospitalBed()
     {
-        var defs = DefDatabase<ThingDef>.AllDefsListForReading.Where(def => def.IsBed && def.building.bed_canBeMedical).ToList();
+        var defs = DefDatabase<ThingDef>.AllDefsListForReading.Where(def => def.IsBed && def.building.bed_canBeMedical && def.building.bed_humanlike).ToList();
         defs.RemoveDuplicates();
         
         foreach (var def in defs)

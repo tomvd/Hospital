@@ -8,8 +8,15 @@ namespace Hospital;
 
     public class CompHospitalBed : ThingComp
     {
-        private bool hospitalInt = true;
+        private bool hospitalInt;
         private bool surgeryInt;
+        
+        public override void PostPostMake()
+        {
+            base.PostPostMake();
+            hospitalInt = !parent.def.defName.Contains("Pod");
+        }
+        
         public bool Hospital
         {
             get => hospitalInt;
@@ -76,21 +83,25 @@ namespace Hospital;
                 commandToggle2.toggleAction = delegate
                 {
                     Hospital = !Hospital;
+                    //if (ModsConfig.IsActive("sumghai.Medpod"))
+                    //{
+                        // TODO if Building_BedMedPod set allowGuests to the same value
+                    //}
                 };
                 commandToggle2.hotKey = KeyBindingDefOf.Misc4;
                 yield return commandToggle2;
-                
-                Command_Toggle commandToggle3 = new Command_Toggle();
-                commandToggle3.defaultLabel = "CommandBedSetAsSurgeryLabel".Translate();
-                commandToggle3.defaultDesc = "CommandBedSetAsSurgeryDesc".Translate();
-                commandToggle3.icon = ContentFinder<Texture2D>.Get("UI/Commands/AsSurgery");
-                commandToggle3.isActive = () => Surgery;
-                commandToggle3.toggleAction = delegate
+
+                if (!parent.def.defName.Contains("Pod")) // medpods no surgery
                 {
-                    Surgery = !Surgery;
-                };
-                commandToggle3.hotKey = KeyBindingDefOf.Misc5;
-                yield return commandToggle3;              
+                    Command_Toggle commandToggle3 = new Command_Toggle();
+                    commandToggle3.defaultLabel = "CommandBedSetAsSurgeryLabel".Translate();
+                    commandToggle3.defaultDesc = "CommandBedSetAsSurgeryDesc".Translate();
+                    commandToggle3.icon = ContentFinder<Texture2D>.Get("UI/Commands/AsSurgery");
+                    commandToggle3.isActive = () => Surgery;
+                    commandToggle3.toggleAction = delegate { Surgery = !Surgery; };
+                    commandToggle3.hotKey = KeyBindingDefOf.Misc5;
+                    yield return commandToggle3;
+                }
             }
         }
     }

@@ -19,7 +19,7 @@ public class IncidentScheduler : MapComponent
     public override void ExposeData()
     {
         base.ExposeData();
-        //Scribe_Values.Look(ref hour, "hour");
+        Scribe_Values.Look(ref MCEtriggered, "MCEtriggered");
     }
     
     public override void MapComponentTick()
