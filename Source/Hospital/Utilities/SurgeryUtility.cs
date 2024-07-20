@@ -83,6 +83,36 @@ public class SurgeryUtility
 				        .Where(record => record.def.label.ToLower().Equals("jaw")).FirstOrFallback(null);
 		        }		        
 	        }
+	        if (selectedRecipe.defName.ToLower().Contains("kidney"))
+	        {
+		        part = pawn.health.hediffSet.GetNotMissingParts()
+			        .Where(record => record.def.label.ToLower().Equals("kidney")).FirstOrFallback(null);		        
+	        }
+	        if (selectedRecipe.defName.ToLower().Contains("deaf"))
+	        {
+		        part = pawn.health.hediffSet.GetNotMissingParts()
+			        .Where(record => record.def.label.ToLower().Equals("kidney")).FirstOrFallback(null);		        
+	        }
+	        if (selectedRecipe.defName.ToLower().Contains("glaucoma") || selectedRecipe.defName.ToLower().Contains("strabismus"))
+	        {
+		        part = pawn.health.hediffSet.GetNotMissingParts()
+			        .Where(record => record.def.label.ToLower().Equals("eye")).FirstOrFallback(null);		        
+	        }	     
+	        if (selectedRecipe.defName.ToLower().Contains("arrhythmia") || selectedRecipe.defName.ToLower().Contains("heart"))
+	        {
+		        part = pawn.health.hediffSet.GetNotMissingParts()
+			        .Where(record => record.def.label.ToLower().Equals("heart")).FirstOrFallback(null);		        
+	        }
+	        if (selectedRecipe.defName.ToLower().Contains("spinal") || selectedRecipe.defName.ToLower().Contains("hernia"))
+	        {
+		        part = pawn.health.hediffSet.GetNotMissingParts()
+			        .Where(record => record.def.label.ToLower().Equals("spine")).FirstOrFallback(null);		        
+	        }	
+	        if (selectedRecipe.defName.ToLower().Contains("gastritis"))
+	        {
+		        part = pawn.health.hediffSet.GetNotMissingParts()
+			        .Where(record => record.def.label.ToLower().Equals("stomach")).FirstOrFallback(null);		        
+	        }
 	        if (part == null)
 	        {
 		        IEnumerable<BodyPartRecord> source = from x in pawn.health.hediffSet.GetNotMissingParts()

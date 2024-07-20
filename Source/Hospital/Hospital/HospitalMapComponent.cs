@@ -111,6 +111,18 @@ namespace Hospital
             // else - was not a patient?
         }
         
+        public void SurgeryFailed(Pawn pawn)
+        {
+            if (Patients.TryGetValue(pawn, out var patientData))
+            {
+                Messages.Message($"{pawn.NameFullColored} failed: -5 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -1, false);
+                patientData.Bill = 0f;
+                RemoveFromPatientList(pawn);
+            }
+            // else - was not a patient?
+        }        
+        
         public void DismissPatient(Pawn pawn)
         {
             if (Patients.TryGetValue(pawn, out var patientData))
