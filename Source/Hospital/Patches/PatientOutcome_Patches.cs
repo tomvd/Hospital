@@ -47,8 +47,8 @@ public class PatientOutcome_Patches
         [HarmonyPrefix]
         public static bool Prefix(Pawn member, bool freed)
         {
-            HospitalMapComponent hospital = member.Map.GetComponent<HospitalMapComponent>();
-            if (hospital.IsOpen()) return false;
+            HospitalMapComponent hospital = member?.Map?.GetComponent<HospitalMapComponent>();
+            if (hospital != null && hospital.IsOpen()) return false;
             return true;
         }
     }        
