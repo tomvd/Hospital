@@ -12,7 +12,8 @@
     <Disallow>Refuse operation</Disallow>
     <RefusedOperations>Refused operations:</RefusedOperations>
     <!-- settings -->
-    <MapSettings>Map settings...</MapSettings>
+    <MapSettings>Hospital Policies...</MapSettings>
+    <HospitalSettings>Hospital Policies</HospitalSettings>
     <AcceptPatients>Accept patients</AcceptPatients>
     <AcceptPatientsTooltip>uncheck this if you want to stop patients from visiting</AcceptPatientsTooltip>
     <AcceptSurgery>Accept surgery</AcceptSurgery>

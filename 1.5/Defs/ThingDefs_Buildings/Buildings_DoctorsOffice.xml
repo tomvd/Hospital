@@ -3,7 +3,7 @@
   <ThingDef ParentName="BenchBase">
     <defName>DoctorsDesk</defName>
     <label>Doctor's desk</label>
-    <description>Patients that do not recovery or surgery pass by here. Needs a medical pawn on standby and an examination table.</description>
+    <description>Patients that do not need recovery or surgery pass by here. Needs a medical pawn on standby and an examination table.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/TableButcher</texPath>
@@ -57,7 +57,7 @@
     <comps>
       <li Class="CompProperties_AffectedByFacilities">
         <linkableFacilities>
-          <li>ToolCabinet</li>
+          <li>ExaminationTable</li>
         </linkableFacilities>
       </li>
     </comps>
@@ -68,10 +68,10 @@
     </placeWorkers>
   </ThingDef>
   
-  <ThingDef ParentName="Bed">
+  <ThingDef ParentName="FurnitureBase">
     <defName>ExaminationTable</defName>
     <label>examination table</label>
-    <description>Goes with the doctor's desk.</description>
+    <description>Goes with the doctor's desk. It has no further functionality</description>
     <graphicData Inherit="False">
       <texPath>Things/Building/Misc/SlabBed/SlabBed</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
@@ -89,16 +89,20 @@
       <Flammability>1.0</Flammability>
     </statBases>
     <size>(1,2)</size>
-    <building>
-      <bed_slabBed>true</bed_slabBed>
-      <bed_showSleeperBody>true</bed_showSleeperBody>
-    </building>
     <stuffCategories Inherit="False">
       <li>Metallic</li>
       <li>Woody</li>
       <li>Stony</li>
     </stuffCategories>
     <costStuffCount>30</costStuffCount>
+    <placeWorkers>
+      <li>PlaceWorker_ShowFacilitiesConnections</li>
+    </placeWorkers>
+    <comps>
+      <li Class="CompProperties_Facility">
+        <maxSimultaneous>1</maxSimultaneous>
+      </li>
+    </comps>    
     <fillPercent>0.3</fillPercent>
     <pathCost>20</pathCost>
     <staticSunShadowHeight>0.17</staticSunShadowHeight>

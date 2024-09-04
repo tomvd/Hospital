@@ -30,6 +30,7 @@ namespace Hospital.MainTab
                 Multiplayer.WatchBegin();
            var listingStandard = new Listing_Standard {ColumnWidth = inRect.width};
            listingStandard.Begin(inRect);
+           listingStandard.Label("HospitalSettings".Translate());
            listingStandard.CheckboxLabeled("AcceptPatients".Translate(), ref hospital.openForBusiness, "AcceptPatientsTooltip".Translate());
            /*listingStandard.SliderLabeled("BedsReserved".Translate(), ref hospital.bedsReserved, hospital.bedsReserved.ToString("0"), 0f, 10f,
                "BedsReservedTooltip".Translate());*/           
