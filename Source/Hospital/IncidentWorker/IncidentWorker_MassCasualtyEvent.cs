@@ -26,22 +26,23 @@ namespace Hospital
                 return false;
             }
             
-            if (!HospitalMod.Settings.MassCasualties)
+            Map map = (Map)parms.target;
+            if (!map.GetComponent<HospitalMapComponent>().MassCasualties)
             {
                 return false;
             }            
 
-            Map map = (Map)parms.target;
             return IncidentHelper.CanSpawnPatient(map);
         }
 
         public override bool TryExecuteWorker(IncidentParms parms)
         {
-            if (!HospitalMod.Settings.MassCasualties)
+            Map map = (Map)parms.target;
+            HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
+            if (!hospital.MassCasualties)
             {
                 return false;
             }            
-            Map map = (Map)parms.target;
             if (!IncidentHelper.CanSpawnPatient(map))
             {
                 return false;
@@ -49,7 +50,7 @@ namespace Hospital
 
             if (parms.pawnCount == 0)
             {
-                parms.pawnCount = map.GetComponent<HospitalMapComponent>().BedCount() + map.GetComponent<HospitalMapComponent>().BedCount() / 5; // a bit more than the hospital can handle.
+                parms.pawnCount = hospital.BedCount() + hospital.BedCount() / 5; // a bit more than the hospital can handle.
             }
             List<Faction> factions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
             parms.faction = factions.RandomElement();

@@ -59,7 +59,8 @@ namespace Hospital
         protected virtual PatientData SpawnPatient(Map map, Pawn pawn)
         {
             IncidentHelper.SetUpNewPatient(pawn);
-            PatientType type = (PatientType)Rand.Range(1, HospitalMod.Settings.AcceptSurgery?4:3);
+            HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
+            PatientType type = (PatientType)Rand.Range(1, hospital.AcceptSurgery?4:3);
             //type = PatientType.Surgery; // debug
             //Log.Message(pawn.Label + " -> " +type.ToString());
             PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
@@ -80,7 +81,6 @@ namespace Hospital
             activeDropPodInfo.spawnWipeMode = WipeMode.Vanish;
             DropPodUtility.MakeDropPodAt(loc, map, activeDropPodInfo);
             
-            HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
             PatientUtility.DamagePawn(pawn, data, hospital);
             hospital.PatientArrived(pawn, data);
             // this hack is needed to cancel the current patient goes to bed job and start a new one
