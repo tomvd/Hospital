@@ -111,6 +111,46 @@ namespace Hospital.Utilities
             if (pawn.needs?.mood == null) return 0;
             return Math.Min((pawn.needs.mood.CurInstantLevel - patientData.InitialMood)*3.5f, 100.0f);
         }
+        
+        public static bool DangersOnMap(Map map, out TaggedString reasons)
+        {
+
+            reasons = null;
+        
+            var fallout = map.GameConditionManager.ConditionIsActive(GameConditionDefOf.ToxicFallout);
+            var potentiallyDangerous = map.mapPawns.AllPawnsSpawned.Where(p => !p.Dead && !p.IsPrisoner && !p.Downed && !IsFogged(p) && !p.InContainerEnclosed).ToArray();
+            var hostileFactions = potentiallyDangerous.Where(p => p.Faction != null).Select(p => p.Faction).Where(f => f.HostileTo(Faction.OfPlayer)).ToArray();
+            var winter = map.GameConditionManager.ConditionIsActive(GameConditionDefOf.VolcanicWinter);
+            var manhunters = potentiallyDangerous.Where(p => p.InAggroMentalState);        
+
+            if (!fallout && !winter && !hostileFactions.Any() && !manhunters.Any()) return false; // All clear
+
+            var reasonList = new List<string>(); // string, so we can check for Distinct later
+            if (fallout) reasonList.Add("!!! " + GameConditionDefOf.ToxicFallout.LabelCap);
+            if (winter) reasonList.Add("!!! " + GameConditionDefOf.VolcanicWinter.LabelCap);
+
+            foreach (var f in hostileFactions)
+            {
+                reasonList.Add("!!! " + f.def.pawnsPlural.CapitalizeFirst());
+            }
+
+            var manhunterNames = manhunters.GroupBy(p => p.MentalStateDef);
+            foreach (var manhunter in manhunterNames)
+            {
+                if (manhunter.Count() > 1)
+                    reasonList.Add($"!!! {manhunter.First().GetKindLabelPlural()} ({manhunter.First().MentalStateDef.label})");
+                else if (manhunter.Count() == 1)
+                    reasonList.Add($"!!! {manhunter.First().LabelShort} ({manhunter.First().MentalStateDef.label})");
+            }
+
+            reasons = reasonList.Distinct().Aggregate((a, b) => a + " " + b);
+            return true;
+        }   
+        
+        public static bool IsFogged(Pawn pawn)
+        {
+            return pawn.MapHeld.fogGrid.IsFogged(pawn.PositionHeld);
+        }
 
 
     }

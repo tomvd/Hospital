@@ -40,6 +40,8 @@ public static class IncidentHelper
         var hospital = map.GetComponent<HospitalMapComponent>();
         if (!hospital.IsOpen()) return false;
         if (hospital.IsFull()) return false;
+        if (map.GameConditionManager.ConditionIsActive(GameConditionDefOf.ToxicFallout)) return false;
+        if (map.GameConditionManager.ConditionIsActive(GameConditionDefOf.VolcanicWinter)) return false;
         //Log.Message((int)HospitalMod.Settings.PatientLimit + " - " + map.GetComponent<HospitalMapComponent>().Patients.Count);
         IntVec3 cell;
         return TryFindEntryCell(map, out cell);

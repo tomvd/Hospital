@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Hospital.Utilities;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -42,7 +43,13 @@ namespace Hospital.MainTab
             Text.Anchor = TextAnchor.LowerLeft;
             Rect label = rect;
             label.y += 3f;
-            Widgets.Label(label,  "BedsFilled".Translate(patientCountCached,bedCountCached));
+            if (PatientUtility.DangersOnMap(currentMap, out var reasons))
+            {
+                GUI.color = Color.red;
+                Widgets.Label(label, reasons);
+            }
+            else
+                Widgets.Label(label,  "BedsFilled".Translate(patientCountCached,bedCountCached));
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
             Text.Font = GameFont.Small;

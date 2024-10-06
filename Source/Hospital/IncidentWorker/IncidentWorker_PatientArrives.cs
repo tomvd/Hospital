@@ -28,12 +28,19 @@ namespace Hospital
             {
                 return false;
             }
-            List<Faction> factions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && f.AllyOrNeutralTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
-            /*foreach (Faction def in factions)
-            {
-                Log.Message(def.def.defName);
-            } */           
-            parms.faction = factions.RandomElement();
+            List<Faction> potentialPatientFactions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && f.AllyOrNeutralTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
+            
+            var activePawns = map.mapPawns.AllPawnsSpawned.Where(p => !p.Dead && !p.IsPrisoner && !p.Downed && !PatientUtility.IsFogged(p) && !p.InContainerEnclosed).ToArray();
+            var manhunters = activePawns.Where(p => p.InAggroMentalState);
+            if (manhunters.Any()) return false; // not a good idea to visit now :)
+            
+            // remove all factions that could get hostile with a pawn on the map - or if the player is currently has hostile pawns visiting
+            potentialPatientFactions.RemoveAll(faction => 
+                activePawns.Where(p => p.Faction != null).Select(p => p.Faction).Any(f => f.HostileTo(Faction.OfPlayer) || f.HostileTo(faction)));
+            
+            if (potentialPatientFactions.Count == 0) return false;
+      
+            parms.faction = potentialPatientFactions.RandomElement();
             Pawn pawn = IncidentHelper.GeneratePawn(parms.faction);
 
             PatientData patient = SpawnPatient(map, pawn);
