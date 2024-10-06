@@ -28,12 +28,19 @@ namespace Hospital
             {
                 return false;
             }
-            List<Faction> factions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && f.AllyOrNeutralTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
-            /*foreach (Faction def in factions)
-            {
-                Log.Message(def.def.defName);
-            } */           
-            parms.faction = factions.RandomElement();
+            List<Faction> potentialPatientFactions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && f.AllyOrNeutralTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
+            
+            var activePawns = map.mapPawns.AllPawnsSpawned.Where(p => !p.Dead && !p.IsPrisoner && !p.Downed && !PatientUtility.IsFogged(p) && !p.InContainerEnclosed).ToArray();
+            var manhunters = activePawns.Where(p => p.InAggroMentalState);
+            if (manhunters.Any()) return false; // not a good idea to visit now :)
+            
+            // remove all factions that could get hostile with a pawn on the map - or if the player is currently has hostile pawns visiting
+            potentialPatientFactions.RemoveAll(faction => 
+                activePawns.Where(p => p.Faction != null).Select(p => p.Faction).Any(f => f.HostileTo(Faction.OfPlayer) || f.HostileTo(faction)));
+            
+            if (potentialPatientFactions.Count == 0) return false;
+      
+            parms.faction = potentialPatientFactions.RandomElement();
             Pawn pawn = IncidentHelper.GeneratePawn(parms.faction);
 
             PatientData patient = SpawnPatient(map, pawn);
@@ -59,7 +66,8 @@ namespace Hospital
         protected virtual PatientData SpawnPatient(Map map, Pawn pawn)
         {
             IncidentHelper.SetUpNewPatient(pawn);
-            PatientType type = (PatientType)Rand.Range(1, HospitalMod.Settings.AcceptSurgery?4:3);
+            HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
+            PatientType type = (PatientType)Rand.Range(1, hospital.AcceptSurgery?4:3);
             //type = PatientType.Surgery; // debug
             //Log.Message(pawn.Label + " -> " +type.ToString());
             PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
@@ -80,7 +88,6 @@ namespace Hospital
             activeDropPodInfo.spawnWipeMode = WipeMode.Vanish;
             DropPodUtility.MakeDropPodAt(loc, map, activeDropPodInfo);
             
-            HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
             PatientUtility.DamagePawn(pawn, data, hospital);
             hospital.PatientArrived(pawn, data);
             // this hack is needed to cancel the current patient goes to bed job and start a new one

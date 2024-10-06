@@ -25,6 +25,8 @@ namespace Hospital
         };
         public List<RecipeDef> refusedOperations = new List<RecipeDef>();
         public FoodPolicy PatientFoodPolicy;
+        public bool MassCasualties;
+        public bool AcceptSurgery;
         
         public HospitalMapComponent(Map map) : base(map)
         {
@@ -52,6 +54,8 @@ namespace Hospital
             Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList);
             Scribe_References.Look(ref PatientFoodPolicy, "PatientFoodPolicy");
             PatientFoodPolicy ??= Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
+            Scribe_Values.Look(ref MassCasualties, "massCasualties", false);
+            Scribe_Values.Look(ref AcceptSurgery, "acceptSurgery", true);
         }
 
         public bool IsOpen()
