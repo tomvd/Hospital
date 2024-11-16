@@ -50,7 +50,7 @@ namespace Hospital
 
             if (parms.pawnCount == 0)
             {
-                parms.pawnCount = hospital.BedCount() + hospital.BedCount() / 5; // a bit more than the hospital can handle.
+                parms.pawnCount = hospital.BedCount() + Rand.Range(-hospital.BedCount() / 5, 1); // a bit more than the hospital can handle.
             }
             List<Faction> factions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
             parms.faction = factions.RandomElement();

@@ -18,8 +18,7 @@ public class PatientOutcome_Patches
         [HarmonyPrefix]
         public static void Prefix(Pawn __instance)
         {
-            HospitalMapComponent hospitalMapComponent;
-            if (__instance.IsPatient(out hospitalMapComponent)) hospitalMapComponent.PatientDied(__instance);
+            if (__instance.IsPatient(out var hospital)) hospital.PatientDied(__instance);
         }
     }
     
@@ -32,8 +31,7 @@ public class PatientOutcome_Patches
         [HarmonyPrefix]
         public static void Prefix(Pawn patient, Pawn surgeon)
         {
-            HospitalMapComponent hospitalMapComponent;
-            if (patient.IsPatient(out hospitalMapComponent)) hospitalMapComponent.SurgeryFailed(patient);
+            if (patient.IsPatient(out var hospital)) hospital.SurgeryFailed(patient);
         }
     }
     
@@ -48,7 +46,11 @@ public class PatientOutcome_Patches
         public static bool Prefix(Pawn member, bool freed)
         {
             HospitalMapComponent hospital = member?.Map?.GetComponent<HospitalMapComponent>();
-            if (hospital != null && hospital.IsOpen()) return false;
+            if (hospital != null && hospital.GetPatientData(member, out var patientData))
+            {
+                hospital.PatientLeftTheMap(member);
+                return false;
+            }
             return true;
         }
     }        

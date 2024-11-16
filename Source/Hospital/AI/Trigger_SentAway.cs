@@ -24,8 +24,8 @@ namespace Hospital
             //Log.Message($"SentAway? HasHediffsNeedingTend? {pawn.health.HasHediffsNeedingTend()} ShouldSeekMedicalRest? {HealthAIUtility.ShouldSeekMedicalRest(pawn)} pawn.health.surgeryBills.Count? {pawn.health.surgeryBills.Count } pawn.health.healthState? {pawn.health.healthState}");
             if (pawn?.Map == null) return false; // has not arrived yet...
             
-            var canbedismissed =  (!pawn.health.HasHediffsNeedingTend() 
-                                   && !HealthAIUtility.ShouldSeekMedicalRest(pawn)
+            bool canbedismissed =  (!pawn.health.HasHediffsNeedingTend() 
+                                   && !HealthAIUtility.ShouldSeekMedicalRestUrgent(pawn)
                                    && pawn.health.surgeryBills.Count == 0
                                    && pawn.health.healthState == PawnHealthState.Mobile);
             //Log.Message("result=" + canbedismissed);

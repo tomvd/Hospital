@@ -18,7 +18,7 @@ namespace Hospital.MainTab
             }
 
             PatientData patientData;
-            if (hospital.Patients.TryGetValue(pawn, out patientData))
+            if (hospital.GetPatientData(pawn, out patientData))
             {
                 return patientData.Cure;
             }

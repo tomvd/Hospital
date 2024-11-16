@@ -12,7 +12,7 @@ namespace Hospital.MainTab
 
         public override PawnTableDef PawnTableDef => pawnTableDef ??= DefDatabase<PawnTableDef>.GetNamed("Patients");
 
-        public override IEnumerable<Pawn> Pawns => Find.CurrentMap.GetComponent<HospitalMapComponent>().Patients.Keys;
+        public override IEnumerable<Pawn> Pawns => Find.CurrentMap.GetComponent<HospitalMapComponent>().ActivePatientsList();
 
       /*  public override void PostOpen()
         {

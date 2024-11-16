@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Hospital.Utilities;
 using RimWorld;
 using Verse;
 
@@ -21,10 +22,10 @@ public static class IncidentHelper
     
     public static IEnumerable<Pawn> GetKnownPawns(IncidentParms parms)
     {
-        return Find.WorldPawns.AllPawnsAlive.Where(pawn => ValidGuest(pawn, parms.faction));
+        return Find.WorldPawns.AllPawnsAlive.Where(pawn => ValidPatient(pawn, parms.faction));
     }
 
-    private static bool ValidGuest(Pawn pawn, Faction faction)
+    private static bool ValidPatient(Pawn pawn, Faction faction)
     {
         var validGuest = !pawn.Discarded && !pawn.Dead && !pawn.Spawned && !pawn.NonHumanlikeOrWildMan() && !pawn.Downed && pawn.Faction == faction;
         if (!validGuest) return false;
@@ -32,6 +33,7 @@ public static class IncidentHelper
         if (faction.leader == pawn && faction.PlayerGoodwill < 80) return false;
         if (pawn.kindDef == PawnKindDefOf.Empire_Royal_Bestower) return false;
         if (QuestUtility.IsReservedByQuestOrQuestBeingGenerated(pawn)) return false;
+        if (pawn.IsPatient(out _, true)) return false;
         return true;
     }        
 

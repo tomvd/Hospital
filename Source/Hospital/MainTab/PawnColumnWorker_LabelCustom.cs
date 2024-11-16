@@ -26,7 +26,7 @@ namespace Hospital.MainTab
             {
                 currentMap = Find.CurrentMap;
                 HospitalMapComponent hospital = currentMap.GetComponent<HospitalMapComponent>();
-                patientCountCached = hospital.Patients.Count;
+                patientCountCached = hospital.ActivePatientsList().Count();
                 full = hospital.IsFull();
                 bedCountCached = hospital.BedCount();
                 lastTimeCached = Time.unscaledTime;

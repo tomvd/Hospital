@@ -9,19 +9,18 @@ namespace Hospital.Utilities
 {
     public static class PatientUtility
     {
-        public static bool IsPatient(this Pawn pawn,out HospitalMapComponent hospital)
+        public static bool IsPatient(this Pawn pawn,out HospitalMapComponent hospital, bool includeDismissed = false)
         {
             hospital = null;
             if (pawn?.Map == null) return false;
-
             hospital = pawn.Map.GetComponent<HospitalMapComponent>(); // TODO cache this?
-            return hospital?.Patients.ContainsKey(pawn) == true;
+            if (hospital == null) return false;
+            return hospital.GetPatientData(pawn, out var patientData) && (!patientData.Dismissed || !includeDismissed);
         }
         public static void AddToBill(this Pawn pawn, HospitalMapComponent hospital, float silver)
         {
             if (pawn == null) return;
-            PatientData patientData = hospital.Patients.TryGetValue(pawn);
-            if (patientData == null) return;
+            if (!hospital.GetPatientData(pawn, out var patientData)) return;
             patientData.Bill += silver;
             patientData.Bill = Mathf.Clamp(patientData.Bill, 0, 4000);
         }
@@ -31,8 +30,7 @@ namespace Hospital.Utilities
             // idea: Rating new screen. Stars. Last 10 reviews. Store thoughts gained during stay. New thought about staff friendliness. Goodwill gained for 4 and 5 star. Loss for less than 3.
             score = 0.0f;
             if (pawn == null) return false;
-            PatientData patientData = hospital.Patients.TryGetValue(pawn);
-            if (patientData == null) return false;
+            if (!hospital.GetPatientData(pawn, out var patientData)) return false;
             score = Score(pawn, patientData);
             return true;
         }
@@ -41,8 +39,7 @@ namespace Hospital.Utilities
         {
             ticks = 0;
             if (pawn == null) return false;
-            PatientData patientData = hospital.Patients.TryGetValue(pawn);
-            if (patientData == null) return false;
+            if (!hospital.GetPatientData(pawn, out var patientData)) return false;
             ticks = GenDate.TicksGame - patientData.ArrivedAtTick;
             return true;
         }

@@ -111,6 +111,7 @@ namespace Hospital
                 Messages.Message($"{pawn.NameFullColored} died: -10 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -10, false);
                 RemoveFromPatientList(pawn);
+                PatientLeftTheMap(pawn);
             }
             // else - was not a patient?
         }
@@ -123,13 +124,14 @@ namespace Hospital
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -1, false);
                 patientData.Bill = 0f;
                 RemoveFromPatientList(pawn);
+                PatientLeftTheMap(pawn);
             }
             // else - was not a patient?
         }        
         
         public void DismissPatient(Pawn pawn)
         {
-            if (Patients.TryGetValue(pawn, out var patientData))
+            if (Patients.TryGetValue(pawn, out var patientData) && !patientData.Dismissed)
             {
                 Messages.Message(
                     $"{pawn.NameFullColored} dismissed.", MessageTypeDefOf.NeutralEvent);
@@ -141,10 +143,18 @@ namespace Hospital
 
         private void RemoveFromPatientList(Pawn pawn)
         {
-            Patients.Remove(pawn);    
+            if (Patients.TryGetValue(pawn, out var patientData))
+            {
+                patientData.Dismissed = true;
+            }
             pawn.playerSettings.selfTend = true; // in case the patient gets hurt while walking home
             pawn.guest.SetGuestStatus(null); // might fix the "patients stay hanging around" issue
             MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
+        }
+        
+        public void PatientLeftTheMap(Pawn pawn)
+        {
+            Patients.Remove(pawn);    
         }
 
         public bool IsSurgeryRecipeAllowed(RecipeDef recipe)
@@ -180,7 +190,7 @@ namespace Hospital
 
         public int FreeMedicalBeds()
         {
-            return BedCount() - Patients.Count;            
+            return BedCount() - Patients.Count(pair => !pair.Value.Dismissed);            
         }
 
         public int BedCount()
@@ -193,6 +203,16 @@ namespace Hospital
                 && bed.TryGetComp<CompHospitalBed>() != null
                 && bed.TryGetComp<CompHospitalBed>().Hospital
                 && bed.Map == map);
+        }
+
+        public IEnumerable<Pawn> ActivePatientsList()
+        {
+            return Patients.Where(pair => !pair.Value.Dismissed).Select(pair => pair.Key);
+        }
+
+        public bool GetPatientData(Pawn pawn, out PatientData patientData)
+        {
+            return Patients.TryGetValue(pawn, out patientData);
         }
     }
 
