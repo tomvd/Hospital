@@ -12,6 +12,7 @@
 		Run a hospital: if you have this mod enabled (and settings allow you to receive patients) and you have plenty of medical beds
 		patients will knock on your door asking for help with their disease, wounds or a surgery.
 	</description>
+	<modIconPath IgnoreIfNoMatchingField="True">HospitalModIcon</modIconPath>
 	<modDependencies>
 	<li>
 		<packageId>brrainz.harmony</packageId>
