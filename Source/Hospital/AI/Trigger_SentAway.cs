@@ -25,7 +25,7 @@ namespace Hospital
             if (pawn?.Map == null) return false; // has not arrived yet...
             
             bool canbedismissed =  (!pawn.health.HasHediffsNeedingTend() 
-                                   && !HealthAIUtility.ShouldSeekMedicalRestUrgent(pawn)
+                                   && !HealthAIUtility.ShouldSeekMedicalRest(pawn)
                                    && pawn.health.surgeryBills.Count == 0
                                    && pawn.health.healthState == PawnHealthState.Mobile);
             //Log.Message("result=" + canbedismissed);
