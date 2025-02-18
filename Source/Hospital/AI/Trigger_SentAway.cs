@@ -44,7 +44,7 @@ namespace Hospital
                 pawn.Map..treatment = "resting";
             }*/
 
-            return canbedismissed || !pawn.IsPatient(out _);
+            return canbedismissed || !pawn.IsPatient(out _, true);
         }
     }
 }

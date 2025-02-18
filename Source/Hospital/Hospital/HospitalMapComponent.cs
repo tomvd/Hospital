@@ -72,7 +72,7 @@ namespace Hospital
         
         public void PatientLeaves(Pawn pawn)
         {
-            if (Patients.TryGetValue(pawn, out var patientData))
+            if (Patients.TryGetValue(pawn, out var patientData) && !patientData.Dismissed)
             {
                 float silver = PatientUtility.CalculateSilverToReceive(pawn, patientData);
                 silver = Mathf.Clamp(silver, 0, 4000);
