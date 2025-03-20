@@ -203,10 +203,13 @@ public class SurgeryUtility
 		        {
 			        materialCost += ingredientCount.FixedIngredient.BaseMarketValue;		        
 		        }
-		        materialCost +=
-			        selectedRecipe.ingredients
-				        .Find(count => count.filter != null && count.filter.categories.Contains("Medicine")).count *
-			        ((int)pawn.playerSettings.medCare * 15.0f);
+
+				List<IngredientCount> foo = selectedRecipe.ingredients
+			        .FindAll(count => count.filter is { categories: not null } && count.filter.categories.Contains("Medicine"));
+		        if (!foo.Empty())
+		        {
+					materialCost += foo.First().count * ((int)pawn.playerSettings.medCare * 15.0f);
+		        }
 	        }
 	        patientData.Bill = Mathf.Clamp(timeCost,0,100) + Mathf.Clamp(materialCost,0, 3000);
 	        return false;
