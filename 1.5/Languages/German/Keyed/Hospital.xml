@@ -18,6 +18,8 @@
     <AcceptPatientsTooltip>Deaktivieren Sie dies, wenn Sie verhindern möchten, dass Patienten kommen.</AcceptPatientsTooltip>
     <AcceptSurgery>Operationen akzeptieren</AcceptSurgery>
     <AcceptSurgeryTooltip>Deaktivieren Sie dies, wenn Sie keine chirurgischen Ereignisse erhalten möchten.</AcceptSurgeryTooltip>
+    <AcceptDanger>Patienten bei Gefahr zulassen</AcceptDanger>
+    <AcceptDangerTooltip>Aktivieren Sie diese Option, um die Sicherheitsüberprüfung der Karte für ankommende Patienten zu überschreiben</AcceptDangerTooltip>
     <PatientLimit>Patientenlimit</PatientLimit>
     <PatientLimitTooltip>Maximale Anzahl der zu akzeptierenden Patienten, 0=unbegrenzt</PatientLimitTooltip>
     <PctBedsForColonists>% Betten für Kolonisten</PctBedsForColonists>

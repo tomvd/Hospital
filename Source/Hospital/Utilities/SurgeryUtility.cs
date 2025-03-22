@@ -26,7 +26,8 @@ public class SurgeryUtility
 		            && !recipe.defName.ToLower().Contains("admin")
 		            && !recipe.defName.ToLower().Contains("rib")
 		            && !recipe.defName.ToLower().Contains("harvest")
-		            && !recipe.defName.ToUpper().Contains("VREA")
+		            && !recipe.defName.ToUpper().Contains("VREA") // androids expanded
+		            && !recipe.defName.ToUpper().Contains("GR") // weird genetics expanded surgeries
 					)
 		        {
 			        if (!(from p in pawn.MapHeld.mapPawns.PawnsInFaction(Faction.OfPlayer)
@@ -204,11 +205,11 @@ public class SurgeryUtility
 			        materialCost += ingredientCount.FixedIngredient.BaseMarketValue;		        
 		        }
 
-				List<IngredientCount> foo = selectedRecipe.ingredients
+				List<IngredientCount> medicine = selectedRecipe.ingredients
 			        .FindAll(count => count.filter is { categories: not null } && count.filter.categories.Contains("Medicine"));
-		        if (!foo.Empty())
+		        if (!medicine.Empty())
 		        {
-					materialCost += foo.First().count * ((int)pawn.playerSettings.medCare * 15.0f);
+					materialCost += medicine.First().count * ((int)pawn.playerSettings.medCare * 15.0f);
 		        }
 	        }
 	        patientData.Bill = Mathf.Clamp(timeCost,0,100) + Mathf.Clamp(materialCost,0, 3000);

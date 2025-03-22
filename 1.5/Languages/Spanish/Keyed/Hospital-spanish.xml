@@ -17,6 +17,8 @@
    <AcceptPatientsTooltip>desmarcar esto si deseas evitar que los pacientes visiten</AcceptPatientsTooltip>
    <AcceptSurgery>Aceptar cirugías</AcceptSurgery>
    <AcceptSurgeryTooltip>desmarcar esto si no deseas recibir eventos de cirugía</AcceptSurgeryTooltip>
+   <AcceptDanger>Permitir pacientes en caso de peligro</AcceptDanger>
+   <AcceptDangerTooltip>Marca esta opción si deseas omitir la verificación de seguridad del mapa para la llegada de pacientes</AcceptDangerTooltip>
    <PatientLimit>Límite de pacientes</PatientLimit>
    <PatientLimitTooltip>número máximo de pacientes para aceptar, 0=ilimitado</PatientLimitTooltip>
    <PctBedsForColonists>Pct camas para colonos</PctBedsForColonists>

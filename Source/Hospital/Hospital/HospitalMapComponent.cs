@@ -27,6 +27,7 @@ namespace Hospital
         public FoodPolicy PatientFoodPolicy;
         public bool MassCasualties;
         public bool AcceptSurgery;
+        public bool AcceptDanger;
         
         public HospitalMapComponent(Map map) : base(map)
         {
@@ -56,6 +57,7 @@ namespace Hospital
             PatientFoodPolicy ??= Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
             Scribe_Values.Look(ref MassCasualties, "massCasualties", false);
             Scribe_Values.Look(ref AcceptSurgery, "acceptSurgery", true);
+            Scribe_Values.Look(ref AcceptDanger, "AcceptDanger", false);
         }
 
         public bool IsOpen()

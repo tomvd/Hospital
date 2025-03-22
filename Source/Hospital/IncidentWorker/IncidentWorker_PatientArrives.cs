@@ -32,16 +32,26 @@ namespace Hospital
             
             var activePawns = map.mapPawns.AllPawnsSpawned.Where(p => !p.Dead && !p.IsPrisoner && !p.Downed && !PatientUtility.IsFogged(p) && !p.InContainerEnclosed).ToArray();
             var manhunters = activePawns.Where(p => p.InAggroMentalState);
-            if (manhunters.Any()) return false; // not a good idea to visit now :)
+            if (manhunters.Any() && !map.GetComponent<HospitalMapComponent>().AcceptDanger) return false; // not a good idea to visit now :)
             
             // remove all factions that could get hostile with a pawn on the map - or if the player is currently has hostile pawns visiting
             potentialPatientFactions.RemoveAll(faction => 
                 activePawns.Where(p => p.Faction != null).Select(p => p.Faction).Any(f => f.HostileTo(Faction.OfPlayer) || f.HostileTo(faction)));
             
             if (potentialPatientFactions.Count == 0) return false;
-      
-            parms.faction = potentialPatientFactions.RandomElement();
-            Pawn pawn = IncidentHelper.GeneratePawn(parms.faction);
+
+            bool goodPawnFound = false;
+            Pawn pawn = null;
+            do
+            {
+                goodPawnFound = true;
+                parms.faction = potentialPatientFactions.RandomElement();
+                pawn = IncidentHelper.GeneratePawn(parms.faction);
+                if (pawn.kindDef.defName.Contains("VREA") || !pawn.health.CanBleed)
+                {
+                    goodPawnFound = false; // if for some reason we got an android or any other weird creature
+                }
+            } while (!goodPawnFound);
 
             PatientData patient = SpawnPatient(map, pawn);
             var list = new List<Pawn> { pawn };

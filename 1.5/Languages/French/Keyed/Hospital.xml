@@ -19,6 +19,8 @@
     <AcceptPatientsTooltip>décochez cette case si vous souhaitez empêcher les patients de venir</AcceptPatientsTooltip>
     <AcceptSurgery>Accepter les opérations</AcceptSurgery>
     <AcceptSurgeryTooltip>décochez cette case si vous ne voulez pas recevoir d'événements chirurgicaux</AcceptSurgeryTooltip>
+    <AcceptDanger>Autoriser les patients en cas de danger</AcceptDanger>
+    <AcceptDangerTooltip>Cochez cette case si vous souhaitez ignorer la vérification de la sécurité de la carte pour l'arrivée des patients</AcceptDangerTooltip>
     <PatientLimit>Limite de patients</PatientLimit>
     <PatientLimitTooltip>nombre maximal de patients à accepter, 0=illimité</PatientLimitTooltip>
     <PctBedsForColonists>Pct lits pour colons</PctBedsForColonists>

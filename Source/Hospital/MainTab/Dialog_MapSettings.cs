@@ -31,11 +31,13 @@ namespace Hospital.MainTab
            var listingStandard = new Listing_Standard {ColumnWidth = inRect.width};
            listingStandard.Begin(inRect);
            listingStandard.Label("HospitalSettings".Translate());
+           listingStandard.Gap();
            listingStandard.CheckboxLabeled("AcceptPatients".Translate(), ref hospital.openForBusiness, "AcceptPatientsTooltip".Translate());
            /*listingStandard.SliderLabeled("BedsReserved".Translate(), ref hospital.bedsReserved, hospital.bedsReserved.ToString("0"), 0f, 10f,
                "BedsReservedTooltip".Translate());*/
            listingStandard.CheckboxLabeled("MassCasualties".Translate(), ref hospital.MassCasualties, "MassCasualtiesTooltip".Translate());
            listingStandard.CheckboxLabeled("AcceptSurgery".Translate(), ref hospital.AcceptSurgery, "AcceptSurgeryTooltip".Translate());
+           listingStandard.CheckboxLabeled("AcceptDanger".Translate(), ref hospital.AcceptDanger, "AcceptDangerTooltip".Translate());
            listingStandard.End();
            int y = 120;
            TimetableUtility.DoHeader(new Rect(0,y,inRect.width,50));

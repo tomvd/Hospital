@@ -20,7 +20,10 @@ public class DiseaseUtility
         && !def.defName.ToLower().Contains("sepsis")
         && !def.defName.ToLower().Contains("animal")
         && !def.defName.ToLower().Contains("gene")
-        && !def.defName.ToLower().Contains("infant")).ToList();
+        && !def.defName.ToLower().Contains("infant")
+        && !def.defName.Contains("GR") // exlcudes (mostly leathal) diseases from genetics expanded
+        && !def.defName.Contains("VDE") // excludes separation sickness
+        ).ToList();
         /*foreach (HediffDef def in list)
         {
             Log.Message(def.label);
@@ -32,7 +35,7 @@ public class DiseaseUtility
 
             hediff = HediffMaker.MakeHediff(list.RandomElement(), pawn);
             //Log.Message(hediff.def.label + " choosen" );
-            float severity = Rand.Range(hediff.def.lethalSeverity / 10.0f, hediff.def.lethalSeverity / 4.0f);
+            float severity = Rand.Range(hediff.def.lethalSeverity / 25.0f, hediff.def.lethalSeverity / 10.0f);
             hediff.Severity = severity - loweredSeverity;
             if (!pawn.health.WouldDieAfterAddingHediff(hediff))
             {

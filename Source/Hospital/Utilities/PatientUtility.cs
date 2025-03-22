@@ -113,6 +113,7 @@ namespace Hospital.Utilities
         {
 
             reasons = null;
+            if (map.GetComponent<HospitalMapComponent>().AcceptDanger) return false;
         
             var fallout = map.GameConditionManager.ConditionIsActive(GameConditionDefOf.ToxicFallout);
             var potentiallyDangerous = map.mapPawns.AllPawnsSpawned.Where(p => !p.Dead && !p.IsPrisoner && !p.Downed && !IsFogged(p) && !p.InContainerEnclosed).ToArray();
