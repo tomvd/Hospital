@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+   <PatientsTab>Pacientes</PatientsTab>
+   <BedsFilled>Camas ocupadas:</BedsFilled>
+   <DiagnosisWounds>heridas</DiagnosisWounds>
+   <CureWounds>atender heridas</CureWounds>
+   <CureDisease>aplicar medicina</CureDisease>
+   <DiagnosisSurgeryOnPart>problema con {0}</DiagnosisSurgeryOnPart>
+   <Dismiss>Despedir</Dismiss>
+   <Disallow>Rechazar operación</Disallow>
+   <RefusedOperations>Operaciones rechazadas:</RefusedOperations>
+   <!--  configuración  -->
+   <MapSettings>Política hospitalaria...</MapSettings>
+   <HospitalSettings>Política hospitalaria</HospitalSettings>
+   <AcceptPatients>Aceptar pacientes</AcceptPatients>
+   <AcceptPatientsTooltip>desmarcar esto si deseas evitar que los pacientes visiten</AcceptPatientsTooltip>
+   <AcceptSurgery>Aceptar cirugías</AcceptSurgery>
+   <AcceptSurgeryTooltip>desmarcar esto si no deseas recibir eventos de cirugía</AcceptSurgeryTooltip>
+   <AcceptDanger>Permitir pacientes en caso de peligro</AcceptDanger>
+   <AcceptDangerTooltip>Marca esta opción si deseas omitir la verificación de seguridad del mapa para la llegada de pacientes</AcceptDangerTooltip>
+   <PatientLimit>Límite de pacientes</PatientLimit>
+   <PatientLimitTooltip>número máximo de pacientes para aceptar, 0=ilimitado</PatientLimitTooltip>
+   <PctBedsForColonists>Pct camas para colonos</PctBedsForColonists>
+   <PctBedsForColonistsTooltip>Porcentaje de camas reservado para colonos</PctBedsForColonistsTooltip>
+   <SilverMultiplier>Multiplicador de plata</SilverMultiplier>
+   <SilverMultiplierTooltip>Cambia la factura de los pacientes en este porcentaje. (recomendado: 100%)</SilverMultiplierTooltip>
+   <ShowMessageAtArrival>Mostrar mensaje en lugar de carta</ShowMessageAtArrival>
+   <ShowMessageAtArrivalTooltip>Muestra un mensaje en lugar de una carta cuando llega un nuevo paciente.</ShowMessageAtArrivalTooltip>
+</LanguageData>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+    <PawnTableDef>
+        <defName>Patients</defName>
+        <workerClass>Hospital.MainTab.PawnTable_Patients</workerClass>
+        <columns>
+            <li>Hospital_LabelCustom</li>
+            <li>GapTiny</li>
+            <li>PatientDiagnosis</li>
+            <li>GapTiny</li>
+            <li>PatientCure</li>
+            <li>GapTiny</li>
+            <li>PatientRating</li>
+            <li>GapTiny</li>
+            <li>PatientTimeSpent</li>
+            <li>GapTiny</li>
+            <li>PatientBill</li>
+            <li>GapTiny</li>
+            <li>Dismiss</li>
+            <li>GapTiny</li>
+            <li>Disallow</li>
+            <li>RemainingSpace</li>
+        </columns>
+    </PawnTableDef>
+
+</Defs>

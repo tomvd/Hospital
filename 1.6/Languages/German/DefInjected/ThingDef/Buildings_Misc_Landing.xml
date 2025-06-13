@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+ <PatientLandingSpot.label>Landeplatz für Patienten</PatientLandingSpot.label>
+ <PatientLandingSpot.description>Bezeichnet einen Ort, an dem die Patienten abgesetzt werden.</PatientLandingSpot.description>
+ <PatientLandingSpot_Blueprint.label>Landeplatz für Patienten (Bauplan)</PatientLandingSpot_Blueprint.label>
+ <PatientLandingSpot_Frame.label>Landeplatz für Patienten (Gebäude)</PatientLandingSpot_Frame.label>
+ <PatientLandingSpot_Frame.description>Bezeichnet einen Ort, an dem die Patienten abgesetzt werden.</PatientLandingSpot_Frame.description>
+
+</LanguageData>

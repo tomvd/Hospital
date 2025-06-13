@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <PatientsTab>Patients</PatientsTab>
+    <BedsFilled>Beds in use: {0}/{1}</BedsFilled>
+    <DiagnosisWounds>wounds</DiagnosisWounds>
+    <CureWounds>tend to wounds</CureWounds>
+    <CureDisease>apply medicine</CureDisease>
+    <DiagnosisSurgeryOnPart>problem with {0}</DiagnosisSurgeryOnPart>
+    <DiagnosisSurgeryNoPart>needs an operation</DiagnosisSurgeryNoPart>
+    <DiagnosisArtificialBodyPart>wants a {0}</DiagnosisArtificialBodyPart>
+    <Dismiss>Dismiss</Dismiss>
+    <Disallow>Refuse operation</Disallow>
+    <RefusedOperations>Refused operations:</RefusedOperations>
+    <!-- settings -->
+    <MapSettings>Hospital Policies...</MapSettings>
+    <HospitalSettings>Hospital Policies</HospitalSettings>
+    <AcceptPatients>Accept patients</AcceptPatients>
+    <AcceptPatientsTooltip>uncheck this if you want to stop patients from visiting</AcceptPatientsTooltip>
+    <AcceptSurgery>Accept surgery</AcceptSurgery>
+    <AcceptSurgeryTooltip>uncheck this if you do not want to get surgery events</AcceptSurgeryTooltip>
+    <AcceptDanger>Allow patients during danger</AcceptDanger>
+    <AcceptDangerTooltip>check this if you want to override the check if the map if safe for patients to arrive</AcceptDangerTooltip>
+    <SilverMultiplier>Silver multiplier</SilverMultiplier>
+    <SilverMultiplierTooltip>Changes the patients bill by this percentage. (recommended: 100%)</SilverMultiplierTooltip>
+    <BedsReserved>Beds reserved for colonists</BedsReserved>
+    <BedsReservedTooltip>To make sure your beds are not all filled up with patients</BedsReservedTooltip>
+    <ShowMessageAtArrival>Show message instead of letter</ShowMessageAtArrival>
+    <ShowMessageAtArrivalTooltip>Shows as a message instead of a letter when a new patient arrives.</ShowMessageAtArrivalTooltip>
+    <MassCasualties>Enable mass casualty events</MassCasualties>
+    <MassCasualtiesTooltip>A MCE will sporadically overwhelm your hospital with patients.</MassCasualtiesTooltip>
+    <!-- button -->
+    <CommandBedSetAsHospitalLabel>Hospital Bed</CommandBedSetAsHospitalLabel>
+    <CommandBedSetAsHospitalDesc>Whether this bed is for patients.</CommandBedSetAsHospitalDesc>
+    <CommandBedSetAsSurgeryLabel>Surgery Bed</CommandBedSetAsSurgeryLabel>
+    <CommandBedSetAsSurgeryDesc>Whether this bed is for surgery patients.</CommandBedSetAsSurgeryDesc>
+    
+    <MCE_Pandemic>A pandemic</MCE_Pandemic>
+    <MCE_Raid>A big raid</MCE_Raid>
+    <MCE_Crash>A large plane crash</MCE_Crash>
+    <MCE_Fire>A large building fire</MCE_Fire>
+</LanguageData>

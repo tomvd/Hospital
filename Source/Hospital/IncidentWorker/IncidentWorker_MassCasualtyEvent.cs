@@ -104,7 +104,7 @@ namespace Hospital
                 loc = spot.Position;
             }
 
-            var activeDropPodInfo = new ActiveDropPodInfo();
+            var activeDropPodInfo = new ActiveTransporterInfo();
             activeDropPodInfo.innerContainer.TryAdd(pawn, 1);
             activeDropPodInfo.openDelay = 60;
             activeDropPodInfo.leaveSlag = false;

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+    <PatientsTab>Patienten</PatientsTab>
+    <BedsFilled>Belegte Betten: {0}/{1}</BedsFilled>
+    <DiagnosisWounds>Verletzungen</DiagnosisWounds>
+    <CureWounds>Verletzungen behandeln</CureWounds>
+    <CureDisease>Medikament anwenden</CureDisease>
+    <DiagnosisSurgeryOnPart>Problem mit {0}</DiagnosisSurgeryOnPart>
+    <DiagnosisSurgeryNoPart>Benötigt eine Operation</DiagnosisSurgeryNoPart>
+    <DiagnosisArtificialBodyPart>Möchte einen/eine {0}</DiagnosisArtificialBodyPart>
+    <Dismiss>Entlassen</Dismiss>
+    <Disallow>Operation ablehnen</Disallow>
+    <RefusedOperations>Abgelehnte Operationen:</RefusedOperations>
+    <!-- Einstellungen -->
+    <MapSettings>Krankenhauspolitik...</MapSettings>
+    <HospitalSettings>Krankenhauspolitik</HospitalSettings>
+    <AcceptPatients>Patienten akzeptieren</AcceptPatients>
+    <AcceptPatientsTooltip>Deaktivieren Sie dies, wenn Sie verhindern möchten, dass Patienten kommen.</AcceptPatientsTooltip>
+    <AcceptSurgery>Operationen akzeptieren</AcceptSurgery>
+    <AcceptSurgeryTooltip>Deaktivieren Sie dies, wenn Sie keine chirurgischen Ereignisse erhalten möchten.</AcceptSurgeryTooltip>
+    <AcceptDanger>Patienten bei Gefahr zulassen</AcceptDanger>
+    <AcceptDangerTooltip>Aktivieren Sie diese Option, um die Sicherheitsüberprüfung der Karte für ankommende Patienten zu überschreiben</AcceptDangerTooltip>
+    <PatientLimit>Patientenlimit</PatientLimit>
+    <PatientLimitTooltip>Maximale Anzahl der zu akzeptierenden Patienten, 0=unbegrenzt</PatientLimitTooltip>
+    <PctBedsForColonists>% Betten für Kolonisten</PctBedsForColonists>
+    <PctBedsForColonistsTooltip>Prozentsatz der für Kolonisten reservierten Betten</PctBedsForColonistsTooltip>
+    <SilverMultiplier>Silbermultiplikator</SilverMultiplier>
+    <SilverMultiplierTooltip>Ändert die Rechnung des Patienten um diesen Prozentsatz. (empfohlen: 100 %)</SilverMultiplierTooltip>
+    <ShowMessageAtArrival>Nachricht bei Ankunft anzeigen</ShowMessageAtArrival>
+    <ShowMessageAtArrivalTooltip>Zeigt eine Nachricht anstelle eines Briefes an, wenn ein neuer Patient ankommt.</ShowMessageAtArrivalTooltip>
+</LanguageData>
+
