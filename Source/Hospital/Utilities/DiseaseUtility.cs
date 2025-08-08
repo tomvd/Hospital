@@ -21,6 +21,7 @@ public class DiseaseUtility
         && !def.defName.ToLower().Contains("animal")
         && !def.defName.ToLower().Contains("gene")
         && !def.defName.ToLower().Contains("infant")
+        && !def.defName.ToLower().Contains("scaria")
         && !def.defName.Contains("GR") // exlcudes (mostly leathal) diseases from genetics expanded
         && !def.defName.Contains("VDE") // excludes separation sickness
         ).ToList();
