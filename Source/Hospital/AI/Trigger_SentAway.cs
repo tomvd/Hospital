@@ -24,9 +24,17 @@ namespace Hospital
             //Log.Message($"SentAway? HasHediffsNeedingTend? {pawn.health.HasHediffsNeedingTend()} ShouldSeekMedicalRest? {HealthAIUtility.ShouldSeekMedicalRest(pawn)} pawn.health.surgeryBills.Count? {pawn.health.surgeryBills.Count } pawn.health.healthState? {pawn.health.healthState}");
             if (pawn?.Map == null) return false; // has not arrived yet...
             
-            bool canbedismissed =  (!pawn.health.HasHediffsNeedingTend() 
+            // Check if patient has pending surgery billing
+            bool hasPendingSurgery = false;
+            if (pawn.IsPatient(out var hospital) && hospital.GetPatientData(pawn, out var patientData))
+            {
+                hasPendingSurgery = patientData.HasPendingSurgeryBill;
+            }
+
+            bool canbedismissed =  (!pawn.health.HasHediffsNeedingTend()
                                    && !HealthAIUtility.ShouldSeekMedicalRest(pawn)
                                    && pawn.health.surgeryBills.Count == 0
+                                   && !hasPendingSurgery
                                    && pawn.health.healthState == PawnHealthState.Mobile);
             //Log.Message("result=" + canbedismissed);
             // sometimes patients have to be reminded to stay in bed :)

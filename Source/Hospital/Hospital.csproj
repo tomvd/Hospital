@@ -33,14 +33,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Krafs.Publicizer" Version="1.0.3">
+        <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4489-beta" />
+        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4633" />
         <!-- Use Version="*-*" to get the latest beta! -->
         <PackageReference Include="Lib.Harmony" Version="*" ExcludeAssets="runtime" />
-        <PackageReference Include="RimWorld.MultiplayerAPI" Version="0.4.0" />
+        <PackageReference Include="RimWorld.MultiplayerAPI" Version="0.6.0" />
     </ItemGroup>
     <ItemGroup>
         <Publicize Include="Assembly-CSharp" />

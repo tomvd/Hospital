@@ -122,7 +122,7 @@ namespace Hospital
         {
             if (Patients.TryGetValue(pawn, out var patientData))
             {
-                Messages.Message($"{pawn.NameFullColored} failed: -5 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                Messages.Message($"{pawn.NameFullColored} failed: -1 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
                 pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -1, false);
                 patientData.Bill = 0f;
                 RemoveFromPatientList(pawn);
@@ -135,12 +135,16 @@ namespace Hospital
         {
             if (Patients.TryGetValue(pawn, out var patientData) && !patientData.Dismissed)
             {
+                // Clear pending surgery flag when manually dismissing
+                // (handles case where user removed surgery bill but patient is stuck)
+                patientData.HasPendingSurgeryBill = false;
+
                 Messages.Message(
                     $"{pawn.NameFullColored} dismissed.", MessageTypeDefOf.NeutralEvent);
                 RemoveFromPatientList(pawn);
             }
             // else - was not a patient?
-            
+
         }
 
         private void RemoveFromPatientList(Pawn pawn)
@@ -215,6 +219,14 @@ namespace Hospital
         public bool GetPatientData(Pawn pawn, out PatientData patientData)
         {
             return Patients.TryGetValue(pawn, out patientData);
+        }
+
+        public void AddSurgeryBill(Pawn pawn, float amount)
+        {
+            if (pawn == null) return;
+            if (!Patients.TryGetValue(pawn, out var patientData)) return;
+            patientData.Bill += amount;
+            patientData.Bill = Mathf.Clamp(patientData.Bill, 0, 4000);
         }
     }
 

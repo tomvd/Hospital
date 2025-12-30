@@ -147,10 +147,17 @@ public class SurgeryUtility
 				*/
 		        if (!part.def.canSuggestAmputation)
 		        {
-			        HediffDef hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(
-				        HealthUtility.RandomPermanentInjuryDamageType(part.def.frostbiteVulnerability > 0f &&
-				                                                      pawn.RaceProps.ToolUser), pawn, part);
-			        pawn.health.AddHediff(hediffDefFromDamage, part);			        
+			        // For organs (can't be amputated), damage them significantly so patient doesn't heal before surgery
+			        float partHealth = pawn.health.hediffSet.GetPartHealth(part);
+			        float desiredDamage = partHealth * 0.5f; // 50% damage to ensure they need the transplant
+
+			        DamageDef damageType = HealthUtility.RandomPermanentInjuryDamageType(
+				        part.def.frostbiteVulnerability > 0f && pawn.RaceProps.ToolUser);
+			        HediffDef hediffDefFromDamage = HealthUtility.GetHediffDefFromDamage(damageType, pawn, part);
+
+			        Hediff hediff = HediffMaker.MakeHediff(hediffDefFromDamage, pawn, part);
+			        hediff.Severity = desiredDamage;
+			        pawn.health.AddHediff(hediff, part);
 		        }
 		        else
 		        {
@@ -187,32 +194,9 @@ public class SurgeryUtility
 		        return true;
 	        }
 
-	        // cost of surgery based on required medical skill and amount of work
-	        float timeCost = 0;
-	        if (selectedRecipe.skillRequirements != null)
-	        {
-		        var medSkill = selectedRecipe.skillRequirements
-			        .Find(requirement => requirement.skill == SkillDefOf.Medicine);
-		        // cost of materials are added to this
-		        timeCost = (selectedRecipe.workAmount / 100f) * (medSkill?.minLevel ?? 0f);
-	        }
+	        // Mark that this patient has a pending surgery that needs billing
+	        patientData.HasPendingSurgeryBill = true;
 
-	        // fixed ingredients are prosthetics for example
-	        float materialCost = 0;
-	        if (selectedRecipe.ingredients != null) {
-		        foreach (IngredientCount ingredientCount in selectedRecipe.ingredients.Where(count => count.IsFixedIngredient))
-		        {
-			        materialCost += ingredientCount.FixedIngredient.BaseMarketValue;		        
-		        }
-
-				List<IngredientCount> medicine = selectedRecipe.ingredients
-			        .FindAll(count => count.filter is { categories: not null } && count.filter.categories.Contains("Medicine"));
-		        if (!medicine.Empty())
-		        {
-					materialCost += medicine.First().count * ((int)pawn.playerSettings.medCare * 15.0f);
-		        }
-	        }
-	        patientData.Bill = Mathf.Clamp(timeCost,0,100) + Mathf.Clamp(materialCost,0, 3000);
 	        return false;
         }
 }

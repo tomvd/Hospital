@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using HarmonyLib;
 using Hospital.Utilities;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Hospital.Patches;
