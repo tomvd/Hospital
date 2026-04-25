@@ -49,6 +49,8 @@ namespace Hospital
                 //    nameof(IncidentWorker_PatientArrives.TryExecuteWorker)));
                 //MP.RegisterSyncMethod(AccessTools.Method(typeof(TransitionAction_EnsureHaveNearbyExitDestination),
                 //    nameof(TransitionAction_EnsureHaveNearbyExitDestination.DoAction)));
+                MP.RegisterSyncMethodLambda(typeof(CompHospitalBed), nameof(CompHospitalBed.CompGetGizmosExtra), 1);
+                MP.RegisterSyncMethodLambda(typeof(CompHospitalBed), nameof(CompHospitalBed.CompGetGizmosExtra), 3);
 
             }
         }
