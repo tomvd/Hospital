@@ -12,7 +12,7 @@
     <Disallow>Refuse operation</Disallow>
     <RefusedOperations>Refused operations:</RefusedOperations>
     <!-- settings -->
-    <MapSettings>Hospital Policies...</MapSettings>
+    <HospitalMapSettings>Hospital Policies...</HospitalMapSettings>
     <HospitalSettings>Hospital Policies</HospitalSettings>
     <AcceptPatients>Accept patients</AcceptPatients>
     <AcceptPatientsTooltip>uncheck this if you want to stop patients from visiting</AcceptPatientsTooltip>

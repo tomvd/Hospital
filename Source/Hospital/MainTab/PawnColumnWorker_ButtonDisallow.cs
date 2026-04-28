@@ -32,7 +32,7 @@ namespace Hospital.MainTab {
 
         public override void DoHeader(Rect rect, PawnTable table)
         {
-            if (Widgets.ButtonText(rect, "MapSettings".Translate(), true, false))
+            if (Widgets.ButtonText(rect, "HospitalMapSettings".Translate(), true, false))
             {
                 Find.WindowStack.Add(new Dialog_MapSettings(Find.CurrentMap));
             }

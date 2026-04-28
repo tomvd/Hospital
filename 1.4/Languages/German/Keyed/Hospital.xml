@@ -12,7 +12,7 @@
     <Disallow>Operation ablehnen</Disallow>
     <RefusedOperations>Abgelehnte Operationen:</RefusedOperations>
     <!-- Einstellungen -->
-    <MapSettings>Karteneinstellungen...</MapSettings>
+    <HospitalMapSettings>Karteneinstellungen...</HospitalMapSettings>
     <AcceptPatients>Patienten akzeptieren</AcceptPatients>
     <AcceptPatientsTooltip>Deaktivieren Sie dies, wenn Sie verhindern möchten, dass Patienten kommen.</AcceptPatientsTooltip>
     <AcceptSurgery>Operationen akzeptieren</AcceptSurgery>

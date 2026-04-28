@@ -102,7 +102,7 @@ namespace Hospital
             }
             else
             {
-                Log.Message($"{pawn.NameFullColored} leaves but is not a patient anymore?");   
+                //Log.Message($"{pawn.NameFullColored} leaves but is not a patient anymore?");   
             }
         }
 

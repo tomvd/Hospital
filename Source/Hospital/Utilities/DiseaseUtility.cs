@@ -40,9 +40,10 @@ public class DiseaseUtility
             hediff.Severity = severity - loweredSeverity;
             if (!pawn.health.WouldDieAfterAddingHediff(hediff))
             {
-                /* special case - infection also adds a wound */
+                
                 if (hediff.def.defName.ToLower().Contains("infection"))
                 {
+                    /* special case - infection also adds a wound */
                     IEnumerable<BodyPartRecord> source = from x in pawn.health.hediffSet.GetNotMissingParts()
                         where pawn.health.hediffSet.GetPartHealth(x) >= 2f && x.def.canScarify
                         select x;
@@ -53,6 +54,19 @@ public class DiseaseUtility
                     BodyPartRecord bodyPartRecord = source.RandomElement();
                     WoundsUtility.DamagePart(pawn, 5, bodyPartRecord, out var s, DamageDefOf.Bite);
                     pawn.health.AddHediff(hediff, bodyPartRecord); 
+                }
+                else if (hediff.def.defName.ToLower().Contains("lung"))
+                {
+                    /* special case - lung rot is applied to left or right lung */
+                    IEnumerable<BodyPartRecord> source = from x in pawn.health.hediffSet.GetNotMissingParts()
+                        where x.def.defName.ToLower().Contains("lung")
+                        select x;
+                    if (!source.Any())
+                    {
+                        break;
+                    }
+                    BodyPartRecord bodyPartRecord = source.RandomElement();
+                    pawn.health.AddHediff(hediff, bodyPartRecord);
                 }
                 else
                 {
@@ -87,7 +101,7 @@ public class DiseaseUtility
         {
 
             //Log.Message(hediff.def.label + " choosen" );
-            float severity = Rand.Range(hediff.def.lethalSeverity / 10.0f, hediff.def.lethalSeverity / 4.0f);
+            float severity = Rand.Range(hediff.def.lethalSeverity / 20.0f, hediff.def.lethalSeverity / 10.0f);
             hediff.Severity = severity - loweredSeverity;
             if (!pawn.health.WouldDieAfterAddingHediff(hediff))
             {

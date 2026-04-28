@@ -13,7 +13,7 @@
     <Disallow>Refuser l'opération</Disallow>
     <RefusedOperations>Opérations refusées :</RefusedOperations>
     <!-- Paramètres -->
-    <MapSettings>Politique hospitalière...</MapSettings>
+    <HospitalMapSettings>Politique hospitalière...</HospitalMapSettings>
     <HospitalSettings>Politique hospitalière</HospitalSettings>
     <AcceptPatients>Accepter les patients</AcceptPatients>
     <AcceptPatientsTooltip>décochez cette case si vous souhaitez empêcher les patients de venir</AcceptPatientsTooltip>

@@ -12,11 +12,13 @@
     <Disallow>Refuse operation</Disallow>
     <RefusedOperations>Refused operations:</RefusedOperations>
     <!-- settings -->
-    <MapSettings>Map settings...</MapSettings>
+    <HospitalMapSettings>Hospital Policies...</HospitalMapSettings>
     <AcceptPatients>Accept patients</AcceptPatients>
     <AcceptPatientsTooltip>uncheck this if you want to stop patients from visiting</AcceptPatientsTooltip>
     <AcceptSurgery>Accept surgery</AcceptSurgery>
     <AcceptSurgeryTooltip>uncheck this if you do not want to get surgery events</AcceptSurgeryTooltip>
+    <AcceptDanger>Accept patients during danger</AcceptDanger>
+    <AcceptDangerTooltip>Allow patients to arrive even when the map has active threats (toxic fallout, hostile factions, manhunters, etc.)</AcceptDangerTooltip>
     <SilverMultiplier>Silver multiplier</SilverMultiplier>
     <SilverMultiplierTooltip>Changes the patients bill by this percentage. (recommended: 100%)</SilverMultiplierTooltip>
     <BedsReserved>Beds reserved for colonists</BedsReserved>

@@ -40,7 +40,6 @@ namespace Hospital
             // sometimes patients have to be reminded to stay in bed :)
             if (pawn.IsPatient(out _) && !canbedismissed && (pawn.mindState.duty == null || !pawn.mindState.duty.def.defName.Equals("Patient")))
             {
-                Log.Message("mindState duty was " + pawn.mindState.duty?.def.defName.ToStringSafe());
                 pawn.mindState.duty = new PawnDuty(DefDatabase<DutyDef>.GetNamed("Patient"), pawn.Position, 100f);
             }
             
