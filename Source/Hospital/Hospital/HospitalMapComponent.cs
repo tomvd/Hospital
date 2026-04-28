@@ -188,6 +188,11 @@ namespace Hospital
             }
         }
 
+        public void SetPatientFoodPolicy(FoodPolicy localRestriction)
+        {
+            PatientFoodPolicy = localRestriction;
+        }
+
         public bool IsFull()
         {
             // check if we have enough beds left for colonists
