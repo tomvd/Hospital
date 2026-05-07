@@ -1,3 +1,4 @@
+using System.Linq;
 using HarmonyLib;
 using Multiplayer.API;
 using RimWorld;
@@ -49,8 +50,25 @@ namespace Hospital
                 //    nameof(IncidentWorker_PatientArrives.TryExecuteWorker)));
                 //MP.RegisterSyncMethod(AccessTools.Method(typeof(TransitionAction_EnsureHaveNearbyExitDestination),
                 //    nameof(TransitionAction_EnsureHaveNearbyExitDestination.DoAction)));
-                MP.RegisterSyncMethodLambda(typeof(CompHospitalBed), nameof(CompHospitalBed.CompGetGizmosExtra), 1);
-                MP.RegisterSyncMethodLambda(typeof(CompHospitalBed), nameof(CompHospitalBed.CompGetGizmosExtra), 3);
+                // Use reflection to avoid a compile-time reference to ParentMethodType, which is present
+                // in the NuGet API package but absent in the DLL shipped by older Multiplayer mod installs.
+                // A direct call bakes the ParentMethodType token into Hospital.dll, causing TypeLoadException
+                // for every user when the Multiplayer mod's DLL loads first.
+                var registerLambda = typeof(MP).GetMethods()
+                    .FirstOrDefault(m => m.Name == nameof(MP.RegisterSyncMethodLambda));
+                if (registerLambda != null)
+                {
+                    var pms = registerLambda.GetParameters();
+                    foreach (int lambdaIndex in new[] { 1, 3 })
+                    {
+                        var args = new object[pms.Length];
+                        args[0] = typeof(CompHospitalBed);
+                        args[1] = nameof(CompHospitalBed.CompGetGizmosExtra);
+                        args[2] = lambdaIndex;
+                        for (int i = 3; i < pms.Length; i++) args[i] = pms[i].DefaultValue;
+                        registerLambda.Invoke(null, args);
+                    }
+                }
 
             }
         }
