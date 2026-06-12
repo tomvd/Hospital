@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/Source/">
+    <Project Path="Source/Hospital/Hospital.csproj" />
+  </Folder>
+</Solution>
