@@ -9,12 +9,11 @@ namespace Hospital.Utilities;
 
 public class DiseaseUtility
 {
-    public static bool AddRandomDisease(Pawn pawn, PatientData patientData)
+    // The universe of diseases the mod may inflict on a patient, before the per-map blacklist is applied.
+    // Shared by the patient generator and the blacklist picker dialog so they always agree.
+    public static IEnumerable<HediffDef> CandidateDiseases()
     {
-        bool retry = true;
-        float loweredSeverity = 0;
-        List<HediffDef> list = new List<HediffDef>();
-        list = DefDatabase<HediffDef>.defsList.Where(def => def.tendable && def.makesSickThought
+        return DefDatabase<HediffDef>.defsList.Where(def => def.tendable && def.makesSickThought
         //&& def.defName.ToLower().Contains("infection") //debug
         && !def.defName.ToLower().Contains("abasia")
         && !def.defName.ToLower().Contains("sepsis")
@@ -24,7 +23,19 @@ public class DiseaseUtility
         && !def.defName.ToLower().Contains("scaria")
         && !def.defName.Contains("GR") // exlcudes (mostly leathal) diseases from genetics expanded
         && !def.defName.Contains("VDE") // excludes separation sickness
-        ).ToList();
+        );
+    }
+
+    public static bool AddRandomDisease(Pawn pawn, PatientData patientData, HospitalMapComponent hospital)
+    {
+        bool retry = true;
+        float loweredSeverity = 0;
+        List<HediffDef> list = CandidateDiseases().Where(def => hospital.IsDiseaseAllowed(def)).ToList();
+        if (list.Count == 0)
+        {
+            Log.Message("tried to find a disease but they are all blacklisted");
+            return true; // fall back to wounds
+        }
         /*foreach (HediffDef def in list)
         {
             Log.Message(def.label);
@@ -36,7 +47,7 @@ public class DiseaseUtility
 
             hediff = HediffMaker.MakeHediff(list.RandomElement(), pawn);
             //Log.Message(hediff.def.label + " choosen" );
-            float severity = Rand.Range(hediff.def.lethalSeverity / 25.0f, hediff.def.lethalSeverity / 10.0f);
+            float severity = Rand.Range(hediff.def.lethalSeverity / 25.0f, hediff.def.lethalSeverity / 10.0f) * HospitalMod.Settings.DiseaseSeverityMultiplier;
             hediff.Severity = severity - loweredSeverity;
             if (!pawn.health.WouldDieAfterAddingHediff(hediff))
             {
@@ -101,7 +112,7 @@ public class DiseaseUtility
         {
 
             //Log.Message(hediff.def.label + " choosen" );
-            float severity = Rand.Range(hediff.def.lethalSeverity / 20.0f, hediff.def.lethalSeverity / 10.0f);
+            float severity = Rand.Range(hediff.def.lethalSeverity / 20.0f, hediff.def.lethalSeverity / 10.0f) * HospitalMod.Settings.DiseaseSeverityMultiplier;
             hediff.Severity = severity - loweredSeverity;
             if (!pawn.health.WouldDieAfterAddingHediff(hediff))
             {

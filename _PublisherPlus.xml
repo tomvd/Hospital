@@ -9,5 +9,6 @@
     <exclude>Hospital.slnx</exclude>
     <exclude>LICENSE</exclude>
     <exclude>Source</exclude>
+    <exclude>Textures\UI\Commands\PSDs</exclude>
   </Excluded>
 </Configuration>

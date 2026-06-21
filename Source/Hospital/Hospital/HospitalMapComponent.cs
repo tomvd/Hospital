@@ -24,6 +24,8 @@ namespace Hospital
             false,false,false,false
         };
         public List<RecipeDef> refusedOperations = new List<RecipeDef>();
+        public List<HediffDef> refusedDiseases = new List<HediffDef>();
+        public List<FactionDef> refusedFactions = new List<FactionDef>();
         public FoodPolicy PatientFoodPolicy;
         public bool MassCasualties;
         public bool AcceptSurgery;
@@ -47,9 +49,16 @@ namespace Hospital
                 false,false,false,false
             };
             refusedOperations ??= new List<RecipeDef>();
-            
+            refusedDiseases ??= new List<HediffDef>();
+            refusedFactions ??= new List<FactionDef>();
+
             Scribe_Collections.Look(ref openingHours, "openingHours");
             Scribe_Collections.Look(ref refusedOperations, "refusedOperations");
+            Scribe_Collections.Look(ref refusedDiseases, "refusedDiseases");
+            Scribe_Collections.Look(ref refusedFactions, "refusedFactions");
+            refusedOperations ??= new List<RecipeDef>();
+            refusedDiseases ??= new List<HediffDef>();
+            refusedFactions ??= new List<FactionDef>();
             Scribe_Values.Look(ref openForBusiness, "openForBusiness", false);
             Patients ??= new Dictionary<Pawn, PatientData>();
             Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList);
@@ -110,8 +119,9 @@ namespace Hospital
         {
             if (Patients.TryGetValue(pawn, out var patientData))
             {
-                Messages.Message($"{pawn.NameFullColored} died: -10 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
-                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -10, false);
+                int penalty = HospitalMod.Settings.DeathGoodwillPenalty;
+                Messages.Message($"{pawn.NameFullColored} died: -{penalty} "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -penalty, false);
                 RemoveFromPatientList(pawn);
                 PatientLeftTheMap(pawn);
             }
@@ -122,8 +132,9 @@ namespace Hospital
         {
             if (Patients.TryGetValue(pawn, out var patientData))
             {
-                Messages.Message($"{pawn.NameFullColored} failed: -1 "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
-                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -1, false);
+                int penalty = HospitalMod.Settings.SurgeryFailGoodwillPenalty;
+                Messages.Message($"{pawn.NameFullColored} failed: -{penalty} "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -penalty, false);
                 patientData.Bill = 0f;
                 RemoveFromPatientList(pawn);
                 PatientLeftTheMap(pawn);
@@ -166,6 +177,35 @@ namespace Hospital
         public bool IsSurgeryRecipeAllowed(RecipeDef recipe)
         {
             return !refusedOperations.Exists(def => def.Equals(recipe));
+        }
+
+        public bool IsDiseaseAllowed(HediffDef disease)
+        {
+            return !refusedDiseases.Exists(def => def.Equals(disease));
+        }
+
+        public bool IsFactionAllowed(FactionDef faction)
+        {
+            return !refusedFactions.Exists(def => def.Equals(faction));
+        }
+
+        // Generic toggles used by the blacklist dialog (registered as Multiplayer sync methods).
+        public void SetRefusedOperation(RecipeDef recipe, bool refused)
+        {
+            if (refused) { if (!refusedOperations.Contains(recipe)) refusedOperations.Add(recipe); }
+            else refusedOperations.Remove(recipe);
+        }
+
+        public void SetRefusedDisease(HediffDef disease, bool refused)
+        {
+            if (refused) { if (!refusedDiseases.Contains(disease)) refusedDiseases.Add(disease); }
+            else refusedDiseases.Remove(disease);
+        }
+
+        public void SetRefusedFaction(FactionDef faction, bool refused)
+        {
+            if (refused) { if (!refusedFactions.Contains(faction)) refusedFactions.Add(faction); }
+            else refusedFactions.Remove(faction);
         }
 
         public void RefuseOperation(Pawn pawn, RecipeDef recipe)

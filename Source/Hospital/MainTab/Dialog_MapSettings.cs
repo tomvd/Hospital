@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hospital.Utilities;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -79,26 +81,40 @@ namespace Hospital.MainTab
                 }));
                 Find.WindowStack.Add(new FloatMenu(list));
             }
-            rect.y += 23f;
-            rect2.y += 23f;
+            rect.y += 28f;
 
-            if (hospital.refusedOperations == null) return;
-            Widgets.Label(rect, "RefusedOperations".Translate());
-            rect2.x = 350;
-            rect.y += 20f;
-            rect2.y += 20f;
-            rect2.width = rect2.height;
-            foreach (var hospitalRefusedOperation in hospital.refusedOperations.ToList())
+            // Blacklist pickers - keep the settings window compact by opening a dedicated dialog per category.
+            Widgets.Label(new Rect(0f, rect.y, inRect.width, 24f), "Blacklists".Translate());
+            rect.y += 26f;
+
+            float btnWidth = inRect.width;
+            if (Widgets.ButtonText(new Rect(0f, rect.y, btnWidth, 30f),
+                    "BlacklistSurgeries".Translate(hospital.refusedOperations.Count)))
             {
-                Widgets.Label(rect, hospitalRefusedOperation.LabelCap);
-                if (Widgets.ButtonText(rect2, "X", true, false))
-                {
-                    hospital.UnRefuseOperation(hospitalRefusedOperation);
-                }
-                rect.y += 20;
-                rect2.y += 20f;
-                if (rect.y > 600) break; // sorry window is full :p
+                OpenBlacklist("BlacklistSurgeriesTitle".Translate(),
+                    SurgeryUtility.CandidateSurgeries(),
+                    d => !hospital.IsSurgeryRecipeAllowed((RecipeDef)d),
+                    (d, refused) => hospital.SetRefusedOperation((RecipeDef)d, refused));
             }
+            rect.y += 34f;
+            if (Widgets.ButtonText(new Rect(0f, rect.y, btnWidth, 30f),
+                    "BlacklistDiseases".Translate(hospital.refusedDiseases.Count)))
+            {
+                OpenBlacklist("BlacklistDiseasesTitle".Translate(),
+                    DiseaseUtility.CandidateDiseases(),
+                    d => !hospital.IsDiseaseAllowed((HediffDef)d),
+                    (d, refused) => hospital.SetRefusedDisease((HediffDef)d, refused));
+            }
+            rect.y += 34f;
+            if (Widgets.ButtonText(new Rect(0f, rect.y, btnWidth, 30f),
+                    "BlacklistFactions".Translate(hospital.refusedFactions.Count)))
+            {
+                OpenBlacklist("BlacklistFactionsTitle".Translate(),
+                    CandidateFactions(),
+                    d => !hospital.IsFactionAllowed((FactionDef)d),
+                    (d, refused) => hospital.SetRefusedFaction((FactionDef)d, refused));
+            }
+
             if (Multiplayer.IsRunning)
             {
                 for (int i = 0; i < hospital.openingHours.Count; i++)
@@ -111,6 +127,18 @@ namespace Hospital.MainTab
                 Multiplayer.WatchEnd();
             }
         }
+        private void OpenBlacklist(string title, IEnumerable<Def> candidates, Func<Def, bool> isBlacklisted, Action<Def, bool> setBlacklisted)
+        {
+            Find.WindowStack.Add(new Dialog_Blacklist(title, candidates, isBlacklisted, setBlacklisted));
+        }
+
+        // Humanlike factions that could send patients (matches the IncidentWorker_PatientArrives filter).
+        private static IEnumerable<Def> CandidateFactions()
+        {
+            return DefDatabase<FactionDef>.AllDefs
+                .Where(f => f.humanlikeFaction && !f.isPlayer && !f.hidden && !f.defName.ToUpper().Contains("VREA"));
+        }
+
         public override void PostClose()
         {
             base.PostClose();

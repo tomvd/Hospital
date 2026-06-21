@@ -8,6 +8,31 @@ namespace Hospital.Utilities;
 
 public class SurgeryUtility
 {
+        // True for surgery recipes the mod is willing to assign as a random "needs an operation" event.
+        // Mirrors the per-pawn filtering in AddRandomSurgeryBill, minus the runtime checks, so the
+        // blacklist picker dialog shows exactly the recipes that could otherwise show up.
+        public static bool IsBlacklistableSurgery(RecipeDef recipe)
+        {
+                return recipe.IsSurgery
+                       && !recipe.isViolation
+                       && !recipe.defName.ToLower().Contains("abasia")
+                       && !recipe.defName.ToLower().Contains("coma")
+                       && !recipe.defName.ToLower().Contains("remove")
+                       && !recipe.defName.ToLower().Contains("anesthetize")
+                       && !recipe.defName.ToLower().Contains("blood")
+                       && !recipe.defName.ToLower().Contains("admin")
+                       && !recipe.defName.ToLower().Contains("rib")
+                       && !recipe.defName.ToLower().Contains("harvest")
+                       && !recipe.defName.ToUpper().Contains("VREA") // androids expanded
+                       && !recipe.defName.ToUpper().Contains("GR"); // weird genetics expanded surgeries
+        }
+
+        // All surgeries applicable to humanlike patients that may be randomly assigned.
+        public static IEnumerable<RecipeDef> CandidateSurgeries()
+        {
+                return ThingDefOf.Human.AllRecipes.Where(IsBlacklistableSurgery).Distinct();
+        }
+
         public static bool AddRandomSurgeryBill(Pawn pawn, PatientData patientData, HospitalMapComponent hospital)
         {
 	        List<RecipeDef> list = new List<RecipeDef>();

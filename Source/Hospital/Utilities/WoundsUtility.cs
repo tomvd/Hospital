@@ -13,7 +13,7 @@ public class WoundsUtility
     {
         Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
         float rnd = Rand.Value;
-        int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
+        int damage = (int)(Mathf.Lerp(5.0f, 50.0f, rnd) * HospitalMod.Settings.WoundSeverityMultiplier);
         DamageParts(pawn, damage, null);
         patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
         patientData.Cure = "CureWounds".Translate();
@@ -65,7 +65,7 @@ public class WoundsUtility
     {
         Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
         float rnd = Rand.Value;
-        int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
+        int damage = (int)(Mathf.Lerp(5.0f, 50.0f, rnd) * HospitalMod.Settings.WoundSeverityMultiplier);
         DamageParts(pawn, damage, DamageDefOf.Bullet);
         patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
         patientData.Cure = "CureWounds".Translate();
@@ -76,7 +76,7 @@ public class WoundsUtility
     {
         Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
         float rnd = Rand.Value;
-        int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
+        int damage = (int)(Mathf.Lerp(5.0f, 50.0f, rnd) * HospitalMod.Settings.WoundSeverityMultiplier);
         DamageParts(pawn, damage, (new List<DamageDef>() {DamageDefOf.Crush, DamageDefOf.Scratch, DamageDefOf.Cut}).RandomElement());
         patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
         patientData.Cure = "CureWounds".Translate();
@@ -87,7 +87,7 @@ public class WoundsUtility
     {
         Rand.seed = (uint)pawn.health.summaryHealth.SummaryHealthPercent;
         float rnd = Rand.Value;
-        int damage = (int)Mathf.Lerp(5.0f, 50.0f, rnd);
+        int damage = (int)(Mathf.Lerp(5.0f, 50.0f, rnd) * HospitalMod.Settings.WoundSeverityMultiplier);
         DamageParts(pawn, damage, DamageDefOf.Burn);
         patientData.Bill = 10;// Medicine.GetMedicineCountToFullyHeal(pawn) * ((int)pawn.playerSettings.medCare * 15.0f);
         patientData.Cure = "CureWounds".Translate();

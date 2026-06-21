@@ -50,7 +50,7 @@ namespace Hospital.Utilities
             switch (patientData.Type)
             {
                 case PatientType.Disease:
-                    failed = DiseaseUtility.AddRandomDisease(pawn, patientData);
+                    failed = DiseaseUtility.AddRandomDisease(pawn, patientData, hospital);
                     break;
                 case PatientType.Wounds:
                     WoundsUtility.AddRandomWounds(pawn, patientData);
@@ -94,13 +94,16 @@ namespace Hospital.Utilities
         {
             if (pawn.needs?.mood == null) return 0;
             float score = Score(pawn, patientData);
-            if (score > 0.9f) return 5;
-            if (score > 0.8f) return 4;
-            if (score > 0.7f) return 3;
-            if (score > 0.6f) return 2;
-            if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdMinor) return 1; // ok stay
-            if (pawn.needs.mood.curLevelInt < pawn.mindState.mentalBreaker.BreakThresholdMajor) return -1; // very unhappy stay
-            return 0;
+            int baseGoodwill;
+            if (score > 0.9f) baseGoodwill = 5;
+            else if (score > 0.8f) baseGoodwill = 4;
+            else if (score > 0.7f) baseGoodwill = 3;
+            else if (score > 0.6f) baseGoodwill = 2;
+            else if (pawn.needs.mood.curLevelInt > pawn.mindState.mentalBreaker.BreakThresholdMinor) baseGoodwill = 1; // ok stay
+            else if (pawn.needs.mood.curLevelInt < pawn.mindState.mentalBreaker.BreakThresholdMajor) return -1; // very unhappy stay
+            else return 0;
+            // scale positive goodwill by the configurable difficulty multiplier
+            return Mathf.RoundToInt(baseGoodwill * HospitalMod.Settings.GoodwillGainMultiplier);
         }
 
         private static float Score(Pawn pawn, PatientData patientData)

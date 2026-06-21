@@ -11,6 +11,15 @@
     <Dismiss>Dismiss</Dismiss>
     <Disallow>Refuse operation</Disallow>
     <RefusedOperations>Refused operations:</RefusedOperations>
+    <!-- blacklists -->
+    <Blacklists>Blacklists</Blacklists>
+    <BlacklistHint>Checked entries are blacklisted and will not appear.</BlacklistHint>
+    <BlacklistSurgeries>Blacklisted surgeries ({0})...</BlacklistSurgeries>
+    <BlacklistDiseases>Blacklisted diseases ({0})...</BlacklistDiseases>
+    <BlacklistFactions>Blacklisted factions ({0})...</BlacklistFactions>
+    <BlacklistSurgeriesTitle>Blacklisted surgeries</BlacklistSurgeriesTitle>
+    <BlacklistDiseasesTitle>Blacklisted diseases</BlacklistDiseasesTitle>
+    <BlacklistFactionsTitle>Blacklisted factions</BlacklistFactionsTitle>
     <!-- settings -->
     <HospitalMapSettings>Hospital Policies...</HospitalMapSettings>
     <HospitalSettings>Hospital Policies</HospitalSettings>
@@ -22,6 +31,19 @@
     <AcceptDangerTooltip>check this if you want to override the check if the map if safe for patients to arrive</AcceptDangerTooltip>
     <SilverMultiplier>Silver multiplier</SilverMultiplier>
     <SilverMultiplierTooltip>Changes the patients bill by this percentage. (recommended: 100%)</SilverMultiplierTooltip>
+    <!-- difficulty -->
+    <DifficultySettings>Difficulty</DifficultySettings>
+    <GoodwillGainMultiplier>Goodwill gain multiplier</GoodwillGainMultiplier>
+    <GoodwillGainMultiplierTooltip>Scales the goodwill earned from happy patients leaving. (default: 100%)</GoodwillGainMultiplierTooltip>
+    <DeathGoodwillPenalty>Goodwill loss on patient death</DeathGoodwillPenalty>
+    <DeathGoodwillPenaltyTooltip>Goodwill lost with a faction when one of their patients dies. (default: 10)</DeathGoodwillPenaltyTooltip>
+    <SurgeryFailGoodwillPenalty>Goodwill loss on surgery failure</SurgeryFailGoodwillPenalty>
+    <SurgeryFailGoodwillPenaltyTooltip>Goodwill lost with a faction when a surgery on their patient fails. (default: 1)</SurgeryFailGoodwillPenaltyTooltip>
+    <DiseaseSeverityMultiplier>Disease severity multiplier</DiseaseSeverityMultiplier>
+    <DiseaseSeverityMultiplierTooltip>Scales how severe arriving patients' diseases are. Higher is harder. (default: 100%)</DiseaseSeverityMultiplierTooltip>
+    <WoundSeverityMultiplier>Wound severity multiplier</WoundSeverityMultiplier>
+    <WoundSeverityMultiplierTooltip>Scales how badly wounded arriving patients are. Higher is harder. (default: 100%)</WoundSeverityMultiplierTooltip>
+    <ResetToDefaults>Reset to defaults</ResetToDefaults>
     <BedsReserved>Beds reserved for colonists</BedsReserved>
     <BedsReservedTooltip>To make sure your beds are not all filled up with patients</BedsReservedTooltip>
     <ShowMessageAtArrival>Show message instead of letter</ShowMessageAtArrival>
