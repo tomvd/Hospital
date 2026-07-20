@@ -104,6 +104,16 @@ namespace Hospital
                 loc = spot.Position;
             }
 
+            HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
+
+            // Spawn the pawn on the map first so it has a valid Map while we apply damage/disease.
+            // Damaging an unspawned pawn (pawn.Map == null) collides with hediff comps and other
+            // mods' patches that dereference pawn.Map (sound makers, FleckMaker, CompPostPostAdd, ...).
+            GenSpawn.Spawn(pawn, loc, map);
+            PatientUtility.DamagePawn(pawn, data, hospital, type);
+
+            // Now scoop the (already damaged) pawn back into a drop pod for the arrival animation.
+            if (pawn.Spawned) pawn.DeSpawn();
             var activeDropPodInfo = new ActiveTransporterInfo();
             activeDropPodInfo.innerContainer.TryAdd(pawn, 1);
             activeDropPodInfo.openDelay = 60;
@@ -111,9 +121,7 @@ namespace Hospital
             activeDropPodInfo.despawnPodBeforeSpawningThing = true;
             activeDropPodInfo.spawnWipeMode = WipeMode.Vanish;
             DropPodUtility.MakeDropPodAt(loc, map, activeDropPodInfo);
-            
-            HospitalMapComponent hospital = map.GetComponent<HospitalMapComponent>();
-            PatientUtility.DamagePawn(pawn, data, hospital, type);
+
             hospital.PatientArrived(pawn, data);
             // this hack is needed to cancel the current patient goes to bed job and start a new one
             pawn.jobs.StopAll();
