@@ -22,41 +22,37 @@ namespace Hospital.Patches;
 public class Billing_Surgery_Patch
 {
     /// <summary>
-    /// Bill patients for artificial body part installations
+    /// Bill patients for any completed medical bill (surgery, implant install, natural
+    /// transplant, administered ingestible, ...).
+    ///
+    /// Previously this hooked three specific recipe worker classes
+    /// (Recipe_InstallArtificialBodyPart / Recipe_InstallNaturalBodyPart /
+    /// Recipe_AdministerIngestible), so any modded surgery or implant that uses its own
+    /// worker class was never billed and the patient paid 0 silver. Hooking the generic
+    /// bill-completion callback instead bills every medical bill regardless of the recipe's
+    /// worker class, which covers modded content (Integrated Implants, More Injuries, ...).
     /// </summary>
-    [HarmonyPatch(typeof(Recipe_InstallArtificialBodyPart), nameof(Recipe_InstallArtificialBodyPart.ApplyOnPawn))]
-    public class BillPatientsForArtificialTransplant
+    [HarmonyPatch(typeof(Bill), nameof(Bill.Notify_IterationCompleted))]
+    public class BillPatientsForMedicalBill
     {
-        [HarmonyPostfix]
-        public static void Postfix(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+        // Capture the patient in the prefix: Notify_IterationCompleted may delete the bill from
+        // its stack before returning, after which billStack.billGiver is no longer reachable.
+        [HarmonyPrefix]
+        public static void Prefix(Bill __instance, out Pawn __state)
         {
-            BillingHelper.BillForSurgery(pawn, bill);
+            __state = null;
+            if (__instance is Bill_Medical && __instance.billStack?.billGiver is Pawn pawn)
+            {
+                __state = pawn;
+            }
         }
-    }
 
-    /// <summary>
-    /// Bill patients for natural body part transplants (specific patch)
-    /// </summary>
-    [HarmonyPatch(typeof(Recipe_InstallNaturalBodyPart), nameof(Recipe_InstallNaturalBodyPart.ApplyOnPawn))]
-    public class BillPatientsForNaturalTransplant
-    {
         [HarmonyPostfix]
-        public static void Postfix(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+        public static void Postfix(Bill __instance, Pawn __state)
         {
-            BillingHelper.BillForSurgery(pawn, bill);
-        }
-    }
-
-    /// <summary>
-    /// Bill patients for administered ingestibles (e.g. psychite tea, drugs)
-    /// </summary>
-    [HarmonyPatch(typeof(Recipe_AdministerIngestible), nameof(Recipe_AdministerIngestible.ApplyOnPawn))]
-    public class BillPatientsForAdministeredIngestible
-    {
-        [HarmonyPostfix]
-        public static void Postfix(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
-        {
-            BillingHelper.BillForSurgery(pawn, bill);
+            // BillForSurgery no-ops for non-patients, so a failed surgery (whose patient was
+            // already removed from the roster) is naturally not billed.
+            if (__state != null) BillingHelper.BillForSurgery(__state, __instance);
         }
     }
 
