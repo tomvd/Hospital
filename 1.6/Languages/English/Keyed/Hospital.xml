@@ -48,6 +48,8 @@
     <BedsReservedTooltip>To make sure your beds are not all filled up with patients</BedsReservedTooltip>
     <ShowMessageAtArrival>Show message instead of letter</ShowMessageAtArrival>
     <ShowMessageAtArrivalTooltip>Shows as a message instead of a letter when a new patient arrives.</ShowMessageAtArrivalTooltip>
+    <PreventIncapacitatedArrivals>Prevent incapacitated arrivals</PreventIncapacitatedArrivals>
+    <PreventIncapacitatedArrivalsTooltip>Patients stop being wounded just before they would collapse, so they arrive hurt but still able to walk. Disable for tougher mass casualty events with downed patients you must rescue.</PreventIncapacitatedArrivalsTooltip>
     <MassCasualties>Enable mass casualty events</MassCasualties>
     <MassCasualtiesTooltip>A MCE will sporadically overwhelm your hospital with patients.</MassCasualtiesTooltip>
     <!-- button -->

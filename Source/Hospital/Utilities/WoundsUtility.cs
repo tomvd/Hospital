@@ -23,6 +23,7 @@ public class WoundsUtility
     private static void DamageParts(Pawn p, int totalDamage, DamageDef damageDef)
     {
         int it = 0;
+        bool avoidDowning = HospitalMod.Settings.PreventIncapacitatedArrivals;
         p.health.forceDowned = true;
         while (totalDamage > 0 && it < 300)
         {
@@ -37,8 +38,24 @@ public class WoundsUtility
             BodyPartRecord bodyPartRecord = source.RandomElement();
             if (DamagePart(p, totalDamage, bodyPartRecord, out var severity, damageDef)) break;
             totalDamage -= severity;
+            // Stop wounding once the patient is on the verge of collapsing, so they arrive
+            // hurt-but-mobile instead of already incapacitated (a downed patient can't be
+            // dismissed either, so this also lets cured mass-casualty patients leave).
+            // We keep at least one wound so the pawn still needs treatment.
+            if (avoidDowning && NearlyDowned(p)) break;
         }
         p.health.forceDowned = false;
+    }
+
+    // Approximates the vanilla downing triggers (unconsciousness, immobility, pain shock)
+    // with a safety margin, without relying on the pawn's transient forceDowned state.
+    private static bool NearlyDowned(Pawn p)
+    {
+        if (p.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness) < 0.40f) return true;
+        if (p.health.capacities.GetLevel(PawnCapacityDefOf.Moving) < 0.20f) return true;
+        float painShockThreshold = p.GetStatValue(StatDefOf.PainShockThreshold);
+        if (p.health.hediffSet.PainTotal >= painShockThreshold - 0.10f) return true;
+        return false;
     }
 
     public static bool DamagePart(Pawn p, int totalDamage, BodyPartRecord bodyPartRecord, out int severity, DamageDef damageDef)

@@ -7,6 +7,7 @@ namespace Hospital;
 public class Settings : ModSettings
 {
     public bool ShowMessageAtArrival;
+    public bool PreventIncapacitatedArrivals = true;
     public float SilverMultiplier = 1f;
 
     // Difficulty tuning - all defaults reproduce the original hardcoded behaviour.
@@ -20,6 +21,7 @@ public class Settings : ModSettings
     {
         Scribe_Values.Look(ref SilverMultiplier, "silverMultiplier", 1f);
         Scribe_Values.Look(ref ShowMessageAtArrival, "showMessageAtArrival", false);
+        Scribe_Values.Look(ref PreventIncapacitatedArrivals, "preventIncapacitatedArrivals", true);
         Scribe_Values.Look(ref GoodwillGainMultiplier, "goodwillGainMultiplier", 1f);
         Scribe_Values.Look(ref DeathGoodwillPenalty, "deathGoodwillPenalty", 10);
         Scribe_Values.Look(ref SurgeryFailGoodwillPenalty, "surgeryFailGoodwillPenalty", 1);
@@ -34,6 +36,7 @@ public class Settings : ModSettings
         listingStandard.Begin(inRect);
 
         listingStandard.CheckboxLabeled("ShowMessageAtArrival".Translate(), ref ShowMessageAtArrival, "ShowMessageAtArrivalTooltip".Translate());
+        listingStandard.CheckboxLabeled("PreventIncapacitatedArrivals".Translate(), ref PreventIncapacitatedArrivals, "PreventIncapacitatedArrivalsTooltip".Translate());
 
         listingStandard.GapLine();
         Text.Font = GameFont.Medium;
@@ -70,6 +73,7 @@ public class Settings : ModSettings
 
     private void ResetToDefaults()
     {
+        PreventIncapacitatedArrivals = true;
         SilverMultiplier = 1f;
         GoodwillGainMultiplier = 1f;
         DeathGoodwillPenalty = 10;
