@@ -171,7 +171,21 @@ namespace Hospital
         
         public void PatientLeftTheMap(Pawn pawn)
         {
-            Patients.Remove(pawn);    
+            Patients.Remove(pawn);
+        }
+
+        // A patient the player captured and recruited is now a colonist. Purge any lingering
+        // patient state so they behave like a normal colonist: drop the roster entry and clear
+        // the forced "Patient" go-to-bed duty (otherwise they refuse to work and just wander).
+        public void StopBeingPatient(Pawn pawn)
+        {
+            if (pawn == null) return;
+            bool wasKnown = Patients.Remove(pawn);
+            if (pawn.mindState?.duty?.def != null && pawn.mindState.duty.def.defName == "Patient")
+            {
+                pawn.mindState.duty = null;
+            }
+            if (wasKnown) MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
         }
 
         public bool IsSurgeryRecipeAllowed(RecipeDef recipe)

@@ -51,6 +51,22 @@ public class PatientOutcome_Patches
             }
             return true;
         }
-    }        
-    
+    }
+
+    /*
+     * A captured patient that gets recruited joins the player faction. Clear any lingering
+     * patient state, otherwise the new colonist keeps the "Patient" go-to-bed duty and just
+     * wanders / refuses to work. Arrest keeps the pawn's original faction, so this only fires
+     * on the recruit -> player-faction transition.
+     */
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.SetFaction))]
+    public static class SetFaction_ClearPatientState
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Pawn __instance, Faction newFaction)
+        {
+            if (newFaction != Faction.OfPlayer) return;
+            __instance?.MapHeld?.GetComponent<HospitalMapComponent>()?.StopBeingPatient(__instance);
+        }
+    }
 }
