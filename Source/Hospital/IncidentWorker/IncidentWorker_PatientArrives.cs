@@ -84,7 +84,9 @@ namespace Hospital
             PatientData data = new PatientData(GenDate.TicksGame, pawn.MarketValue, pawn.needs.mood.curLevelInt, type);
             //TryFindEntryCell(map, out var cell);
             //GenSpawn.Spawn(pawn, cell, map);
-            var spot = map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("PatientLandingSpot")).RandomElement();
+            // RandomElementWithFallback (not RandomElement) so an empty result - i.e. the player
+            // has not built a Patient Landing Spot - falls back silently instead of warning.
+            var spot = map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("PatientLandingSpot")).RandomElementWithFallback();
             var loc = DropCellFinder.TryFindSafeLandingSpotCloseToColony(map, IntVec2.Two);
             if (spot != null)
             {
