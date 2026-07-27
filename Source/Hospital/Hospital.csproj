@@ -7,7 +7,11 @@
         <TargetFramework>net472</TargetFramework>
         <LangVersion>latest</LangVersion>
         <PlatformTarget>x64</PlatformTarget>
-        <OutputPath>..\..\1.6\Assemblies\</OutputPath>
+        <!-- Which RimWorld version to build for. Defaults to 1.6, so an ordinary build is
+             unchanged; pass -p:RwVersion=1.5 to build the 1.5 assembly instead. The output
+             folder follows, so each build lands in its own version folder. -->
+        <RwVersion Condition="'$(RwVersion)'==''">1.6</RwVersion>
+        <OutputPath>..\..\$(RwVersion)\Assemblies\</OutputPath>
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -27,9 +31,23 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>portable</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>../../1.6/Assemblies</OutputPath>
+        <OutputPath>../../$(RwVersion)/Assemblies</OutputPath>
         <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>     
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+
+    <!-- Per-game-version package versions. This has to come after the Debug/Release groups,
+         which assign DefineConstants outright and would otherwise drop RW15. -->
+    <PropertyGroup Condition="'$(RwVersion)'=='1.6'">
+        <RimWorldRefVersion>1.6.4633</RimWorldRefVersion>
+        <MultiplayerApiVersion>0.6.0</MultiplayerApiVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(RwVersion)'=='1.5'">
+        <RimWorldRefVersion>1.5.4409</RimWorldRefVersion>
+        <!-- MultiplayerAPI 0.6.0 requires a 1.6 reference assembly; 0.5.0 needs only 1.4.3641. -->
+        <MultiplayerApiVersion>0.5.0</MultiplayerApiVersion>
+        <DefineConstants>$(DefineConstants);RW15</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -37,10 +55,10 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4633" />
+        <PackageReference Include="Krafs.Rimworld.Ref" Version="$(RimWorldRefVersion)" />
         <!-- Use Version="*-*" to get the latest beta! -->
         <PackageReference Include="Lib.Harmony" Version="*" ExcludeAssets="runtime" />
-        <PackageReference Include="RimWorld.MultiplayerAPI" Version="0.6.0" />
+        <PackageReference Include="RimWorld.MultiplayerAPI" Version="$(MultiplayerApiVersion)" />
     </ItemGroup>
     <ItemGroup>
         <Publicize Include="Assembly-CSharp" />

@@ -4,6 +4,10 @@ using Hospital.Utilities;
 using RimWorld;
 using Verse;
 using Verse.AI.Group;
+#if RW15
+// 1.6 renamed ActiveDropPodInfo to ActiveTransporterInfo. Same shape, same members.
+using ActiveTransporterInfo = RimWorld.ActiveDropPodInfo;
+#endif
 
 namespace Hospital
 {
