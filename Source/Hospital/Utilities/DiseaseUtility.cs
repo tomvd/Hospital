@@ -15,6 +15,7 @@ public class DiseaseUtility
     {
         return DefDatabase<HediffDef>.defsList.Where(def => def.tendable && def.makesSickThought
         //&& def.defName.ToLower().Contains("infection") //debug
+        && !CausesAggroMentalState(def)
         && !def.defName.ToLower().Contains("abasia")
         && !def.defName.ToLower().Contains("sepsis")
         && !def.defName.ToLower().Contains("animal")
@@ -24,6 +25,28 @@ public class DiseaseUtility
         && !def.defName.Contains("GR") // exlcudes (mostly leathal) diseases from genetics expanded
         && !def.defName.Contains("VDE") // excludes separation sickness
         );
+    }
+
+    // A disease that can push its host into an aggro mental state must never be handed to a
+    // patient. Vanilla scaria drives humanlikes permanently berserk, and a berserk pawn is
+    // hostile to everyone regardless of faction (GenHostility asks the mental state, not the
+    // faction), so colonists set to "attack" gun down a friendly visitor and the player eats
+    // the goodwill penalty plus the revenge raid.
+    //
+    // The defName blacklist in CandidateDiseases only catches vanilla scaria by name; this
+    // checks what the disease actually does, so modded equivalents are excluded too.
+    private static bool CausesAggroMentalState(HediffDef def)
+    {
+        if (def.stages == null) return false;
+        foreach (HediffStage stage in def.stages)
+        {
+            if (stage?.mentalStateGivers == null) continue;
+            foreach (MentalStateGiver giver in stage.mentalStateGivers)
+            {
+                if (giver?.mentalState != null && giver.mentalState.IsAggro) return true;
+            }
+        }
+        return false;
     }
 
     public static bool AddRandomDisease(Pawn pawn, PatientData patientData, HospitalMapComponent hospital)

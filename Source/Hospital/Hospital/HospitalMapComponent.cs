@@ -87,21 +87,27 @@ namespace Hospital
             {
                 float silver = PatientUtility.CalculateSilverToReceive(pawn, patientData);
                 silver = Mathf.Clamp(silver, 0, 4000);
+
+                // Goodwill and the departure message are not conditional on the bill. A patient
+                // can legitimately owe nothing - an implant install inflicts no wound, so nothing
+                // adds to their bill - and those patients used to walk out with no payment, no
+                // goodwill and no message at all, which reads as the mod doing nothing.
+                if (pawn.Faction != null)
+                {
+                    int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
+                    Messages.Message(
+                        $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", goodwill change: " +
+                        goodwill + " " +
+                        pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
+                    pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
+                }
+                else
+                {
+                    Messages.Message($"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney(), MessageTypeDefOf.NeutralEvent);
+                }
+
                 if (silver > 0)
                 {
-                    if (pawn.Faction != null)
-                    {
-                        int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
-                        Messages.Message(
-                            $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", goodwill change: " +
-                            goodwill + " " +
-                            pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
-                        pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
-                    }
-                    else
-                    {
-                        Messages.Message($"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney(), MessageTypeDefOf.NeutralEvent);                        
-                    }
                     var silverThing = ThingMaker.MakeThing(ThingDefOf.Silver);
                     silverThing.stackCount = (int)silver;
                     GenPlace.TryPlaceThing(silverThing, pawn.Position, pawn.Map, ThingPlaceMode.Near);
