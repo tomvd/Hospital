@@ -119,9 +119,12 @@ namespace Hospital
         {
             if (Patients.TryGetValue(pawn, out var patientData))
             {
-                int penalty = HospitalMod.Settings.DeathGoodwillPenalty;
-                Messages.Message($"{pawn.NameFullColored} died: -{penalty} "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
-                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -penalty, false);
+                if (pawn.Faction != null)
+                {
+                    int penalty = HospitalMod.Settings.DeathGoodwillPenalty;
+                    Messages.Message($"{pawn.NameFullColored} died: -{penalty} "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                    pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -penalty, false);
+                }
                 RemoveFromPatientList(pawn);
                 PatientLeftTheMap(pawn);
             }
@@ -132,9 +135,12 @@ namespace Hospital
         {
             if (Patients.TryGetValue(pawn, out var patientData))
             {
-                int penalty = HospitalMod.Settings.SurgeryFailGoodwillPenalty;
-                Messages.Message($"{pawn.NameFullColored} failed: -{penalty} "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
-                pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -penalty, false);
+                if (pawn.Faction != null)
+                {
+                    int penalty = HospitalMod.Settings.SurgeryFailGoodwillPenalty;
+                    Messages.Message($"{pawn.NameFullColored} failed: -{penalty} "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                    pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -penalty, false);
+                }
                 patientData.Bill = 0f;
                 RemoveFromPatientList(pawn);
                 PatientLeftTheMap(pawn);
