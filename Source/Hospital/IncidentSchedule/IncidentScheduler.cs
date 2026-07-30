@@ -27,7 +27,7 @@ public class IncidentScheduler : MapComponent
         base.MapComponentTick();
         if (GenTicks.TicksGame % 42 == 0) // every ingame minute
         {
-            int freebeds = Find.CurrentMap.GetComponent<HospitalMapComponent>().FreeMedicalBeds();
+            int freebeds = map.GetComponent<HospitalMapComponent>().FreeMedicalBeds();
             // every ingame minute there is a chance of patients arriving minute
             float baseChance = 0.004f; // 1% every minute, gives about a patient per 100 minutes  
             if (GenDate.DaysPassed % 2 == 0)
