@@ -57,6 +57,7 @@ namespace Hospital
                 parms.pawnCount = hospital.BedCount() + Rand.Range(-hospital.BedCount() / 5, 1); // a bit more than the hospital can handle.
             }
             List<Faction> factions = Find.FactionManager.AllFactions.Where(f => !f.IsPlayer && !f.defeated && !f.def.hidden && !f.HostileTo(Faction.OfPlayer) && f.def.humanlikeFaction && !f.def.defName.ToUpper().Contains("VREA")).ToList();
+            if (factions.Count == 0) return false;
             parms.faction = factions.RandomElement();
             /*foreach (Faction def in factions)
             {
