@@ -209,7 +209,9 @@ public class SurgeryUtility
 			        TranslatorFormattedStringExtensions.Translate("DiagnosisSurgeryOnPart", part.Label);
 	        }
 
-	        HealthCardUtility.CreateSurgeryBill(pawn, selectedRecipe, part, null, false);
+	        // Pass an empty ingredient list rather than null: vanilla accepts null, but other mods'
+	        // CreateSurgeryBill patches (e.g. Multi-Doctor Surgery) iterate it and throw.
+	        HealthCardUtility.CreateSurgeryBill(pawn, selectedRecipe, part, new List<Thing>(), false);
 	        patientData.Cure = selectedRecipe.Worker.GetLabelWhenUsedOn(pawn, part);
 	        patientData.CureRecipe = selectedRecipe;
 

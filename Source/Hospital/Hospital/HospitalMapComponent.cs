@@ -96,14 +96,14 @@ namespace Hospital
                 {
                     int goodwill = PatientUtility.CalculateGoodwillToGain(pawn, patientData);
                     Messages.Message(
-                        $"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney() + ", goodwill change: " +
-                        goodwill + " " +
-                        pawn.Faction.name, MessageTypeDefOf.NeutralEvent);
+                        "HospitalPatientLeaves".Translate(pawn.NameFullColored, silver.ToStringMoney(), goodwill,
+                            pawn.Faction.name), MessageTypeDefOf.NeutralEvent);
                     pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, goodwill, false);
                 }
                 else
                 {
-                    Messages.Message($"{pawn.NameFullColored} leaves: +" + silver.ToStringMoney(), MessageTypeDefOf.NeutralEvent);
+                    Messages.Message("HospitalPatientLeavesNoFaction".Translate(pawn.NameFullColored, silver.ToStringMoney()),
+                        MessageTypeDefOf.NeutralEvent);
                 }
 
                 if (silver > 0)
@@ -128,7 +128,8 @@ namespace Hospital
                 if (pawn.Faction != null)
                 {
                     int penalty = HospitalMod.Settings.DeathGoodwillPenalty;
-                    Messages.Message($"{pawn.NameFullColored} died: -{penalty} "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                    Messages.Message("HospitalPatientDied".Translate(pawn.NameFullColored, penalty, pawn.Faction.name),
+                        MessageTypeDefOf.PawnDeath);
                     pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -penalty, false);
                 }
                 RemoveFromPatientList(pawn);
@@ -144,7 +145,8 @@ namespace Hospital
                 if (pawn.Faction != null)
                 {
                     int penalty = HospitalMod.Settings.SurgeryFailGoodwillPenalty;
-                    Messages.Message($"{pawn.NameFullColored} failed: -{penalty} "+pawn.Faction.name, MessageTypeDefOf.PawnDeath);
+                    Messages.Message("HospitalSurgeryFailed".Translate(pawn.NameFullColored, penalty, pawn.Faction.name),
+                        MessageTypeDefOf.PawnDeath);
                     pawn.Faction.TryAffectGoodwillWith(Faction.OfPlayer, -penalty, false);
                 }
                 patientData.Bill = 0f;
@@ -162,8 +164,7 @@ namespace Hospital
                 // (handles case where user removed surgery bill but patient is stuck)
                 patientData.HasPendingSurgeryBill = false;
 
-                Messages.Message(
-                    $"{pawn.NameFullColored} dismissed.", MessageTypeDefOf.NeutralEvent);
+                Messages.Message("HospitalPatientDismissed".Translate(pawn.NameFullColored), MessageTypeDefOf.NeutralEvent);
                 RemoveFromPatientList(pawn);
             }
             // else - was not a patient?
@@ -239,8 +240,7 @@ namespace Hospital
             if (!refusedOperations.Exists(def => def.Equals(recipe)))
             {
                 refusedOperations.Add(recipe);
-                Messages.Message(
-                    $"{recipe.LabelCap} blacklisted.", MessageTypeDefOf.NeutralEvent); 
+                Messages.Message("HospitalBlacklisted".Translate(recipe.LabelCap), MessageTypeDefOf.NeutralEvent);
             }
 
             DismissPatient(pawn);

@@ -11,6 +11,13 @@
     <Dismiss>Dismiss</Dismiss>
     <Disallow>Refuse operation</Disallow>
     <RefusedOperations>Refused operations:</RefusedOperations>
+    <!-- messages -->
+    <HospitalPatientLeaves>{0} leaves: +{1}, goodwill change: {2} {3}</HospitalPatientLeaves>
+    <HospitalPatientLeavesNoFaction>{0} leaves: +{1}</HospitalPatientLeavesNoFaction>
+    <HospitalPatientDied>{0} died: -{1} {2}</HospitalPatientDied>
+    <HospitalSurgeryFailed>{0} failed: -{1} {2}</HospitalSurgeryFailed>
+    <HospitalPatientDismissed>{0} dismissed.</HospitalPatientDismissed>
+    <HospitalBlacklisted>{0} blacklisted.</HospitalBlacklisted>
     <!-- blacklists -->
     <Blacklists>Blacklists</Blacklists>
     <BlacklistHint>Checked entries are blacklisted and will not appear.</BlacklistHint>
