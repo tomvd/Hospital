@@ -61,12 +61,44 @@ namespace Hospital
             refusedFactions ??= new List<FactionDef>();
             Scribe_Values.Look(ref openForBusiness, "openForBusiness", false);
             Patients ??= new Dictionary<Pawn, PatientData>();
-            Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList);
+            // logNullErrors: false - a reference to a destroyed pawn is always saved as null, so a
+            // patient that was lost without being removed (see RemoveLostPatients) used to log
+            // "Null key while loading dictionary" on load. The null entry itself is just skipped.
+            Scribe_Collections.Look(ref Patients, "patients", LookMode.Reference, LookMode.Deep, ref _colonistsKeysWorkingList, ref _colonistsValuesWorkingList, logNullErrors: false);
             Scribe_References.Look(ref PatientFoodPolicy, "PatientFoodPolicy");
             PatientFoodPolicy ??= Current.Game.foodRestrictionDatabase.DefaultFoodRestriction();
             Scribe_Values.Look(ref MassCasualties, "massCasualties", false);
             Scribe_Values.Look(ref AcceptSurgery, "acceptSurgery", true);
             Scribe_Values.Look(ref AcceptDanger, "AcceptDanger", false);
+        }
+
+        public override void MapComponentTick()
+        {
+            base.MapComponentTick();
+            if (Find.TickManager.TicksGame % 2000 == 0) RemoveLostPatients();
+        }
+
+        // Safety net for patients that left without passing one of our hooks (kidnapped, carried
+        // off the map, destroyed by another mod, ...). They would keep a bed reserved forever.
+        private void RemoveLostPatients()
+        {
+            if (Patients.RemoveAll(pair => pair.Key == null || pair.Key.Destroyed || pair.Key.MapHeld != map) > 0)
+            {
+                MainTabWindowUtility.NotifyAllPawnTables_PawnsChanged();
+            }
+        }
+
+        // Finds the hospital a pawn is registered at, also when the pawn is not spawned
+        // (carried, in a container, already off the map) and so has no Map of its own.
+        public static HospitalMapComponent FindHospitalOf(Pawn pawn)
+        {
+            if (pawn == null) return null;
+            foreach (var m in Find.Maps)
+            {
+                var hospital = m.GetComponent<HospitalMapComponent>();
+                if (hospital != null && hospital.Patients.ContainsKey(pawn)) return hospital;
+            }
+            return null;
         }
 
         public bool IsOpen()

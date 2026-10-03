@@ -16,7 +16,8 @@ public class PatientOutcome_Patches
         [HarmonyPrefix]
         public static void Prefix(Pawn __instance)
         {
-            if (__instance.IsPatient(out var hospital)) hospital.PatientDied(__instance);
+            // not IsPatient: a patient dying while being carried has no Map and would be missed
+            HospitalMapComponent.FindHospitalOf(__instance)?.PatientDied(__instance);
         }
     }
     
@@ -43,8 +44,9 @@ public class PatientOutcome_Patches
         [HarmonyPrefix]
         public static bool Prefix(Pawn member, bool freed)
         {
-            HospitalMapComponent hospital = member?.Map?.GetComponent<HospitalMapComponent>();
-            if (hospital != null && hospital.GetPatientData(member, out var patientData))
+            // a patient carried off the map by a faction mate is not spawned, so don't rely on Map
+            HospitalMapComponent hospital = HospitalMapComponent.FindHospitalOf(member);
+            if (hospital != null)
             {
                 hospital.PatientLeftTheMap(member);
                 return false;
