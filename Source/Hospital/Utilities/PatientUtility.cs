@@ -44,46 +44,65 @@ namespace Hospital.Utilities
             return true;
         }
         
+        // The pawn currently receiving its arrival wounds/disease. It is not registered as a patient
+        // yet at that point, so patches on other mods' damage reactions check this instead.
+        public static Pawn PawnBeingInjured { get; private set; }
+
         public static void DamagePawn(Pawn pawn, PatientData patientData, HospitalMapComponent hospital)
         {
-            bool failed = false;
-            switch (patientData.Type)
+            PawnBeingInjured = pawn;
+            try
             {
-                case PatientType.Disease:
-                    failed = DiseaseUtility.AddRandomDisease(pawn, patientData, hospital);
-                    break;
-                case PatientType.Wounds:
+                bool failed = false;
+                switch (patientData.Type)
+                {
+                    case PatientType.Disease:
+                        failed = DiseaseUtility.AddRandomDisease(pawn, patientData, hospital);
+                        break;
+                    case PatientType.Wounds:
+                        WoundsUtility.AddRandomWounds(pawn, patientData);
+                        break;
+                    case PatientType.Surgery:
+                        failed = SurgeryUtility.AddRandomSurgeryBill(pawn, patientData, hospital);
+                        break;
+                }
+                if (failed)
+                {
+                    patientData.Type = PatientType.Wounds;
                     WoundsUtility.AddRandomWounds(pawn, patientData);
-	                break;
-                case PatientType.Surgery:
-                    failed = SurgeryUtility.AddRandomSurgeryBill(pawn, patientData, hospital);
-                    break;
+                }
             }
-            if (failed)
+            finally
             {
-                patientData.Type = PatientType.Wounds;
-                WoundsUtility.AddRandomWounds(pawn, patientData);
+                PawnBeingInjured = null;
             }
         }
         public static void DamagePawn(Pawn pawn, PatientData patientData, HospitalMapComponent hospital, IncidentWorker_MassCasualtyEvent.MCEType type)
         {
-
-            switch (type)
+            PawnBeingInjured = pawn;
+            try
             {
-                case IncidentWorker_MassCasualtyEvent.MCEType.Pandemic:
-                    DiseaseUtility.AddPlague(pawn, patientData);
-                    break;
-                case IncidentWorker_MassCasualtyEvent.MCEType.Raid:
-                    WoundsUtility.AddGunshotWounds(pawn, patientData);
-                    break;
-                case IncidentWorker_MassCasualtyEvent.MCEType.Crash:
-                    WoundsUtility.AddBruisesWounds(pawn, patientData);
-                    break;
-                case IncidentWorker_MassCasualtyEvent.MCEType.Fire:
-                    WoundsUtility.AddBurnWounds(pawn, patientData);
-                    break;
+                switch (type)
+                {
+                    case IncidentWorker_MassCasualtyEvent.MCEType.Pandemic:
+                        DiseaseUtility.AddPlague(pawn, patientData);
+                        break;
+                    case IncidentWorker_MassCasualtyEvent.MCEType.Raid:
+                        WoundsUtility.AddGunshotWounds(pawn, patientData);
+                        break;
+                    case IncidentWorker_MassCasualtyEvent.MCEType.Crash:
+                        WoundsUtility.AddBruisesWounds(pawn, patientData);
+                        break;
+                    case IncidentWorker_MassCasualtyEvent.MCEType.Fire:
+                        WoundsUtility.AddBurnWounds(pawn, patientData);
+                        break;
+                }
             }
-        }        
+            finally
+            {
+                PawnBeingInjured = null;
+            }
+        }
         
         public static float CalculateSilverToReceive(Pawn pawn, PatientData patientData)
         {
