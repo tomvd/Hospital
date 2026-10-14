@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+ <PatientLandingSpot.label>Zone d'atterrissage des patients</PatientLandingSpot.label>
+ <PatientLandingSpot.description>Désigne un endroit où les patients seront déposés.</PatientLandingSpot.description>
+ <PatientLandingSpot_Blueprint.label>Zone d'atterrissage des patients (plan)</PatientLandingSpot_Blueprint.label>
+ <PatientLandingSpot_Frame.label>Zone d'atterrissage des patients (bâtiment)</PatientLandingSpot_Frame.label>
+ <PatientLandingSpot_Frame.description>Désigne un endroit où les patients seront déposés.</PatientLandingSpot_Frame.description>
+
+</LanguageData>

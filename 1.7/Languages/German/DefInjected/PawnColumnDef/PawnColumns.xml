@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+    <PatientRating.label>Bewertung</PatientRating.label>
+    <PatientRating.headerTip>Wie glücklich der Patient ist.</PatientRating.headerTip>
+
+    <PatientTimeSpent.label>Verbrachte Zeit</PatientTimeSpent.label>
+    <PatientTimeSpent.headerTip>Wie viele Stunden der Patient in Ihrem Krankenhaus verbracht hat.</PatientTimeSpent.headerTip>
+
+    <PatientDiagnosis.label>Diagnose</PatientDiagnosis.label>
+    <PatientDiagnosis.headerTip>Was dem Patienten fehlt?</PatientDiagnosis.headerTip>
+
+    <PatientCure.label>Behandlung</PatientCure.label>
+    <PatientCure.headerTip>Was der Patient braucht.</PatientCure.headerTip>
+
+    <PatientBill.label>Rechnung</PatientBill.label>
+    <PatientBill.headerTip>Wie viel der Patient bezahlen muss.</PatientBill.headerTip>
+
+</LanguageData>
+

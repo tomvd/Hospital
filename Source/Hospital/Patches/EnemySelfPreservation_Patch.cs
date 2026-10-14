@@ -24,9 +24,10 @@ public static class EnemySelfPreservation_Patch
 
     public static MethodBase TargetMethod() => target;
 
-    // __0 is the damaged pawn (ESP's own "ref Pawn __instance" parameter)
+    // __0 is the damaged pawn (ESP's own "ref Pawn __instance" parameter). Taken by ref to
+    // match it exactly, since Harmony 3 (RimWorld 1.7) type-checks injected parameters.
     [HarmonyPrefix]
-    public static bool Prefix(Pawn __0)
+    public static bool Prefix(ref Pawn __0)
     {
         if (__0 == null) return true;
         if (__0 == PatientUtility.PawnBeingInjured) return false; // not registered as patient yet
