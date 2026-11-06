@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <AcceptDanger>Принимать пациентов во время опасности</AcceptDanger>
+  <AcceptDangerTooltip>Принимать пациентов без проверки безопасности карты.</AcceptDangerTooltip>
+  <AcceptPatients>Принимать пациентов</AcceptPatients>
+  <AcceptPatientsTooltip>Отключите, чтобы пациенты перестали прибывать.</AcceptPatientsTooltip>
+  <AcceptSurgery>Принимать на операции</AcceptSurgery>
+  <AcceptSurgeryTooltip>Отключите, чтобы прекратить поступление пациентов, которым нужны операции.</AcceptSurgeryTooltip>
+  <BedsFilled>Занято кроватей: {0}/{1}</BedsFilled>
+  <BedsReserved>Кроватей в резерве для поселенцев</BedsReserved>
+  <BedsReservedTooltip>Резерв не позволяет приезжим пациентам занять все кровати.</BedsReservedTooltip>
+  <BlacklistDiseases>Исключённые болезни ({0})…</BlacklistDiseases>
+  <BlacklistDiseasesTitle>Исключённые болезни</BlacklistDiseasesTitle>
+  <BlacklistFactions>Исключённые фракции ({0})…</BlacklistFactions>
+  <BlacklistFactionsTitle>Исключённые фракции</BlacklistFactionsTitle>
+  <BlacklistHint>Отмеченные пункты исключены и не будут появляться.</BlacklistHint>
+  <BlacklistSurgeries>Исключённые операции ({0})…</BlacklistSurgeries>
+  <BlacklistSurgeriesTitle>Исключённые операции</BlacklistSurgeriesTitle>
+  <Blacklists>Исключения</Blacklists>
+  <CommandBedSetAsHospitalDesc>Предназначена ли эта кровать для приезжих пациентов.</CommandBedSetAsHospitalDesc>
+  <CommandBedSetAsHospitalLabel>Для пациентов</CommandBedSetAsHospitalLabel>
+  <CommandBedSetAsSurgeryDesc>Предназначена ли эта кровать для пациентов, которым нужна операция.</CommandBedSetAsSurgeryDesc>
+  <CommandBedSetAsSurgeryLabel>Для операций</CommandBedSetAsSurgeryLabel>
+  <CureDisease>назначить медикаменты</CureDisease>
+  <CureWounds>обработать раны</CureWounds>
+  <DeathGoodwillPenalty>Ухудшение отношений при смерти пациента</DeathGoodwillPenalty>
+  <DeathGoodwillPenaltyTooltip>Насколько ухудшаются отношения с фракцией при смерти её пациента. По умолчанию: 10.</DeathGoodwillPenaltyTooltip>
+  <DiagnosisArtificialBodyPart>желаемый имплант: {0}</DiagnosisArtificialBodyPart>
+  <DiagnosisSurgeryNoPart>требуется операция</DiagnosisSurgeryNoPart>
+  <DiagnosisSurgeryOnPart>проблемная часть тела: {0}</DiagnosisSurgeryOnPart>
+  <DiagnosisWounds>ранения</DiagnosisWounds>
+  <DifficultySettings>Сложность</DifficultySettings>
+  <Disallow>Отказать в операции</Disallow>
+  <DiseaseSeverityMultiplier>Множитель тяжести болезней</DiseaseSeverityMultiplier>
+  <DiseaseSeverityMultiplierTooltip>Определяет тяжесть болезней прибывающих пациентов. Чем выше значение, тем сложнее лечение. По умолчанию: 100%.</DiseaseSeverityMultiplierTooltip>
+  <Dismiss>Выписать</Dismiss>
+  <GoodwillGainMultiplier>Множитель улучшения отношений</GoodwillGainMultiplier>
+  <GoodwillGainMultiplierTooltip>Определяет улучшение отношений после выписки довольных пациентов. По умолчанию: 100%.</GoodwillGainMultiplierTooltip>
+  <HospitalBlacklisted>Добавлено в исключения: {0}.</HospitalBlacklisted>
+  <HospitalMapSettings>Правила больницы…</HospitalMapSettings>
+  <HospitalPatientDied>Смерть пациента: {0}. -{1} {2}</HospitalPatientDied>
+  <HospitalPatientDismissed>Выписка пациента: {0}.</HospitalPatientDismissed>
+  <HospitalPatientLeaves>Уходит пациент: {0}. +{1}; изменение отношений: {2} {3}</HospitalPatientLeaves>
+  <HospitalPatientLeavesNoFaction>Уходит пациент: {0}. +{1}</HospitalPatientLeavesNoFaction>
+  <HospitalSettings>Правила больницы</HospitalSettings>
+  <HospitalSurgeryFailed>Неудача при операции: {0}. -{1} {2}</HospitalSurgeryFailed>
+  <MCE_Crash>крупная авиакатастрофа</MCE_Crash>
+  <MCE_Fire>крупный пожар в здании</MCE_Fire>
+  <MCE_Pandemic>пандемия</MCE_Pandemic>
+  <MCE_Raid>крупный налёт</MCE_Raid>
+  <MassCasualties>Массовое поступление пострадавших</MassCasualties>
+  <MassCasualtiesTooltip>Время от времени в больницу будет поступать множество пострадавших одновременно.</MassCasualtiesTooltip>
+  <PatientsTab>Пациенты</PatientsTab>
+  <PreventIncapacitatedArrivals>Не допускать прибытия обездвиженных пациентов</PreventIncapacitatedArrivals>
+  <PreventIncapacitatedArrivalsTooltip>Пациентам перестают добавляться раны до того, как они потеряют способность ходить. Они прибывают ранеными, но передвигаются самостоятельно. Отключите для более сложных массовых происшествий: обездвиженных пострадавших придётся спасать.</PreventIncapacitatedArrivalsTooltip>
+  <RefusedOperations>Операции, в которых отказано:</RefusedOperations>
+  <ResetToDefaults>Сбросить настройки</ResetToDefaults>
+  <ShowMessageAtArrival>Сообщение вместо письма</ShowMessageAtArrival>
+  <ShowMessageAtArrivalTooltip>О прибытии нового пациента будет появляться сообщение вместо письма.</ShowMessageAtArrivalTooltip>
+  <SilverMultiplier>Множитель оплаты серебром</SilverMultiplier>
+  <SilverMultiplierTooltip>Изменяет счёт пациента на указанный процент. Рекомендуется: 100%.</SilverMultiplierTooltip>
+  <SurgeryFailGoodwillPenalty>Ухудшение отношений при неудачной операции</SurgeryFailGoodwillPenalty>
+  <SurgeryFailGoodwillPenaltyTooltip>Насколько ухудшаются отношения с фракцией при неудачной операции на её пациенте. По умолчанию: 1.</SurgeryFailGoodwillPenaltyTooltip>
+  <WoundSeverityMultiplier>Множитель тяжести ранений</WoundSeverityMultiplier>
+  <WoundSeverityMultiplierTooltip>Определяет тяжесть ранений прибывающих пациентов. Чем выше значение, тем сложнее лечение. По умолчанию: 100%.</WoundSeverityMultiplierTooltip>
+</LanguageData>
