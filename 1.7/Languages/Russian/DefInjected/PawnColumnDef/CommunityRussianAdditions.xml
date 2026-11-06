@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PatientBill.headerTip>Сколько пациенту предстоит заплатить</PatientBill.headerTip>
+  <PatientBill.label>счёт</PatientBill.label>
+  <PatientCure.headerTip>Как мы поможем пациенту?</PatientCure.headerTip>
+  <PatientCure.label>лечение</PatientCure.label>
+  <PatientDiagnosis.headerTip>Что случилось с этим пациентом?</PatientDiagnosis.headerTip>
+  <PatientDiagnosis.label>диагноз</PatientDiagnosis.label>
+  <PatientRating.headerTip>Насколько доволен пациент. Оценка выше 70 улучшает отношения с его фракцией.</PatientRating.headerTip>
+  <PatientRating.label>оценка</PatientRating.label>
+  <PatientTimeSpent.headerTip>Сколько часов пациент провёл в вашей больнице.</PatientTimeSpent.headerTip>
+  <PatientTimeSpent.label>время в больнице</PatientTimeSpent.label>
+</LanguageData>
