@@ -58,7 +58,7 @@
   <ShowMessageAtArrival>Сообщение вместо письма</ShowMessageAtArrival>
   <ShowMessageAtArrivalTooltip>О прибытии нового пациента будет появляться сообщение вместо письма.</ShowMessageAtArrivalTooltip>
   <SilverMultiplier>Множитель оплаты серебром</SilverMultiplier>
-  <SilverMultiplierTooltip>Изменяет счёт пациента на указанный процент. Рекомендуется: 100%.</SilverMultiplierTooltip>
+  <SilverMultiplierTooltip>Размер счёта пациента в процентах от обычного. Рекомендуется: 100%.</SilverMultiplierTooltip>
   <SurgeryFailGoodwillPenalty>Ухудшение отношений при неудачной операции</SurgeryFailGoodwillPenalty>
   <SurgeryFailGoodwillPenaltyTooltip>Насколько ухудшаются отношения с фракцией при неудачной операции на её пациенте. По умолчанию: 1.</SurgeryFailGoodwillPenaltyTooltip>
   <WoundSeverityMultiplier>Множитель тяжести ранений</WoundSeverityMultiplier>

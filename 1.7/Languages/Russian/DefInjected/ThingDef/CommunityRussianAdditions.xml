@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <PatientLandingSpot.description>Обозначает место высадки пациентов.</PatientLandingSpot.description>
+  <PatientLandingSpot.label>место высадки пациентов</PatientLandingSpot.label>
 </LanguageData>
