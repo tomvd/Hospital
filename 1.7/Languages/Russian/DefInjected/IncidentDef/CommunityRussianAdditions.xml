@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <MassCasualtyEvent.label>массовое поступление пострадавших</MassCasualtyEvent.label>
+  <MassCasualtyEvent.letterLabel>Массовое поступление пострадавших</MassCasualtyEvent.letterLabel>
+  <MassCasualtyEvent.letterText>Происшествие неподалёку: {0}. В вашу больницу направляются пациенты: {1}.</MassCasualtyEvent.letterText>
+  <PatientArrives.label>прибытие пациента</PatientArrives.label>
+  <PatientArrives.letterLabel>Прибыл новый пациент</PatientArrives.letterLabel>
+  <PatientArrives.letterText>{PAWN_possessive} зовут {0}. Диагноз: {1}</PatientArrives.letterText>
+</LanguageData>
