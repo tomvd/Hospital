@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using Hospital.Utilities;
 using RimWorld;
@@ -136,7 +137,28 @@ public class Billing_Surgery_Patch
     }
 
     /// <summary>
-    /// Clear pending surgery flag when bill is manually removed (note this method also is called after a surgery)
+    /// Tracks whether a medical bill is currently being completed. Vanilla deletes a medical bill
+    /// from its stack as part of completing it, so BillStack.Delete alone cannot tell a finished
+    /// operation from one the player cancelled. Patches the most derived override (Bill_Medical's,
+    /// if it has one) so the whole completion, including that delete, runs inside the window.
+    /// </summary>
+    [HarmonyPatch]
+    public static class TrackMedicalBillCompletion
+    {
+        public static int CompletingDepth;
+
+        public static MethodBase TargetMethod() =>
+            AccessTools.Method(typeof(Bill_Medical), nameof(Bill.Notify_IterationCompleted));
+
+        [HarmonyPrefix]
+        public static void Prefix() => CompletingDepth++;
+
+        [HarmonyFinalizer]
+        public static void Finalizer() => CompletingDepth--;
+    }
+
+    /// <summary>
+    /// Handle a patient's medical bill being removed (note this method also is called after a surgery).
     /// </summary>
     [HarmonyPatch(typeof(BillStack), nameof(BillStack.Delete))]
     public class ClearPendingSurgeryOnBillRemoval
@@ -149,6 +171,19 @@ public class Billing_Surgery_Patch
             {
                 if (pawn.IsPatient(out var hospital) && hospital.GetPatientData(pawn, out var patientData))
                 {
+                    bool cancelledCure = TrackMedicalBillCompletion.CompletingDepth == 0
+                                         && patientData.HasPendingSurgeryBill
+                                         && !patientData.Dismissed
+                                         && bill.recipe == patientData.CureRecipe
+                                         && !pawn.Dead;
+                    if (cancelledCure)
+                    {
+                        // The player cancelled the operation the patient came for (issue #56). Sending
+                        // them home as "cured" would pay out and give goodwill for nothing, so dismiss
+                        // them instead, like the Disallow button does (without blacklisting the recipe).
+                        hospital.DismissPatient(pawn);
+                        return;
+                    }
                     // Clear the pending flag so patient can be dismissed
                     patientData.HasPendingSurgeryBill = false;
                 }
